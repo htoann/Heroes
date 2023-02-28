@@ -1,0 +1,19 @@
+<div class="mb-3 col-2">
+  <label for="formGroupExampleInput" class="form-label">Hero Search</label>
+  <input
+    type="text"
+    class="form-control"
+    id="formGroupExampleInput"
+    placeholder="Name"
+    #searchBox
+    (input)="search(searchBox.value)"
+  />
+
+  <ul class="search-result mt-3">
+    <li *ngFor="let hero of heroes$ | async">
+      <a routerLink="/detail/{{ hero._id }}">
+        {{ hero.name | capitalize}}
+      </a>
+    </li>
+  </ul>
+</div>
