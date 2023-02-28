@@ -51,7 +51,7 @@ export class RegisterComponent {
     }
 
     this.loading = true;
-    this.authService.register(this.f?.['email'].value, this.f?.['password'].value)
+    this.authService.postRegister(this.f?.['email'].value, this.f?.['password'].value)
       .pipe(first())
       .subscribe({
         next: () => {

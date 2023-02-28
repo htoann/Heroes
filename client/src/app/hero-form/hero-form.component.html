@@ -1,6 +1,6 @@
 <h2 class="text-center">My Heroes</h2>
 <div class="d-flex justify-content-center">
-  <div class="col-2">
+  <div class="col-3">
     <label for="new-hero">Hero name</label>
     <input
       type="text"
@@ -12,7 +12,7 @@
 
     <button
       type="button"
-      class="btn btn-primary"
+      class="btn btn-primary d-flex mx-auto"
       (click)="createHero(heroName.value); heroName.value = ''"
     >
       Add hero

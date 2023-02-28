@@ -59,7 +59,7 @@ exports.updateHero = async (req, res, next) => {
     }
 
     res.status(200).json(hero);
-  } catch (error) {
+  } catch (err) {
     res.status(err.status || 500).json({
       message: err.message,
       error: err,
@@ -76,7 +76,7 @@ exports.deleteHero = async (req, res, next) => {
     }
 
     res.status(200).json("Delete hero successfully");
-  } catch (error) {
+  } catch (err) {
     res.status(err.status || 500).json({
       message: err.message,
       error: err,

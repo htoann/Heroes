@@ -41,15 +41,13 @@ export class HeroService {
 
   updateHero(hero: Hero): Observable<Hero> {
     const url = `${this.heroesUrl}/${hero._id}`;
-    console.log(hero)
     return this.http.patch<Hero>(url, hero, this.httpOptions).pipe(
-      tap(_ => this.log(`updated hero id=${hero._id}`)),
+      tap(_ => this.log(`Updated hero id=${hero._id}`)),
       catchError(this.handleError<any>('updateHero'))
     )
   }
 
   createHero(name: string): Observable<Hero> {
-    console.log("addHero service", name)
     return this.http.post<Hero>(this.heroesUrl, { name }, this.httpOptions).pipe(
       tap((newHero: Hero) => this.log(`Add hero w/ id=${newHero._id}`)),
       catchError(this.handleError<Hero>('addHero'))

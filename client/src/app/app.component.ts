@@ -13,11 +13,9 @@ export class AppComponent {
   user?: User;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
   ) {
-    if (this.authService.userValue) {
-      this.user = this.authService.userValue;
-    }
+    this.authService.user.subscribe(user => this.user = user?.user);
   }
 
   logout() {

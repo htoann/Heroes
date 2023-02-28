@@ -17,10 +17,10 @@ import { StoreModule } from '@ngrx/store';
 
 import { EffectsModule } from '@ngrx/effects';
 import { CoreModule } from './core/core.module';
-import { heroReducer } from './core/store/hero/hero.reducer';
 import { LoginComponent } from './login/login.component';
 import { HeroFormComponent } from './hero-form/hero-form.component';
 import { RegisterComponent } from './register/register.component';
+import { MyHeroesComponent } from './my-heroes/my-heroes.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +34,7 @@ import { RegisterComponent } from './register/register.component';
     LoginComponent,
     HeroFormComponent,
     RegisterComponent,
+    MyHeroesComponent,
   ],
   imports: [
   BrowserModule,

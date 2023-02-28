@@ -3,6 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './../core/services/auth.service';
 import { first } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { postLogin } from '../core/store/user/user.actions';
+import { User } from '../core/models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +23,8 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store
   ) {
     if (this.authService.userValue) {
       this.router.navigate(['/']);
@@ -50,7 +54,11 @@ export class LoginComponent {
     }
 
     this.loading = true;
-    this.authService.login(this.f?.['email'].value, this.f?.['password'].value)
+    const { email, password }: User = this.loginForm.value;
+    const user = { email, password }
+    this.store.dispatch(postLogin({ user }));
+
+    this.authService.postLogin(this.f?.['email'].value, this.f?.['password'].value)
       .pipe(first())
       .subscribe({
         next: () => {

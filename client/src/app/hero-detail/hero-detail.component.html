@@ -3,7 +3,7 @@
   <div><span>ID: </span>{{ hero._id }}</div>
 
   <div [formGroup]="form">
-    <div class="col-2 my-2">
+    <div class="col-3 my-2">
       <label for="hero-name" class="mb-2">Hero name</label>
       <input
         [(ngModel)]="hero.name"
@@ -14,7 +14,7 @@
         formControlName="name"
       />
     </div>
-    <div class="col-2 my-2">
+    <div class="col-3 my-2">
       <label for="hero-gender" class="mb-2">Hero gender</label>
       <select
         class="form-select"
@@ -26,7 +26,7 @@
         <option value="1">Female</option>
       </select>
     </div>
-    <div class="col-2 my-2">
+    <div class="col-3 my-2">
       <label for="hero-mail" class="mb-2">Hero mail</label>
       <input
         [class.is-invalid]="
@@ -38,10 +38,10 @@
         [(ngModel)]="hero.mail"
       />
     </div>
-    <div *ngIf="email?.invalid" class="alert alert-danger col-2">
+    <div *ngIf="email?.invalid" class="alert alert-danger col-3">
       Please enter a valid email
     </div>
-    <div class="col-2 my-2">
+    <div class="col-3 my-2">
       <label for="hero-age" class="mb-2">Hero age</label>
       <input
         [(ngModel)]="hero.age"
@@ -52,7 +52,7 @@
         formControlName="age"
       />
     </div>
-    <div class="col-2 my-2">
+    <div class="col-3 my-2">
       <label for="hero-address" class="mb-2">Hero address</label>
       <input
         [(ngModel)]="hero.address"
