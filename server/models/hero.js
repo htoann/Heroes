@@ -13,6 +13,10 @@ const HeroSchema = new Schema(
     age: Number,
     mail: String,
     gender: Boolean,
+    // user: {
+    //   type: Object,
+    //   ref: "User",
+    // },
     userId: {
       type: mongoose.Schema.ObjectId,
       ref: "User",

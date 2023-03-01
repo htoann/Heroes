@@ -3,6 +3,22 @@ const Hero = require("../models/hero");
 exports.getAllHeroes = async (req, res, next) => {
   try {
     const heroes = await Hero.find();
+
+    res.status(200).json(heroes);
+  } catch (err) {
+    res.status(err.status || 500).json({
+      message: err.message,
+      error: err,
+    });
+  }
+};
+
+exports.getMyHeroes = async (req, res, next) => {
+  try {
+    const heroes = await Hero.find({
+      userId: req.user.user_id,
+    });
+
     res.status(200).json(heroes);
   } catch (err) {
     res.status(err.status || 500).json({
@@ -31,8 +47,7 @@ exports.getHero = async (req, res, next) => {
 
 exports.createHero = async (req, res, next) => {
   try {
-    // const hero = await Hero.create({ userId: req.user._id, ...req.body });
-    const hero = await Hero.create({ ...req.body });
+    const hero = await Hero.create({ userId: req.user.user_id, ...req.body });
 
     if (!hero) {
       return res.status(404).send("Something went wrong");
@@ -75,7 +90,26 @@ exports.deleteHero = async (req, res, next) => {
       return res.status(404).send("No hero found");
     }
 
-    res.status(200).json("Delete hero successfully");
+    res.status(200).json(hero);
+  } catch (err) {
+    res.status(err.status || 500).json({
+      message: err.message,
+      error: err,
+    });
+  }
+};
+
+exports.searchHero = async (req, res, next) => {
+  try {
+    const heroes = await Hero.find({
+      name: { $regex: new RegExp(req.query.name, "i") },
+    }).exec();
+
+    if (!heroes) {
+      return res.status(404).send("No hero found");
+    }
+
+    res.status(200).json(heroes);
   } catch (err) {
     res.status(err.status || 500).json({
       message: err.message,

@@ -7,6 +7,7 @@ var cors = require("cors");
 
 var heroesRouter = require("./routes/hero");
 var authRouter = require("./routes/auth");
+var userRouter = require("./routes/user");
 
 const initDatabase = require("./config/initDatabase");
 
@@ -35,6 +36,7 @@ app.use(
 
 app.use("/api/heroes", heroesRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 app.use("*", async (req, res) => {
   res.status(404).send("404 not found");
 });
