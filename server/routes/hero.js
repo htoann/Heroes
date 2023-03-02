@@ -3,19 +3,21 @@ var router = express.Router();
 var HeroController = require("../controllers/hero");
 const verifyToken = require("../middleware/auth");
 
-router.get("/search", HeroController.searchHero);
+router.get("/search", verifyToken, HeroController.searchHero);
 
-router.get("/", HeroController.getAllHeroes);
+router.get("/", verifyToken, HeroController.getAllHeroes);
 
 router.get("/:userId/my-heroes", verifyToken, HeroController.getMyHeroes);
 
-router.get("/:id", HeroController.getHero);
+router.get("/:id", verifyToken, HeroController.getHero);
 
 router.post("/", verifyToken, HeroController.createHero);
 
-router.patch("/:id", HeroController.updateHero);
+router.patch("/tags", verifyToken, HeroController.updateManyHero);
 
-router.delete("/:id", HeroController.deleteHero);
+router.patch("/:id", verifyToken, HeroController.updateHero);
+
+router.delete("/:id", verifyToken, HeroController.deleteHero);
 
 router.delete("/", verifyToken, HeroController.deleteManyHero);
 
