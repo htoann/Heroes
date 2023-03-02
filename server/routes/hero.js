@@ -7,6 +7,8 @@ router.get("/search", HeroController.searchHero);
 
 router.get("/", HeroController.getAllHeroes);
 
+router.get("/:userId/my-heroes", HeroController.getMyHeroes);
+
 router.get("/:id", HeroController.getHero);
 
 router.post("/", verifyToken, HeroController.createHero);

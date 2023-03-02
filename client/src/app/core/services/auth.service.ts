@@ -14,8 +14,8 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router, private messageService: MessageService) {
   }
 
-  private authUrl = "http://localhost:8000/api/auth";
-  private userUrl = "http://localhost:8000/api/user";
+  private authUrl = "http://localhost:8001/api/auth";
+  private userUrl = "http://localhost:8001/api/user";
 
   public getToken(): string {
     return JSON.parse(localStorage.getItem('user')!)?.token

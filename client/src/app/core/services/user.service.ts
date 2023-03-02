@@ -19,7 +19,7 @@ export class UserService {
     this.user = this.userSubject.asObservable();
   }
 
-  private userUrl = "http://localhost:8000/api/user";
+  private userUrl = "http://localhost:8001/api/user";
 
   public get userValue() {
     return this.userSubject.value?.user;

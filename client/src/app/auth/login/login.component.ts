@@ -50,6 +50,7 @@ export class LoginComponent {
     this.loading = true;
     const { email, password } = this.loginForm.value;
     this.store.dispatch(login({ email, password }));
+
     this.router.navigateByUrl("/")
   }
 }

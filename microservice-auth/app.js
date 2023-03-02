@@ -5,7 +5,8 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
 
-var heroesRouter = require("./routes/hero");
+var authRouter = require("./routes/auth");
+var userRouter = require("./routes/user");
 
 const initDatabase = require("./config/initDatabase");
 
@@ -21,18 +22,15 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   cors({
-    origin: [
-      "https://test.app",
-      "http://localhost:4200",
-      process.env.WEB_URL,
-    ],
+    origin: ["https://test.app", "http://localhost:4200", process.env.WEB_URL],
     methods: "GET, POST, PUT, DELETE, PATCH",
     credentials: true,
     maxAge: 3600,
   })
 );
 
-app.use("/api/heroes", heroesRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 app.use("*", async (req, res) => {
   res.status(404).send("404 not found");
 });
@@ -53,7 +51,7 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8001;
 app.listen(PORT, () => {
   console.log(`Server listening on: http://localhost:${PORT}`);
 });

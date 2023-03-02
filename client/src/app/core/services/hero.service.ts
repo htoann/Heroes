@@ -16,7 +16,7 @@ export class HeroService {
     private userService: UserService,
     private http: HttpClient, private messageService: MessageService, private authService: AuthService) { }
   private heroesUrl = "http://localhost:8000/api/heroes";
-  private userUrl = "http://localhost:8000/api/user";
+  private userUrl = "http://localhost:8001/api/user";
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -34,7 +34,7 @@ export class HeroService {
   }
 
   getMyHeroes() {
-    return this.http.get<Hero[]>(`${this.userUrl}/${this.userService.userValue._id}/my-heroes`).pipe(
+    return this.http.get<Hero[]>(`${this.heroesUrl}/${this.userService.userValue._id}/my-heroes`).pipe(
       tap(_ => this.log('Fetched heroes')),
       catchError(this.handleError<Hero[]>('getHeroes', []))
     )
