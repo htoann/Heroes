@@ -6,4 +6,5 @@ export interface Hero {
   age?: number
   gender?: boolean
   userId?: string
+  tags?: string[]
 }

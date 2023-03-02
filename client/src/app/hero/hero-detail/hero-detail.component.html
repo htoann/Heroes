@@ -16,7 +16,7 @@
     <div class="col-3 my-2">
       <label for="hero-gender" class="mb-2">Hero gender</label>
       <select class="form-select" aria-label="Default select example">
-        <option value="0">Male</option>
+        <option value="0" selected>Male</option>
         <option value="1">Female</option>
       </select>
     </div>
@@ -56,13 +56,40 @@
     </div>
   </div>
 
+  <h6>Hero tags</h6>
+  <!-- <tag-input
+    class="col-3"
+    [(ngModel)]="tags"
+    (onSelect)="onSelect($any($event))"
+    (onAdd)="onAdd($any($event))"
+    [modelAsStrings]="true"
+  >
+  </tag-input> -->
+  <tag-input
+    [ngModel]="['tags']"
+    [modelAsStrings]="true"
+    (onAdd)="onAdd($any($event))"
+    #input
+    (onTextChange)="onTextChange($any($event))"
+  >
+    <ng-template item-template let-item="item" let-index="index">
+      <span>#{{ item }} </span>
+      <span
+        (click)="input.removeItem(item, index)"
+        class="ng2-tag__remove-button"
+      >
+        x
+      </span>
+    </ng-template>
+  </tag-input>
+
   <button type="button" (click)="goBack()" class="btn btn-primary">
     Go back
   </button>
   <button
     type="button"
     (click)="updateHero()"
-    [disabled]="email?.invalid || !form.dirty"
+    [disabled]="email?.invalid"
     class="btn btn-primary"
   >
     Save

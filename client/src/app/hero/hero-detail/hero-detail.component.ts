@@ -10,6 +10,7 @@ import { getHero, updateHero } from '../../core/store/hero/hero.actions';
 import { select, Store } from '@ngrx/store';
 import { currentHeroSelector } from '../../core/store/hero/hero.selector';
 
+
 @Component({
   selector: 'app-hero-detail',
   templateUrl: './hero-detail.component.html',
@@ -17,11 +18,11 @@ import { currentHeroSelector } from '../../core/store/hero/hero.selector';
 })
 export class HeroDetailComponent {
   @Input() hero: Hero | null;
+  tags?: string[];
   form: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
-    private heroService: HeroService,
     private location: Location,
     private fb: FormBuilder,
     private store: Store
@@ -45,15 +46,17 @@ export class HeroDetailComponent {
     this.store.pipe(select(currentHeroSelector)).subscribe(hero => {
       if (hero) {
         this.hero = hero
+        this.tags = hero.tags
         this.form.patchValue({
           name: hero.name,
           gender: hero.gender,
           mail: hero.mail,
           age: hero.age,
-          address: hero.address
+          address: hero.address,
         });
       }
     })
+    
   }
 
   goBack(): void {
@@ -61,12 +64,47 @@ export class HeroDetailComponent {
   }
 
   updateHero(): void {
-    const updatedHero = { ...this.hero, ...this.form.value };
+    const updatedHero = { ...this.hero, ...this.form.value, };
+    updatedHero.tags = this.tags;
     this.store.dispatch(updateHero({ hero: updatedHero }));
     this.goBack();
   }
 
+  addTags(): void {
+
+  }
+
   get email() {
     return this.form.get('email')
+  }
+
+  // Tags
+
+  public onAdd(tag: string) {
+    console.log(this.tags)
+  }
+
+  public onRemove(tag: string) {
+    console.log('tag removed: value is ' + tag);
+  }
+
+  public onSelect(tag: string) {
+    console.log('tag selected: value is ' + tag);
+  }
+
+  public onFocus(tag: string) {
+    console.log('input focused: current value is ' + tag);
+  }
+
+  public onTextChange(text: string) {
+    console.log('text changed: value is ' + text);
+  }
+
+  public onBlur(tag: string) {
+    console.log('input blurred: current value is ' + tag);
+  }
+
+  public onTagEdited(tag: string) {
+    console.log('tag edited: current value is ' + tag);
   }
 }
