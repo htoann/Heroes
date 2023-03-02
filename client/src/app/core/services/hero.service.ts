@@ -2,22 +2,25 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Hero } from '../models/hero.model';
 import { Observable, tap, of } from 'rxjs';
-import { MessageService } from 'src/app/message.service';
+import { MessageService } from 'src/app/core/services/message.service';
 import { catchError } from 'rxjs/operators';
+import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroService {
-  constructor(private http: HttpClient, private messageService: MessageService) { }
+  constructor(
+    private userService: UserService,
+    private http: HttpClient, private messageService: MessageService, private authService: AuthService) { }
   private heroesUrl = "http://localhost:8000/api/heroes";
-  // private heroesUrl = "https://60c9e7eb772a760017204b93.mockapi.io/todolist";
+  private userUrl = "http://localhost:8000/api/user";
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-
 
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`);
@@ -30,6 +33,13 @@ export class HeroService {
     )
   }
 
+  getMyHeroes() {
+    return this.http.get<Hero[]>(`${this.userUrl}/${this.userService.userValue._id}/my-heroes`).pipe(
+      tap(_ => this.log('Fetched heroes')),
+      catchError(this.handleError<Hero[]>('getHeroes', []))
+    )
+  }
+
   getHero(id: string): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.get<Hero>(url).pipe(
@@ -37,7 +47,6 @@ export class HeroService {
       catchError(this.handleError<Hero>(`getHero id=${id}`))
     );
   }
-
 
   updateHero(hero: Hero): Observable<Hero> {
     const url = `${this.heroesUrl}/${hero._id}`;
@@ -62,15 +71,14 @@ export class HeroService {
     );
   }
 
-
   searchHeroes(term: string): Observable<Hero[]> {
     if (!term.trim()) {
       return of([]);
     }
     return this.http.get<Hero[]>(`${this.heroesUrl}/search?name=${term}`).pipe(
       tap(x => x.length ?
-        this.log(`found heroes matching "${term}"`) :
-        this.log(`no heroes matching "${term}"`)),
+        this.log(`Found heroes matching "${term}"`) :
+        this.log(`No heroes matching "${term}"`)),
       catchError(this.handleError<Hero[]>('searchHeroes', []))
     );
   }

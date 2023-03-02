@@ -1,7 +1,11 @@
 export interface User {
-  _id?: string
-  first_name?: string
-  last_name?: string,
+  _id: string
+  name?: string
   email: string
   password: string
+}
+
+export interface UserResponse {
+  user: User;
+  token: string;
 }

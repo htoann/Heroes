@@ -1,5 +1,5 @@
 export interface Hero {
-  _id?: string
+  _id: string
   name: string
   address?: string
   mail?: string

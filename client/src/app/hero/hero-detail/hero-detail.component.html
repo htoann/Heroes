@@ -6,7 +6,6 @@
     <div class="col-3 my-2">
       <label for="hero-name" class="mb-2">Hero name</label>
       <input
-        [(ngModel)]="hero.name"
         type="text"
         class="form-control"
         id="hero-name"
@@ -16,12 +15,7 @@
     </div>
     <div class="col-3 my-2">
       <label for="hero-gender" class="mb-2">Hero gender</label>
-      <select
-        class="form-select"
-        aria-label="Default select example"
-        [(ngModel)]="hero.gender"
-        [ngModelOptions]="{ standalone: true }"
-      >
+      <select class="form-select" aria-label="Default select example">
         <option value="0">Male</option>
         <option value="1">Female</option>
       </select>
@@ -34,8 +28,7 @@
         "
         type="email"
         class="form-control"
-        formControlName="email"
-        [(ngModel)]="hero.mail"
+        formControlName="mail"
       />
     </div>
     <div *ngIf="email?.invalid" class="alert alert-danger col-3">
@@ -44,7 +37,6 @@
     <div class="col-3 my-2">
       <label for="hero-age" class="mb-2">Hero age</label>
       <input
-        [(ngModel)]="hero.age"
         type="text"
         class="form-control"
         id="hero-age"
@@ -55,7 +47,6 @@
     <div class="col-3 my-2">
       <label for="hero-address" class="mb-2">Hero address</label>
       <input
-        [(ngModel)]="hero.address"
         type="text"
         class="form-control"
         id="hero-address"

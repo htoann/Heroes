@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../core/services/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 import { first } from 'rxjs/operators';
+import { register } from 'src/app/core/store/auth/auth.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-register',
@@ -20,9 +22,10 @@ export class RegisterComponent {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store
   ) {
-    if (this.authService.userValue) {
+    if (this.authService.getToken()) {
       this.router.navigate(['/']);
     }
   }
@@ -36,31 +39,21 @@ export class RegisterComponent {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  // convenience getter for easy access to form fields
   get f() { return this.registerForm.controls; }
 
 
   onSubmit() {
     this.submitted = true;
 
-    console.log(this.f?.['email'].value)
-    console.log(this.f?.['password'].value)
-
     if (this.registerForm.invalid) {
       return;
     }
 
     this.loading = true;
-    this.authService.postRegister(this.f?.['email'].value, this.f?.['password'].value)
-      .pipe(first())
-      .subscribe({
-        next: () => {
-          this.router.navigateByUrl(this.returnUrl);
-        },
-        error: error => {
-          this.error = error.error;
-          this.loading = false;
-        }
-      });
+
+    const { email, password } = this.registerForm.value;
+
+    this.store.dispatch(register({ email, password }));
+    this.router.navigateByUrl("/")
   }
 }

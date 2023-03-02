@@ -11,7 +11,15 @@ export class HeroEffects {
     ofType(heroActions.getHeroes),
     mergeMap(() => this.heroService.getHeroes()),
     map(heroes => heroActions.getHeroesSuccess({ heroes })),
-    catchError(error => of(heroActions.getHeroFailed({ error })))
+    catchError(error => of(heroActions.getHeroesFailed({ error })))
+  )
+  );
+
+  loadMyHeroes$ = createEffect(() => this.actions$.pipe(
+    ofType(heroActions.getMyHeroes),
+    mergeMap(() => this.heroService.getMyHeroes()),
+    map(heroes => heroActions.getMyHeroesSuccess({ heroes })),
+    catchError(error => of(heroActions.getMyHeroesFailed({ error })))
   )
   );
 
@@ -19,9 +27,9 @@ export class HeroEffects {
     ofType(heroActions.getHero),
     mergeMap((action) => this.heroService.getHero(action.id)),
     map(hero => heroActions.getHeroSuccess({ hero })),
-    catchError(error => of(heroActions.getHeroesFailed({ error })))
+    catchError(error => of(heroActions.getHeroFailed({ error })))
   ))
-  
+
   createHero$ = createEffect(() => this.actions$.pipe(
     ofType(heroActions.createHero),
     exhaustMap((action) => this.heroService.createHero(action.name)),
@@ -34,6 +42,14 @@ export class HeroEffects {
     mergeMap((action) => this.heroService.updateHero(action.hero)),
     map(hero => heroActions.updateHeroSuccess({ hero })),
     catchError(error => of(heroActions.updateHeroFailed({ error })))
+  )
+  )
+
+  deleteHero$ = createEffect(() => this.actions$.pipe(
+    ofType(heroActions.deleteHero),
+    mergeMap((action) => this.heroService.deleteHero(action.id)),
+    map(hero => heroActions.deleteHeroSuccess({ id: hero._id })),
+    catchError(error => of(heroActions.deleteHeroFailed({ error })))
   )
   )
 

@@ -1,0 +1,43 @@
+<div *ngIf="user" class="mx-auto">
+  <h2>{{ user.name | uppercase }} Profile</h2>
+  <div><span>ID: </span>{{ user._id }}</div>
+
+  <div [formGroup]="form">
+    <div class="col-3 my-2">
+      <label for="user-name" class="mb-2">User name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="user-name"
+        placeholder="Name"
+        formControlName="name"
+      />
+    </div>
+    <div class="col-3 my-2">
+      <label for="user-email" class="mb-2">User email</label>
+      <input
+        [class.is-invalid]="
+          form.get('email')?.invalid && form.get('email')?.touched
+        "
+        type="email"
+        class="form-control"
+        formControlName="email"
+      />
+    </div>
+    <div *ngIf="email?.invalid" class="alert alert-danger col-3">
+      Please enter a valid email
+    </div>
+  </div>
+
+  <button type="button" (click)="goBack()" class="btn btn-primary">
+    Go back
+  </button>
+  <button
+    type="button"
+    (click)="updateUser()"
+    [disabled]="email?.invalid || !form.dirty"
+    class="btn btn-primary"
+  >
+    Save
+  </button>
+</div>
