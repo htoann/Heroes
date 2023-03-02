@@ -11,13 +11,14 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'heroes', component: HeroesComponent },
+  // { path: 'heroes', component: HeroesComponent },
   { path: 'detail/:id', component: HeroDetailComponent },
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 
-  { path: 'user/:id/my-heroes', component: MyHeroesComponent },
+  // { path: 'heroes/:id/my-heroes', component: MyHeroesComponent },
+  { path: 'heroes/:id/my-heroes', component: HeroesComponent },
   { path: 'user/:id', component: UserDetailComponent },
 
   // {

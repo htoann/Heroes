@@ -13,6 +13,7 @@ const HeroSchema = new Schema(
     age: Number,
     mail: String,
     gender: Boolean,
+    tags: Array,
     // user: {
     //   type: Object,
     //   ref: "User",

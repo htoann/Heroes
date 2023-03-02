@@ -99,6 +99,26 @@ exports.deleteHero = async (req, res, next) => {
   }
 };
 
+exports.deleteManyHero = async (req, res, next) => {
+  const heroIds = req.body.ids;
+  console.log(heroIds);
+  try {
+    const heroes = await Hero.deleteMany({
+      user: req.user.user_id,
+      _id: { $in: heroIds },
+    });
+    if (!heroes) {
+      return res.status(404).send("No hero found");
+    }
+    res.status(200).json(heroes);
+  } catch (err) {
+    res.status(err.status || 500).json({
+      message: err.message,
+      error: err,
+    });
+  }
+};
+
 exports.searchHero = async (req, res, next) => {
   try {
     const heroes = await Hero.find({

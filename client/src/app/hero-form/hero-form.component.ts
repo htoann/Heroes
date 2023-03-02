@@ -23,7 +23,6 @@ export class HeroFormComponent {
 
     this.store.dispatch(createHero({ name }))
 
-    // Fix add 2 lần
     // this.heroService.createHero(name)
     //   .subscribe(hero => {
     //     this.heroes.push(hero);
