@@ -5,8 +5,7 @@ import { Location } from '@angular/common';
 
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Hero } from '../../core/models/hero.model';
-import { HeroService } from '../../core/services/hero.service';
-import { getHero, updateHero } from '../../core/store/hero/hero.actions';
+import { deleteHero, getHero, updateHero } from '../../core/store/hero/hero.actions';
 import { select, Store } from '@ngrx/store';
 import { currentHeroSelector } from '../../core/store/hero/hero.selector';
 
@@ -25,7 +24,7 @@ export class HeroDetailComponent {
     private route: ActivatedRoute,
     private location: Location,
     private fb: FormBuilder,
-    private store: Store
+    private store: Store,
   ) {
     this.form = fb.group({
       name: ["", Validators.required],
@@ -56,7 +55,7 @@ export class HeroDetailComponent {
         });
       }
     })
-    
+
   }
 
   goBack(): void {
@@ -70,18 +69,18 @@ export class HeroDetailComponent {
     this.goBack();
   }
 
-  addTags(): void {
-
-  }
-
   get email() {
     return this.form.get('email')
+  }
+
+  deleteHero(id: string): void {
+    this.store.dispatch(deleteHero({ id }))
+    this.goBack()
   }
 
   // Tags
 
   public onAdd(tag: string) {
-    console.log(this.tags)
   }
 
   public onRemove(tag: string) {
@@ -100,9 +99,6 @@ export class HeroDetailComponent {
     console.log('text changed: value is ' + text);
   }
 
-  public onBlur(tag: string) {
-    console.log('input blurred: current value is ' + tag);
-  }
 
   public onTagEdited(tag: string) {
     console.log('tag edited: current value is ' + tag);
