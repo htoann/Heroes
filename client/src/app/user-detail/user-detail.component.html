@@ -30,6 +30,10 @@
       </div>
     </div>
 
+    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+      {{ error }}
+    </div>
+
     <div>
       <button type="button" (click)="goBack()" class="btn btn-primary">
         Go back

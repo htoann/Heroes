@@ -45,36 +45,18 @@ export class UserService {
     this.messageService.add(`AuthService: ${message}`);
   }
 
-  getUser(id: string) {
+  getUser(id: string): Observable<User> {
     return this.http.get<User>(`${this.userUrl}/${id}`);
+  }
+
+  getMe() {
+    return this.http.get<User>(`${this.userUrl}/me`);
   }
 
   updateUser(user: User): Observable<User> {
     const url = `${this.userUrl}/${user._id}`;
     return this.http.patch<User>(url, user, this.httpOptions).pipe(
       tap(_ => this.log(`Updated hero id=${user._id}`)),
-      catchError(this.handleError<any>('updateHero'))
     )
-  }
-
-  /**
-* Handle Http operation that failed.
-* Let the app continue.
-*
-* @param operation - name of the operation that failed
-* @param result - optional value to return as the observable result
-*/
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error);
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
   }
 }

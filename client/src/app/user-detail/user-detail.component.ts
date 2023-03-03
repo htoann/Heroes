@@ -16,6 +16,7 @@ import { userSelector } from '../core/store/user/user.selector';
 export class UserDetailComponent {
   @Input() user: User | null;
   form: FormGroup;
+  error: string | undefined
 
   constructor(
     private route: ActivatedRoute,
@@ -55,6 +56,16 @@ export class UserDetailComponent {
   updateUser(): void {
     const updatedUser = { ...this.user, ...this.form.value };
     this.store.dispatch(updateUser({ user: updatedUser }));
+    // this.store.pipe(select(userSelector)).subscribe({
+    //   next: (data) => {
+    //     console.log(data)
+    //   },
+    //   error: (error) => {
+    //     this.error = error.error;
+    //   }
+    // })
+
+    // if (!this.error) this.goBack();
     this.goBack();
   }
 

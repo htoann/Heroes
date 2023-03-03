@@ -40,7 +40,7 @@ export class AuthService {
     const body = { email, password };
     const url = `${this.authUrl}/register`
     return this.http.post<UserResponse>(url, body, this.httpOptions).pipe(
-      tap(res => localStorage.setItem('token', res.token))
+      tap(res => localStorage.setItem('user', JSON.stringify(res)))
     )
 
   }
