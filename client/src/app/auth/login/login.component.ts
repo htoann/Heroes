@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { Store } from '@ngrx/store';
 import { login } from 'src/app/core/store/auth/auth.actions';
+import { first } from 'rxjs/operators';
+import { UserService } from './../../core/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,7 @@ export class LoginComponent {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private store: Store
+    private store: Store,
   ) {
     if (this.authService.getToken()) {
       this.router.navigate(['/']);
@@ -49,8 +51,17 @@ export class LoginComponent {
 
     this.loading = true;
     const { email, password } = this.loginForm.value;
-    this.store.dispatch(login({ email, password }));
 
-    this.router.navigateByUrl("/")
+    this.authService.login(email, password)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.store.dispatch(login({ email, password }));
+          this.router.navigateByUrl("/")
+        },
+        error => {
+          this.error = error.error;
+          this.loading = false;
+        });
   }
 }

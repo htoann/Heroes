@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './hero/dashboard/dashboard.component';
 import { HeroDetailComponent } from './hero/hero-detail/hero-detail.component';
-import { HeroesComponent } from './heroes/heroes.component';
+import { HeroesComponent } from './hero/heroes/heroes.component';
 import { LoginComponent } from './auth/login/login.component';
-import { MyHeroesComponent } from './my-heroes/my-heroes.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 
@@ -17,7 +16,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 
-  // { path: 'heroes/:id/my-heroes', component: MyHeroesComponent },
   { path: 'heroes/:id/my-heroes', component: HeroesComponent },
   { path: 'user/:id', component: UserDetailComponent },
 

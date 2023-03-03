@@ -53,7 +53,16 @@ export class RegisterComponent {
 
     const { email, password } = this.registerForm.value;
 
-    this.store.dispatch(register({ email, password }));
-    this.router.navigateByUrl("/")
+    this.authService.register(email, password)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.store.dispatch(register({ email, password }));
+          this.router.navigateByUrl("/")
+        },
+        error => {
+          this.error = error.error;
+          this.loading = false;
+        });
   }
 }

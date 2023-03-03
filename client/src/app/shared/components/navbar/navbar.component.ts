@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { User } from 'src/app/core/models/user.model';
 import { UserService } from 'src/app/core/services/user.service';
@@ -16,7 +17,8 @@ export class NavbarComponent {
 
   constructor(
     private store: Store,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
   ) {
     this.store.pipe(select(userSelector)).subscribe(user => {
       this.user = user
@@ -32,5 +34,6 @@ export class NavbarComponent {
 
   logout() {
     this.store.dispatch(logout())
+    this.router.navigate(['/login']);
   }
 }
