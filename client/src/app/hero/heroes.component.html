@@ -18,7 +18,7 @@
                 class="text-decoration-none flex-row"
                 for="flexCheckChecked"
               >
-                <span class="mt-4 d-flex">{{ hero.name | capitalize }}</span>
+                <span class="d-flex">Name: {{ hero.name | capitalize }}</span>
                 <tag-input [ngModel]="hero.tags" [removable]="false">
                   <ng-template item-template let-item="item" let-index="index">
                     <span>#{{ item }} </span>

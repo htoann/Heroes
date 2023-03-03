@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { AppState } from '../../core/store/app.state';
-import { Hero } from '../../core/models/hero.model';
-import { getHeroes } from '../../core/store/hero/hero.actions';
-import { heroesSelector } from '../../core/store/hero/hero.selector';
+import { AppState } from './../core/store/app.state';
+import { Hero } from './../core/models/hero.model';
+import { getHeroes } from './../core/store/hero/hero.actions';
+import { heroesSelector } from './../core/store/hero/hero.selector';
 import { Observable, of } from 'rxjs';
-import { HeroService } from './../../core/services/hero.service';
-import { AuthService } from './../../core/services/auth.service';
+import { HeroService } from './../core/services/hero.service';
 import { Router } from '@angular/router';
+import { AuthService } from './../core/services/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-heroes',
@@ -25,11 +26,11 @@ export class HeroesComponent implements OnInit {
   selectedTags: string[] = [];
 
 
-  constructor(private store: Store<AppState>, private authService: AuthService, private heroService: HeroService, private router: Router) { }
+  constructor(private store: Store<AppState>, private authService: AuthService, private heroService: HeroService, private router: Router, private location: Location,) { }
 
   ngOnInit(): void {
     if (!this.authService.getToken()) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
     }
     else
       this.getHeroes();
@@ -41,11 +42,16 @@ export class HeroesComponent implements OnInit {
   }
 
   addTagsToHeroes(): void {
-    this.heroService.addTagsToHeroes(this.heroIds, this.tags)
+    console.log(this.heroIds, this.tags)
+    this.heroService.addTagsToHeroes(this.heroIds, this.tags).subscribe(data => {
+      this.getHeroes();
+    }
+    )
   }
 
   deleteTagsFromHeroes(): void {
-    this.heroService.deleteTagsFromHeroes(this.heroIdsRemovieTag, this.tagsRemove)
+    this.heroService.deleteTagsFromHeroes(this.heroIdsRemovieTag, this.tagsRemove).subscribe(data =>
+      this.getHeroes())
   }
 
   public requestAutocompleteItemsFake = (text: string): Observable<any> => {
@@ -54,11 +60,10 @@ export class HeroesComponent implements OnInit {
 
   public onAddOfAddHeros(tag: string) {
     this.heroIds = this.heroObjectAdd?.map((hero) => hero._id)
-    console.log(this.heroIds)
   }
 
   public onAddOfAddTags(tag: string) {
-    console.log(this.tags)
+    console.log(tag)
   }
 
   public onAddOfRemoveHeros(tag: string) {

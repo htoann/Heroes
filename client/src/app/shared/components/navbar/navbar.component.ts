@@ -34,6 +34,6 @@ export class NavbarComponent {
 
   logout() {
     this.store.dispatch(logout())
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 }

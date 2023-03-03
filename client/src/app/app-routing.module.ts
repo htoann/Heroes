@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DashboardComponent } from './hero/dashboard/dashboard.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 
@@ -17,6 +18,8 @@ const routes: Routes = [
   },
 
   { path: 'user/:id', component: UserDetailComponent },
+
+  { path: '', component: DashboardComponent },
 
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
 

@@ -19,9 +19,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { SharedModule } from './shared/shared.module';
 import { UserDetailComponent } from './user-detail/user-detail.component';
-import { HeroModule } from './hero/hero.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { HeroModule } from './hero/hero.module';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     EffectsModule.forRoot([]),
     CoreModule,
     SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
     HeroModule,
   ],
   providers: [{
