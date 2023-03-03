@@ -13,7 +13,9 @@ router.get("/:id", verifyToken, HeroController.getHero);
 
 router.post("/", verifyToken, HeroController.createHero);
 
-router.patch("/tags", verifyToken, HeroController.updateManyHero);
+router.patch("/tags", verifyToken, HeroController.addTagsToHeroes);
+
+router.patch("/tags/delete", verifyToken, HeroController.deleteTagsFromHeroes);
 
 router.patch("/:id", verifyToken, HeroController.updateHero);
 

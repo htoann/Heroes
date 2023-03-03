@@ -51,25 +51,7 @@ export class UserService {
 
   updateUser(user: User): Observable<User> {
     const url = `${this.userUrl}/${user._id}`;
-    // return this.http.patch<User>(url, user, this.httpOptions).pipe(
-    //   map(x => {
-    //     if (user._id == this.authService.getUserId()) {
-    //       const newUser = { ...this.userValue, ...user };
-    //       localStorage.setItem('user', JSON.stringify(newUser));
-
-    //       // Publish updated user to subscribers
-    //       this.userSubject.next(user);
-    //     }
-    //     return x;
-    //   })
-    // )
     return this.http.patch<User>(url, user, this.httpOptions).pipe(
-      // map(x => {
-      //   // const token = JSON.parse(localStorage.getItem('user')!).token;
-      //   // localStorage.setItem('user', JSON.stringify(user, token));
-
-      //   return x;
-      // }),
       tap(_ => this.log(`Updated hero id=${user._id}`)),
       catchError(this.handleError<any>('updateHero'))
     )

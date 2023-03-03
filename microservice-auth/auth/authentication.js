@@ -27,7 +27,7 @@ exports.register = async (req, res, next) => {
       { user_id: user._id, email },
       process.env.TOKEN_KEY,
       {
-        expiresIn: "2h",
+        expiresIn: "365d",
       }
     );
     user.token = token;
@@ -54,7 +54,7 @@ exports.login = async (req, res, next) => {
         { user_id: user._id, email },
         process.env.TOKEN_KEY,
         {
-          expiresIn: "2h",
+          expiresIn: "365d",
         }
       );
 

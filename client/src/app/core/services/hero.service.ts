@@ -14,9 +14,12 @@ import { UserService } from './user.service';
 export class HeroService {
   constructor(
     private userService: UserService,
-    private http: HttpClient, private messageService: MessageService, private authService: AuthService) { }
+    private http: HttpClient, private messageService: MessageService, private authService: AuthService) {
+  }
   private heroesUrl = "http://localhost:8000/api/heroes";
   private userUrl = "http://localhost:8001/api/user";
+
+
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -53,6 +56,26 @@ export class HeroService {
     const url = `${this.heroesUrl}/${hero._id}`;
     return this.http.patch<Hero>(url, hero, this.httpOptions).pipe(
       tap(_ => this.log(`Updated hero id=${hero._id}`)),
+      catchError(this.handleError<any>('updateHero'))
+    )
+  }
+
+  addTagsToHeroes(heroIds: any, tags: any): Observable<any> {
+    const url = `${this.heroesUrl}/tags`;
+    const body = { heroIds, tags }
+
+    return this.http.patch<any>(url, body, this.httpOptions).pipe(
+      tap(_ => this.log(`Add tags for heroes`)),
+      catchError(this.handleError<any>('updateHero'))
+    )
+  }
+
+  deleteTagsFromHeroes(heroIds: any, tags: any): Observable<any> {
+    const url = `${this.heroesUrl}/tags/delete`;
+    const body = { heroIds, tags }
+
+    return this.http.patch<any>(url, body, this.httpOptions).pipe(
+      tap(_ => this.log(`Delete tags for heroes`)),
       catchError(this.handleError<any>('updateHero'))
     )
   }

@@ -1,72 +1,73 @@
-<div *ngIf="hero">
-  <h2>{{ hero.name | uppercase }} Details</h2>
-  <div><span>ID: </span>{{ hero._id }}</div>
+<div *ngIf="hero" class="list-group col-3 mb-4 d-flex mx-auto">
+  <div>
+    <h2>{{ hero.name | uppercase }} Details</h2>
+    <div><span>ID: </span>{{ hero._id }}</div>
 
-  <div [formGroup]="form">
-    <div class="col-3 my-2">
-      <label for="hero-name" class="mb-2">Hero name</label>
-      <input
-        type="text"
-        class="form-control"
-        id="hero-name"
-        placeholder="Name"
-        formControlName="name"
-      />
-    </div>
-    <div class="col-3 my-2">
-      <label for="hero-gender" class="mb-2">Hero gender</label>
-      <select class="form-select" aria-label="Default select example">
-        <option value="0" selected>Male</option>
-        <option value="1">Female</option>
-      </select>
-    </div>
-    <div class="col-3 my-2">
-      <label for="hero-mail" class="mb-2">Hero mail</label>
-      <input
-        [class.is-invalid]="
-          form.get('email')?.invalid && form.get('email')?.touched
-        "
-        type="email"
-        class="form-control"
-        formControlName="mail"
-      />
-    </div>
-    <div *ngIf="email?.invalid" class="alert alert-danger col-3">
-      Please enter a valid email
-    </div>
-    <div class="col-3 my-2">
-      <label for="hero-age" class="mb-2">Hero age</label>
-      <input
-        type="text"
-        class="form-control"
-        id="hero-age"
-        placeholder="Age"
-        formControlName="age"
-      />
-    </div>
-    <div class="col-3 my-2">
-      <label for="hero-address" class="mb-2">Hero address</label>
-      <input
-        type="text"
-        class="form-control"
-        id="hero-address"
-        placeholder="Address"
-        formControlName="address"
-      />
+    <div [formGroup]="form">
+      <div class="my-2">
+        <label for="hero-name" class="mb-2">Hero name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="hero-name"
+          placeholder="Name"
+          formControlName="name"
+        />
+      </div>
+      <div class="my-2">
+        <label for="hero-gender" class="mb-2">Hero gender</label>
+        <select class="form-select" aria-label="Default select example">
+          <option value="0" selected>Male</option>
+          <option value="1">Female</option>
+        </select>
+      </div>
+      <div class="my-2">
+        <label for="hero-mail" class="mb-2">Hero mail</label>
+        <input
+          [class.is-invalid]="
+            form.get('email')?.invalid && form.get('email')?.touched
+          "
+          type="email"
+          class="form-control"
+          formControlName="mail"
+        />
+      </div>
+      <div *ngIf="email?.invalid" class="alert alert-danger">
+        Please enter a valid email
+      </div>
+      <div class="my-2">
+        <label for="hero-age" class="mb-2">Hero age</label>
+        <input
+          type="text"
+          class="form-control"
+          id="hero-age"
+          placeholder="Age"
+          formControlName="age"
+        />
+      </div>
+      <div class="my-2">
+        <label for="hero-address" class="mb-2">Hero address</label>
+        <input
+          type="text"
+          class="form-control"
+          id="hero-address"
+          placeholder="Address"
+          formControlName="address"
+        />
+      </div>
     </div>
   </div>
 
   <h6>Hero tags</h6>
-  <!-- <tag-input
-    class="col-3"
+  <tag-input
     [(ngModel)]="tags"
     (onSelect)="onSelect($any($event))"
     (onAdd)="onAdd($any($event))"
     [modelAsStrings]="true"
   >
-  </tag-input> -->
-  <tag-input
-    [ngModel]="['tags']"
+  </tag-input>
+  <!-- <tag-input
+    [ngModel]="tags"
     [modelAsStrings]="true"
     (onAdd)="onAdd($any($event))"
     #input
@@ -81,17 +82,26 @@
         x
       </span>
     </ng-template>
-  </tag-input>
+  </tag-input> -->
 
-  <button type="button" (click)="goBack()" class="btn btn-primary">
-    Go back
-  </button>
-  <button
-    type="button"
-    (click)="updateHero()"
-    [disabled]="email?.invalid"
-    class="btn btn-primary"
-  >
-    Save
-  </button>
+  <div>
+    <button type="button" (click)="goBack()" class="btn btn-primary">
+      Go back
+    </button>
+    <button
+        type="button"
+        class="btn btn-danger mr-auto"
+        (click)="deleteHero(hero._id)"
+      >
+        Delete Hero
+      </button>
+    <button
+      type="button"
+      (click)="updateHero()"
+      [disabled]="email?.invalid"
+      class="btn btn-success"
+    >
+      Save
+    </button>
+  </div>
 </div>
