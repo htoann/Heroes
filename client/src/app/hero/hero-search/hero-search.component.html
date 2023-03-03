@@ -22,7 +22,7 @@
       class="list-group-item list-group-item-action"
       *ngFor="let hero of heroes$ | async"
     >
-      <a routerLink="/detail/{{ hero._id }}" class="text-decoration-none">
+      <a routerLink="/heroes/detail/{{ hero._id }}" class="text-decoration-none">
         {{ hero.name | capitalize }}
       </a>
     </li>

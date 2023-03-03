@@ -20,6 +20,8 @@ import { TokenInterceptor } from './auth/token.interceptor';
 import { SharedModule } from './shared/shared.module';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { HeroModule } from './hero/hero.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { HeroModule } from './hero/hero.module';
     LoginComponent,
     RegisterComponent,
     UserDetailComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,8 @@ import { HeroModule } from './hero/hero.module';
     EffectsModule.forRoot([]),
     CoreModule,
     SharedModule,
-    HeroModule
+    BrowserAnimationsModule
+    HeroModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -1,29 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './hero/dashboard/dashboard.component';
-import { HeroDetailComponent } from './hero/hero-detail/hero-detail.component';
-import { HeroesComponent } from './hero/heroes/heroes.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  // { path: 'heroes', component: HeroesComponent },
-  { path: 'detail/:id', component: HeroDetailComponent },
+  {
+    path: 'heroes',
+    loadChildren: () =>
+      import('./hero/hero.module').then((b) => b.HeroModule),
+  },
 
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./auth/auth.module').then((b) => b.AuthModule),
+  },
 
-  { path: 'heroes/:id/my-heroes', component: HeroesComponent },
   { path: 'user/:id', component: UserDetailComponent },
 
-  // {
-  //   path: '/books',
-  //   loadChildren: () =>
-  //     import('./books/books.module').then((b) => b.BooksModule),
-  // },
+  { path: '**', pathMatch: 'full', component: NotFoundComponent },
+
 ];
 
 @NgModule({

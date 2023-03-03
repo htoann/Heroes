@@ -5,7 +5,7 @@
 <app-hero-search></app-hero-search>
 
 <div class="heroes-menu">
-  <a *ngFor="let hero of heroes" routerLink="/detail/{{ hero._id }}">
+  <a *ngFor="let hero of heroes" routerLink="/heroes/detail/{{ hero._id }}">
     {{ hero.name | capitalize }}
   </a>
 
