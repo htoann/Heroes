@@ -43,7 +43,7 @@ export class AuthEffects {
   fetchUser$ = createEffect(() => this.actions$.pipe(
     ofType((authActions.fetchUser)),
     switchMap(() => {
-      const token = JSON.parse(localStorage.getItem('user')!)?.token;
+      const token = localStorage.getItem('token')
 
       if (!token) {
         return of(authActions.fetchUserFailed({ error: 'Token not found in local storage.' }));

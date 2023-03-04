@@ -5,6 +5,7 @@ import { Observable, tap, of } from 'rxjs';
 import { MessageService } from 'src/app/core/services/message.service';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -15,10 +16,8 @@ export class HeroService {
     private userService: UserService,
     private http: HttpClient, private messageService: MessageService, private authService: AuthService) {
   }
-  private heroesUrl = "http://localhost:8000/api/heroes";
-  private userUrl = "http://localhost:8001/api/user";
-
-
+  private heroesUrl = environment.heroesUrl
+  private userUrl = environment.userUrl
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -30,13 +29,13 @@ export class HeroService {
 
   getHeroes() {
     // return this.http.get<Hero[]>(this.heroesUrl).pipe(
-    return this.http.get<Hero[]>(`${this.heroesUrl}/${this.userService.userValue._id}/my-heroes`).pipe(
+    return this.http.get<Hero[]>(`${this.heroesUrl}/${this.authService.currentUserId}/my-heroes`).pipe(
       tap(_ => this.log('Fetched heroes')),
     )
   }
 
   getMyHeroes() {
-    return this.http.get<Hero[]>(`${this.heroesUrl}/${this.userService.userValue._id}/my-heroes`).pipe(
+    return this.http.get<Hero[]>(`${this.heroesUrl}/${this.authService.currentUserId}/my-heroes`).pipe(
       tap(_ => this.log('Fetched heroes')),
     )
   }

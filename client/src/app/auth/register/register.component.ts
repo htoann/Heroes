@@ -3,8 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { first } from 'rxjs/operators';
-import { register } from 'src/app/core/store/auth/auth.actions';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-register',
@@ -23,9 +21,8 @@ export class RegisterComponent {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private store: Store
   ) {
-    if (this.authService.getToken()) {
+    if (this.authService.currentUserValue) {
       this.router.navigate(['/']);
     }
   }
@@ -55,14 +52,12 @@ export class RegisterComponent {
 
     this.authService.register(email, password)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.store.dispatch(register({ email, password }));
-          this.router.navigateByUrl("/")
-        },
-        error => {
+      .subscribe({
+        next: (data) => { this.router.navigateByUrl("/") },
+        error: (error) => {
           this.error = error.error;
           this.loading = false;
-        });
+        }
+      })
   }
 }

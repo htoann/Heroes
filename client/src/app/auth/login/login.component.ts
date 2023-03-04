@@ -3,9 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { Store } from '@ngrx/store';
-import { login } from 'src/app/core/store/auth/auth.actions';
 import { first } from 'rxjs/operators';
-import { UserService } from './../../core/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +24,7 @@ export class LoginComponent {
     private authService: AuthService,
     private store: Store,
   ) {
-    if (this.authService.getToken()) {
+    if (this.authService.currentUserValue) {
       this.router.navigate(['/']);
     }
   }
@@ -54,14 +52,12 @@ export class LoginComponent {
 
     this.authService.login(email, password)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.store.dispatch(login({ email, password }));
-          this.router.navigateByUrl("/")
-        },
-        error => {
+      .subscribe({
+        next: (data) => { this.router.navigateByUrl("/") },
+        error: (error) => {
           this.error = error.error;
           this.loading = false;
-        });
+        }
+      })
   }
 }

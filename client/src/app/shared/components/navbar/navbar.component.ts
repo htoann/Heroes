@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
 import { User } from 'src/app/core/models/user.model';
-import { UserService } from 'src/app/core/services/user.service';
-import { fetchUser, logout } from 'src/app/core/store/auth/auth.actions';
-import { userSelector } from './../../../core/store/auth/auth.selector';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,27 +10,19 @@ import { userSelector } from './../../../core/store/auth/auth.selector';
 })
 export class NavbarComponent {
   title = 'Tour of Heroes';
-  user: User | null;
+  user: User;
 
   constructor(
-    private store: Store,
-    private userService: UserService,
+    private authService: AuthService,
     private router: Router,
   ) {
-    this.store.pipe(select(userSelector)).subscribe(user => {
+    this.authService.currentUser.subscribe(user => {
       this.user = user
-    })
-
-    if (!this.user) {
-      this.store.dispatch(fetchUser());
-    }
-    if (this.userService.userId) {
-      this.userService.getUser(this.userService.userId).subscribe((user) => (this.user = user));
-    }
+    });
   }
 
   logout() {
-    this.store.dispatch(logout())
+    this.authService.logout();
     this.router.navigate(['/auth/login']);
   }
 }

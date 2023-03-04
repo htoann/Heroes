@@ -22,10 +22,5 @@ export class HeroFormComponent {
     name = name.trim();
 
     this.store.dispatch(createHero({ name }))
-
-    // this.heroService.createHero(name)
-    //   .subscribe(hero => {
-    //     this.heroes.push(hero);
-    //   });
   }
 }

@@ -91,15 +91,6 @@ export class HeroDetailComponent {
     console.log('tag selected: value is ' + tag);
   }
 
-  public onFocus(tag: string) {
-    console.log('input focused: current value is ' + tag);
-  }
-
-  public onTextChange(text: string) {
-    console.log('text changed: value is ' + text);
-  }
-
-
   public onTagEdited(tag: string) {
     console.log('tag edited: current value is ' + tag);
   }

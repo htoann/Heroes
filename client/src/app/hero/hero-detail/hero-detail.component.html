@@ -59,19 +59,20 @@
   </div>
 
   <h6>Hero tags</h6>
-  <tag-input
+  <!-- <tag-input
     [(ngModel)]="tags"
     (onSelect)="onSelect($any($event))"
     (onAdd)="onAdd($any($event))"
     [modelAsStrings]="true"
   >
-  </tag-input>
-  <!-- <tag-input
-    [ngModel]="tags"
-    [modelAsStrings]="true"
+  </tag-input> -->
+
+  <tag-input
+    [(ngModel)]="tags"
+    (onSelect)="onSelect($any($event))"
     (onAdd)="onAdd($any($event))"
+    [modelAsStrings]="true"
     #input
-    (onTextChange)="onTextChange($any($event))"
   >
     <ng-template item-template let-item="item" let-index="index">
       <span>#{{ item }} </span>
@@ -82,19 +83,19 @@
         x
       </span>
     </ng-template>
-  </tag-input> -->
+  </tag-input>
 
   <div>
     <button type="button" (click)="goBack()" class="btn btn-primary">
       Go back
     </button>
     <button
-        type="button"
-        class="btn btn-danger mr-auto"
-        (click)="deleteHero(hero._id)"
-      >
-        Delete Hero
-      </button>
+      type="button"
+      class="btn btn-danger mr-auto"
+      (click)="deleteHero(hero._id)"
+    >
+      Delete Hero
+    </button>
     <button
       type="button"
       (click)="updateHero()"

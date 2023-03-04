@@ -2,11 +2,12 @@ import { Component, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../core/models/user.model';
-import { UserService } from '../core/services/user.service';
 import { select, Store } from '@ngrx/store';
 import { Location } from '@angular/common';
 import { getUser, updateUser } from '../core/store/user/user.actions';
 import { userSelector } from '../core/store/user/user.selector';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { UserService } from './../core/services/user.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -20,6 +21,7 @@ export class UserDetailComponent {
 
   constructor(
     private route: ActivatedRoute,
+    private authService: AuthService,
     private userService: UserService,
     private location: Location,
     private fb: FormBuilder,
@@ -36,16 +38,12 @@ export class UserDetailComponent {
   }
 
   getUser(): void {
-    const id = this.route.snapshot.paramMap.get('id')!;
-    this.store.dispatch(getUser({ id }))
-    this.store.pipe(select(userSelector)).subscribe(user => {
-      if (user) {
-        this.user = user;
-        this.form.patchValue({
-          name: user.name,
-          email: user.email,
-        });
-      }
+    this.userService.getMe().subscribe(user => {
+      this.user = user;
+      this.form.patchValue({
+        name: user.name,
+        email: user.email,
+      });
     })
   }
 
@@ -55,18 +53,9 @@ export class UserDetailComponent {
 
   updateUser(): void {
     const updatedUser = { ...this.user, ...this.form.value };
-    this.store.dispatch(updateUser({ user: updatedUser }));
-    // this.store.pipe(select(userSelector)).subscribe({
-    //   next: (data) => {
-    //     console.log(data)
-    //   },
-    //   error: (error) => {
-    //     this.error = error.error;
-    //   }
-    // })
-
-    // if (!this.error) this.goBack();
-    this.goBack();
+    this.authService.updateUser(updatedUser).subscribe(user => {
+      this.user = user;
+    })
   }
 
   get email() {

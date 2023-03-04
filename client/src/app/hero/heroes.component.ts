@@ -17,10 +17,10 @@ import { Location } from '@angular/common';
 })
 export class HeroesComponent implements OnInit {
   heroes: Hero[] = [];
-  heroObjectAdd: Hero[] = [];;
-  heroObjectRemove: Hero[] = [];;
+  heroObjectAdd: Hero[] = [];
+  heroObjectRemove: Hero[] = [];
   heroIds: string[] = [];;
-  heroIdsRemovieTag: string[] = [];;
+  heroIdsRemovieTag: string[] = [];
   tags: string[];
   tagsRemove: string[] = [];
   selectedTags: string[] = [];
@@ -29,7 +29,7 @@ export class HeroesComponent implements OnInit {
   constructor(private store: Store<AppState>, private authService: AuthService, private heroService: HeroService, private router: Router, private location: Location,) { }
 
   ngOnInit(): void {
-    if (!this.authService.getToken()) {
+    if (!this.authService.currentUserValue) {
       this.router.navigate(['/auth/login']);
     }
     else

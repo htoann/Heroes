@@ -2,6 +2,10 @@ ul {
   list-style: none;
 }
 
+li {
+  flex-direction: column;
+}
+
 .selected {
   background-color: black;
   color: white;

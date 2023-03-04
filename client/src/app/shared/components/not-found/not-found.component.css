@@ -1,0 +1,7 @@
+div {
+  display: flex;
+  align-items: center;
+  height: 65vh;
+  justify-content: center;
+  flex-direction: column;
+}

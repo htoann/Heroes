@@ -16,12 +16,14 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from './auth/token.interceptor';
+import { TokenInterceptor } from './core/helpers/token.interceptor';
 import { SharedModule } from './shared/shared.module';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { HeroModule } from './hero/hero.module';
+import { ErrorInterceptor } from './core/helpers/error.interceptor';
+import { AuthGuard } from './core/helpers/auth.guard';
 
 @NgModule({
   declarations: [
@@ -45,11 +47,18 @@ import { HeroModule } from './hero/hero.module';
     BrowserAnimationsModule,
     HeroModule,
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptor,
-    multi: true
-  }],
+  providers: [
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
