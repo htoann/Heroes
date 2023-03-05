@@ -47,12 +47,15 @@ exports.getHero = async (req, res, next) => {
 
 exports.createHero = async (req, res, next) => {
   try {
-    const hero = await Hero.create({ userId: req.user.user_id, ...req.body });
+    const existingHero = await Hero.findOne({ name: req.body.name });
+    if (existingHero) {
+      return res.status(400).send("Hero name already exists");
+    }
 
+    const hero = await Hero.create({ userId: req.user.user_id, ...req.body });
     if (!hero) {
       return res.status(404).send("Something went wrong");
     }
-
     res.status(200).json(hero);
   } catch (err) {
     res.status(err.status || 500).json({
