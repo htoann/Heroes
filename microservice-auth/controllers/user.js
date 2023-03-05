@@ -19,20 +19,13 @@ exports.updateUser = async (req, res, next) => {
     const { name, email } = req.body;
     const user = await User.findOne({ _id: req.user.user_id });
 
-    if (user.name !== name) {
-      const nameExists = await User.findOne({ name });
-      if (nameExists) {
-        return res.status(400).json("Name already exists in the system");
-      }
-      user.name = name;
-    }
-
     if (user.email !== email) {
       const emailExists = await User.findOne({ email });
       if (emailExists) {
         return res.status(400).json("Email already exists in the system");
       }
       user.email = email;
+      user.name = name;
     }
 
     await user.save();
