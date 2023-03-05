@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { Store } from '@ngrx/store';
 import { first } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,7 @@ export class LoginComponent {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private store: Store,
+    private toastr: ToastrService,
   ) {
     if (this.authService.currentUserValue) {
       this.router.navigate(['/']);
@@ -53,11 +53,18 @@ export class LoginComponent {
     this.authService.login(email, password)
       .pipe(first())
       .subscribe({
-        next: (data) => { this.router.navigateByUrl("/") },
+        next: (data) => {
+          this.router.navigateByUrl("/");
+          this.showSuccess();
+        },
         error: (error) => {
           this.error = error.error;
           this.loading = false;
         }
       })
+  }
+
+  showSuccess() {
+    this.toastr.success('Login successfully');
   }
 }

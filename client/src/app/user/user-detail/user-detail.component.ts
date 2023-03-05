@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { User } from '../core/models/user.model';
+import { User } from '../../core/models/user.model';
 import { Store } from '@ngrx/store';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { UserService } from './../core/services/user.service';
+import { UserService } from '../../core/services/user.service';
 import { first } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-detail',
@@ -25,7 +26,8 @@ export class UserDetailComponent {
     private userService: UserService,
     private location: Location,
     private fb: FormBuilder,
-    private store: Store
+    private store: Store,
+    private toastr: ToastrService
   ) {
     this.form = fb.group({
       name: ["", Validators.required],
@@ -53,11 +55,18 @@ export class UserDetailComponent {
     this.location.back();
   }
 
+  showSuccess() {
+    this.toastr.success('Update profile successfully');
+  }
+
   updateUser(): void {
     const updatedUser = { ...this.user, ...this.form.value };
     this.authService.updateUser(updatedUser).pipe(first())
       .subscribe({
-        next: (user) => { this.user = user },
+        next: (user) => {
+          this.user = user;
+          this.showSuccess();
+        },
         error: (error) => {
           this.error = error.error;
         }

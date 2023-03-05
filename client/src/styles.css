@@ -55,3 +55,7 @@ label {
 }
 
 @import "~bootstrap/dist/css/bootstrap.min.css";
+
+/* Toast */
+
+@import "./toast.css";

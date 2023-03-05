@@ -34,6 +34,9 @@
         </div>
       </ul>
     </div>
+
+    <!-- <app-hero-search></app-hero-search> -->
+
     <div *ngIf="user; else doSomethingElse">
       <span class="name_user">User: {{ user.name || user.email }}</span>
       <a href="/user/{{ user._id }}">
