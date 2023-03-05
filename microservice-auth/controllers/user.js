@@ -13,11 +13,12 @@ exports.getUser = async (req, res, next) => {
   }
 };
 
-
 exports.updateUser = async (req, res, next) => {
   try {
     const { name, email } = req.body;
     const user = await User.findOne({ _id: req.user.user_id });
+
+    console.log(user.email, email);
 
     if (user.email !== email) {
       const emailExists = await User.findOne({ email });
@@ -25,8 +26,9 @@ exports.updateUser = async (req, res, next) => {
         return res.status(400).json("Email already exists in the system");
       }
       user.email = email;
-      user.name = name;
     }
+
+    user.name = name;
 
     await user.save();
 
