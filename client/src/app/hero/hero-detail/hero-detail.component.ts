@@ -64,7 +64,7 @@ export class HeroDetailComponent {
 
   updateHero(): void {
     const updatedHero = { ...this.hero, ...this.form.value, };
-    updatedHero.tags = this.tags;
+    updatedHero.tags = this.tags?.map(tag => tag.toLowerCase().trim().replace(/\s+/g, ''));
     this.store.dispatch(updateHero({ hero: updatedHero }));
     this.goBack();
   }
@@ -80,7 +80,7 @@ export class HeroDetailComponent {
 
   // Tags
 
-  public onAdd(tag: string) {
+  public onAdd(tag: any) {
   }
 
   public onRemove(tag: string) {

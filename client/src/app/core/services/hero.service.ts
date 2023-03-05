@@ -28,7 +28,6 @@ export class HeroService {
   }
 
   getHeroes() {
-    // return this.http.get<Hero[]>(this.heroesUrl).pipe(
     return this.http.get<Hero[]>(`${this.heroesUrl}/${this.authService.currentUserId}/my-heroes`).pipe(
       tap(_ => this.log('Fetched heroes')),
     )
@@ -57,7 +56,7 @@ export class HeroService {
   addTagsToHeroes(heroIds: any, tags: any): Observable<any> {
     const url = `${this.heroesUrl}/tags`;
     const body = { heroIds, tags }
-
+    
     return this.http.patch<any>(url, body, this.httpOptions).pipe(
       tap(_ => this.log(`Add tags for heroes`)),
     )

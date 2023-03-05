@@ -42,7 +42,7 @@ export class HeroesComponent implements OnInit {
   }
 
   addTagsToHeroes(): void {
-    console.log(this.heroIds, this.tags)
+    this.tags = this.tags.map(tag => tag.toLowerCase().trim().replace(/\s+/g, ''));
     this.heroService.addTagsToHeroes(this.heroIds, this.tags).subscribe(data => {
       this.getHeroes();
     }

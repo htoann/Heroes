@@ -18,16 +18,16 @@
                 for="flexCheckChecked"
               >
                 <span class="d-flex">Name: {{ hero.name | capitalize }}</span>
+                <tag-input
+                  [ngModel]="hero.tags"
+                  [removable]="false"
+                  (onSelect)="onSelectOfRemoveTags($any($event))"
+                >
+                  <ng-template item-template let-item="item" let-index="index">
+                    <span>#{{ item }} </span>
+                  </ng-template>
+                </tag-input>
               </a>
-              <tag-input
-                [ngModel]="hero.tags"
-                [removable]="false"
-                (onSelect)="onSelectOfRemoveTags($any($event))"
-              >
-                <ng-template item-template let-item="item" let-index="index">
-                  <span>#{{ item }} </span>
-                </ng-template>
-              </tag-input>
             </li>
           </div>
         </div>
