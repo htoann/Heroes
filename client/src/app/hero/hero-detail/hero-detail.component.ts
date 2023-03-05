@@ -28,7 +28,7 @@ export class HeroDetailComponent {
   ) {
     this.form = fb.group({
       name: ["", Validators.required],
-      mail: ["", Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
+      mail: ["", Validators.email],
       gender: "",
       age: ["", Validators.min(0)],
       address: "",
@@ -66,16 +66,14 @@ export class HeroDetailComponent {
     const updatedHero = { ...this.hero, ...this.form.value, };
     updatedHero.tags = this.tags?.map(tag => tag.toLowerCase().trim().replace(/\s+/g, ''));
     this.store.dispatch(updateHero({ hero: updatedHero }));
-    this.goBack();
   }
 
-  get email() {
-    return this.form.get('email')
+  get mail() {
+    return this.form.get('mail')
   }
 
   deleteHero(id: string): void {
     this.store.dispatch(deleteHero({ id }))
-    this.goBack()
   }
 
   // Tags

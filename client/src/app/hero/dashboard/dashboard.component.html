@@ -4,7 +4,7 @@
 
 <div class="heroes-menu">
   <a *ngFor="let hero of heroes" routerLink="/heroes/detail/{{ hero._id }}">
-    {{ hero.name | capitalize }}
+    <h4 class="mb-0">{{ hero.name | capitalize }}</h4>
   </a>
 
   <div *ngIf="heroes.length === 0">

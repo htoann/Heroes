@@ -1,5 +1,4 @@
-Application-wide Styles
-h1 {
+Application-wide Styles h1 {
   color: #369;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
@@ -41,9 +40,18 @@ button:disabled {
   cursor: auto;
 }
 
-/* everywhere else */
 * {
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif !important;
+}
+
+h2 {
+  font-weight: 600;
+}
+
+label {
+  font-weight: 500;
 }
 
 @import "~bootstrap/dist/css/bootstrap.min.css";

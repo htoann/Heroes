@@ -1,31 +1,22 @@
 <div *ngIf="user" class="mx-auto">
-  <div class="list-group col-3 mb-4 d-flex mx-auto">
-    <h2>{{ user.name | uppercase }} Profile</h2>
+  <div
+    class="list-group col-4 mb-4 d-flex mx-auto shadow p-3 mb-5 bg-body rounded p-4"
+  >
+    <h2>{{ user.name | uppercase }}</h2>
     <div><span>ID: </span>{{ user._id }}</div>
 
+    <h5 class="text-uppercase mt-3">Information</h5>
+
     <div [formGroup]="form">
-      <div class="my-2">
-        <label for="user-name" class="mb-2">User name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="user-name"
-          placeholder="Name"
-          formControlName="name"
-        />
+      <div class="input-group my-4">
+        <span class="input-group-text">Email</span>
+        <input type="text" class="form-control" formControlName="email" />
       </div>
-      <div class="my-2">
-        <label for="user-email" class="mb-2">User email</label>
-        <input
-          [class.is-invalid]="
-            form.get('email')?.invalid && form.get('email')?.touched
-          "
-          type="email"
-          class="form-control"
-          formControlName="email"
-        />
+      <div class="input-group my-4">
+        <span class="input-group-text">Name</span>
+        <input type="text" class="form-control" formControlName="name" />
       </div>
-      <div *ngIf="email?.invalid" class="alert alert-danger col-3">
+      <div *ngIf="email?.invalid" class="alert alert-danger">
         Please enter a valid email
       </div>
     </div>
@@ -35,17 +26,20 @@
     </div>
 
     <div>
-      <button type="button" (click)="goBack()" class="btn btn-primary">
+      <button type="button" (click)="goBack()" class="btn btn-primary mb-0">
         Go back
       </button>
       <button
+        *ngIf="email?.valid && form.dirty"
         type="button"
         (click)="updateUser()"
         [disabled]="email?.invalid || !form.dirty"
-        class="btn btn-success"
+        class="btn btn-success mb-0"
       >
         Save
       </button>
     </div>
   </div>
 </div>
+
+<!-- <app-loading loading="loading"></app-loading> -->

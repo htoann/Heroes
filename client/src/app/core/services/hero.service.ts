@@ -4,16 +4,15 @@ import { Hero } from '../models/hero.model';
 import { Observable, tap, of } from 'rxjs';
 import { MessageService } from 'src/app/core/services/message.service';
 import { AuthService } from './auth.service';
-import { UserService } from './user.service';
 import { environment } from 'src/environments/environment';
-
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroService {
   constructor(
-    private userService: UserService,
+    private location: Location,
     private http: HttpClient, private messageService: MessageService, private authService: AuthService) {
   }
   private heroesUrl = environment.heroesUrl
@@ -49,7 +48,10 @@ export class HeroService {
   updateHero(hero: Hero): Observable<Hero> {
     const url = `${this.heroesUrl}/${hero._id}`;
     return this.http.patch<Hero>(url, hero, this.httpOptions).pipe(
-      tap(_ => this.log(`Updated hero id=${hero._id}`)),
+      tap(_ => {
+        this.location.back();
+        this.log(`Updated hero id=${hero._id}`)
+      }),
     )
   }
 
@@ -80,7 +82,10 @@ export class HeroService {
   deleteHero(id: string): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.delete<Hero>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`Deleted hero id=${id}`)),
+      tap(_ => {
+        this.location.back();
+        this.log(`Deleted hero id=${id}`)
+      }),
     );
   }
 

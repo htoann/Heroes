@@ -1,6 +1,9 @@
-<div *ngIf="hero" class="list-group col-3 mb-4 d-flex mx-auto">
+<div
+  *ngIf="hero"
+  class="list-group col-4 mb-4 d-flex mx-auto shadow p-3 mb-5 bg-body rounded p-4"
+>
   <div>
-    <h2>{{ hero.name | uppercase }} Details</h2>
+    <h2>{{ hero.name | uppercase }}</h2>
     <div><span>ID: </span>{{ hero._id }}</div>
 
     <div [formGroup]="form">
@@ -17,7 +20,8 @@
       <div class="my-2">
         <label for="hero-gender" class="mb-2">Hero gender</label>
         <select class="form-select" aria-label="Default select example">
-          <option value="0" selected>Male</option>
+          <option value="" selected>Choose gender</option>
+          <option value="0">Male</option>
           <option value="1">Female</option>
         </select>
       </div>
@@ -25,20 +29,20 @@
         <label for="hero-mail" class="mb-2">Hero mail</label>
         <input
           [class.is-invalid]="
-            form.get('email')?.invalid && form.get('email')?.touched
+            form.get('mail')?.invalid && form.get('mail')?.touched
           "
           type="email"
           class="form-control"
           formControlName="mail"
         />
       </div>
-      <div *ngIf="email?.invalid" class="alert alert-danger">
+      <div *ngIf="mail?.invalid" class="alert alert-danger">
         Please enter a valid email
       </div>
       <div class="my-2">
         <label for="hero-age" class="mb-2">Hero age</label>
         <input
-          type="text"
+          type="number"
           class="form-control"
           id="hero-age"
           placeholder="Age"
@@ -59,7 +63,6 @@
   </div>
 
   <h6>Hero tags (Enter example: "mytag")</h6>
-
   <tag-input
     [(ngModel)]="tags"
     (onSelect)="onSelect($any($event))"
@@ -92,7 +95,7 @@
     <button
       type="button"
       (click)="updateHero()"
-      [disabled]="email?.invalid"
+      [disabled]="mail?.invalid "
       class="btn btn-success"
     >
       Save

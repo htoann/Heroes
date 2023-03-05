@@ -2,12 +2,11 @@ import { Component, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../core/models/user.model';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Location } from '@angular/common';
-import { getUser, updateUser } from '../core/store/user/user.actions';
-import { userSelector } from '../core/store/user/user.selector';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from './../core/services/user.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-detail',
@@ -18,6 +17,7 @@ export class UserDetailComponent {
   @Input() user: User | null;
   form: FormGroup;
   error: string | undefined
+  loading: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,7 +29,7 @@ export class UserDetailComponent {
   ) {
     this.form = fb.group({
       name: ["", Validators.required],
-      email: ["", [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      email: ["", [Validators.required, Validators.email]],
     });
   }
 
@@ -38,12 +38,14 @@ export class UserDetailComponent {
   }
 
   getUser(): void {
+    this.loading = true;
     this.userService.getMe().subscribe(user => {
       this.user = user;
       this.form.patchValue({
         name: user.name,
         email: user.email,
       });
+      this.loading = false;
     })
   }
 
@@ -53,9 +55,13 @@ export class UserDetailComponent {
 
   updateUser(): void {
     const updatedUser = { ...this.user, ...this.form.value };
-    this.authService.updateUser(updatedUser).subscribe(user => {
-      this.user = user;
-    })
+    this.authService.updateUser(updatedUser).pipe(first())
+      .subscribe({
+        next: (user) => { this.user = user },
+        error: (error) => {
+          this.error = error.error;
+        }
+      })
   }
 
   get email() {

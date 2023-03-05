@@ -17,7 +17,7 @@
                 class="text-decoration-none flex-row"
                 for="flexCheckChecked"
               >
-                <span class="d-flex">Name: {{ hero.name | capitalize }}</span>
+                <h5 class="d-flex my-2">{{ hero.name | capitalize }}</h5>
                 <tag-input
                   [ngModel]="hero.tags"
                   [removable]="false"
