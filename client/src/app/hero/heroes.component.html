@@ -6,30 +6,28 @@
   <div class="row">
     <div class="col">
       <ul class="list-group mb-4 d-flex mx-auto">
-        <div class="">
-          <div class="form-check ps-0">
-            <li
-              *ngFor="let hero of heroes"
-              class="list-group-item d-flex justify-content-between"
+        <div class="form-check ps-0">
+          <h4>List Heroes</h4>
+          <li
+            *ngFor="let hero of heroes"
+            class="list-group-item d-flex justify-content-between"
+          >
+            <a
+              routerLink="/heroes/detail/{{ hero._id }}"
+              class="text-decoration-none flex-row"
+              for="flexCheckChecked"
             >
-              <a
-                routerLink="/heroes/detail/{{ hero._id }}"
-                class="text-decoration-none flex-row"
-                for="flexCheckChecked"
+              <h5 class="d-flex my-2">{{ hero.name | capitalize }}</h5>
+              <tag-input
+                [ngModel]="hero.tags"
+                [removable]="false"
               >
-                <h5 class="d-flex my-2">{{ hero.name | capitalize }}</h5>
-                <tag-input
-                  [ngModel]="hero.tags"
-                  [removable]="false"
-                  (onSelect)="onSelectOfRemoveTags($any($event))"
-                >
-                  <ng-template item-template let-item="item" let-index="index">
-                    <span>#{{ item }} </span>
-                  </ng-template>
-                </tag-input>
-              </a>
-            </li>
-          </div>
+                <ng-template item-template let-item="item" let-index="index">
+                  <span class="tag">#{{ item }} </span>
+                </ng-template>
+              </tag-input>
+            </a>
+          </li>
         </div>
       </ul>
     </div>
@@ -39,7 +37,8 @@
         <div class="mb-4">
           <h5 class="text-center">Select heroes for add tags</h5>
           <tag-input
-            (onAdd)="onAddOfAddHeros($any($event))"
+            (onAdd)="onAddToAddHeroes($any($event))"
+            (onRemove)="onRemoveToAddHeroes($any($event))"
             [(ngModel)]="heroObjectAdd"
             [editable]="true"
             [identifyBy]="'id'"
@@ -50,7 +49,7 @@
           >
             <tag-input-dropdown
               [showDropdownIfEmpty]="true"
-              [autocompleteObservable]="requestAutocompleteItemsFake"
+              [autocompleteObservable]="requestAutocompleteHeroes"
               [identifyBy]="'_id'"
               [displayBy]="'name'"
             >
@@ -61,11 +60,9 @@
 
         <tag-input
           [(ngModel)]="tags"
-          (onAdd)="onAddOfAddTags($any($event))"
-          (onSelect)="onSelectOfAddTags($any($event))"
+          (onAdd)="onAddToAddTags($any($event))"
           [modelAsStrings]="true"
           #input1
-          (onTextChange)="onTextChange($any($event))"
           ><ng-template item-template let-item="item" let-index="index">
             <span>#{{ item }} </span>
             <span
@@ -90,7 +87,8 @@
         <div class="mb-4">
           <h5 class="text-center mt-4">Select heroes for remove tags</h5>
           <tag-input
-            (onAdd)="onAddOfRemoveHeros($any($event))"
+            (onAdd)="onAddToRemoveHeroes($any($event))"
+            (onRemove)="onRemoveToRemoveHeroes($any($event))"
             [(ngModel)]="heroObjectRemove"
             [editable]="true"
             [identifyBy]="'id'"
@@ -101,7 +99,7 @@
           >
             <tag-input-dropdown
               [showDropdownIfEmpty]="true"
-              [autocompleteObservable]="requestAutocompleteItemsFake"
+              [autocompleteObservable]="requestAutocompleteHeroes"
               [identifyBy]="'_id'"
               [displayBy]="'name'"
             >
@@ -112,14 +110,12 @@
 
         <tag-input
           [(ngModel)]="selectedTags"
-          (onAdd)="onAddOfRemoveTags($any($event))"
-          (onSelect)="onSelectOfRemoveTags($any($event))"
-          (onRemove)="onRemoveOfRemoveTags($any($event))"
+          (onAdd)="onAddToRemoveTags($any($event))"
+          (onRemove)="onRemoveToRemoveTags($any($event))"
           [modelAsStrings]="true"
           #input2
-          (onTextChange)="onTextChange($any($event))"
-          placeholder="Tags of heroes"
-          secondaryPlaceholder="Enter tags"
+          placeholder="Edit tags of heroes"
+          secondaryPlaceholder="Tags"
           ><ng-template item-template let-item="item" let-index="index">
             <span>#{{ item }} </span>
             <span
@@ -136,7 +132,7 @@
           (click)="deleteTagsFromHeroes()"
           class="btn btn-danger"
         >
-          Remove tags
+          Save tags
         </button>
       </div>
     </div>

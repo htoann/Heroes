@@ -7,7 +7,6 @@ import { Location } from '@angular/common';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from '../../core/services/user.service';
 import { first } from 'rxjs/operators';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-detail',
@@ -27,7 +26,6 @@ export class UserDetailComponent {
     private location: Location,
     private fb: FormBuilder,
     private store: Store,
-    private toastr: ToastrService
   ) {
     this.form = fb.group({
       name: ["", Validators.required],
@@ -55,17 +53,12 @@ export class UserDetailComponent {
     this.location.back();
   }
 
-  showSuccess() {
-    this.toastr.success('Update profile successfully');
-  }
-
   updateUser(): void {
     const updatedUser = { ...this.user, ...this.form.value };
     this.authService.updateUser(updatedUser).pipe(first())
       .subscribe({
         next: (user) => {
           this.user = user;
-          this.showSuccess();
         },
         error: (error) => {
           this.error = error.error;

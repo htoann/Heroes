@@ -6,6 +6,7 @@ import { MessageService } from 'src/app/core/services/message.service';
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
 import { Location } from '@angular/common';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,9 @@ import { Location } from '@angular/common';
 export class HeroService {
   constructor(
     private location: Location,
-    private http: HttpClient, private messageService: MessageService, private authService: AuthService) {
+    private http: HttpClient, private messageService: MessageService,
+    private authService: AuthService,
+    private toastr: ToastService) {
   }
   private heroesUrl = environment.heroesUrl
   private userUrl = environment.userUrl
@@ -49,6 +52,7 @@ export class HeroService {
     const url = `${this.heroesUrl}/${hero._id}`;
     return this.http.patch<Hero>(url, hero, this.httpOptions).pipe(
       tap(_ => {
+        this.toastr.showSuccess("Update hero successfully");
         this.location.back();
         this.log(`Updated hero id=${hero._id}`)
       }),
@@ -83,6 +87,7 @@ export class HeroService {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.delete<Hero>(url, this.httpOptions).pipe(
       tap(_ => {
+        this.toastr.showSuccess("Delete hero successfully");
         this.location.back();
         this.log(`Deleted hero id=${id}`)
       }),

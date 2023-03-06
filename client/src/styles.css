@@ -59,3 +59,9 @@ label {
 /* Toast */
 
 @import "./toast.css";
+
+.tag {
+  display: flex;
+  align-items: center;
+  height: 28px;
+}

@@ -70,14 +70,14 @@
     [modelAsStrings]="true"
     #input
   >
-    <ng-template item-template let-item="item" let-index="index">
-      <span>#{{ item }} </span>
-      <span
+    <ng-template item-template let-item="item" let-index="index" class="tags-wrap">
+      <span class="tag" (click)="input.removeItem(item, index)">#{{ item }} x</span>
+      <!-- <span
         (click)="input.removeItem(item, index)"
         class="ng2-tag__remove-button"
       >
         x
-      </span>
+      </span> -->
     </ng-template>
   </tag-input>
 

@@ -50,23 +50,36 @@ export class HeroesComponent implements OnInit {
   }
 
   deleteTagsFromHeroes(): void {
-    this.heroService.deleteTagsFromHeroes(this.heroIdsRemovieTag, this.tagsRemove).subscribe(data =>
-      this.getHeroes())
+    this.heroService.deleteTagsFromHeroes(this.heroIdsRemovieTag, this.tagsRemove).subscribe(data => {
+      this.getHeroes();
+    });
   }
 
-  public requestAutocompleteItemsFake = (text: string): Observable<any> => {
+  public requestAutocompleteHeroes = (text: string): Observable<any> => {
     return of(this.heroes);
   };
 
-  public onAddOfAddHeros(tag: string) {
+  public onAddToAddHeroes(tag: string) {
     this.heroIds = this.heroObjectAdd?.map((hero) => hero._id)
   }
 
-  public onAddOfAddTags(tag: string) {
+  public onRemoveToAddHeroes(hero: Hero) {
+    this.heroIds = this.heroIds.filter(id => id !== hero._id)
+
+    console.log('tag removed: value is ' + hero);
+  }
+
+  public onRemoveToRemoveHeroes(hero: Hero) {
+    this.heroIdsRemovieTag = this.heroIdsRemovieTag.filter(id => id !== hero._id)
+
+    console.log('tag removed: value is ' + hero);
+  }
+
+  public onAddToAddTags(tag: string) {
     console.log(tag)
   }
 
-  public onAddOfRemoveHeros(tag: string) {
+  public onAddToRemoveHeroes(tag: string) {
     this.heroIdsRemovieTag = this.heroObjectRemove?.map((hero) => hero._id)
     this.heroObjectRemove?.map((hero) => {
       hero.tags?.forEach((value) => {
@@ -79,32 +92,13 @@ export class HeroesComponent implements OnInit {
     console.log(this.selectedTags)
   }
 
-  public onAddOfRemoveTags(tag: string) {
+  public onAddToRemoveTags(tag: string) {
     console.log(tag)
   }
 
-  public onRemoveOfAddTags(tag: string) {
-    console.log('tag removed: value is ' + tag);
-  }
-
-  public onRemoveOfRemoveTags(tag: string) {
+  public onRemoveToRemoveTags(tag: string) {
     this.tagsRemove.push(tag)
     console.log('tag removed: value is ' + tag);
   }
 
-  public onSelectOfAddTags(tag: string) {
-    console.log('tag selected: value is ' + tag);
-  }
-
-  public onSelectOfRemoveTags(tag: string) {
-    console.log('tag selected: value is ' + tag);
-  }
-
-  public onFocus(tag: string) {
-    console.log('input focused: current value is ' + tag);
-  }
-
-  public onTextChange(text: string) {
-    console.log('text changed: value is ' + text);
-  }
 }
