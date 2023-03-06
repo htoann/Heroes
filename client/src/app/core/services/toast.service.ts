@@ -11,4 +11,8 @@ export class ToastService {
   showSuccess(text: string) {
     this.toastr.success(text);
   }
+
+  showError(text: string) {
+    this.toastr.error(text);
+  }
 }

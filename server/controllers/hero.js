@@ -1,8 +1,16 @@
 const Hero = require("../models/hero");
 
-exports.getAllHeroes = async (req, res, next) => {
+exports.getHeroes = async (req, res, next) => {
+  const name = req.query.name;
   try {
-    const heroes = await Hero.find();
+    let heroes;
+    if (name) {
+      heroes = await Hero.find({
+        name: { $regex: new RegExp(req.query.name, "i") },
+      }).exec();
+    } else {
+      heroes = await Hero.find();
+    }
 
     res.status(200).json(heroes);
   } catch (err) {
@@ -89,39 +97,28 @@ exports.updateHero = async (req, res, next) => {
   }
 };
 
-exports.addTagsToHeroes = async (req, res, next) => {
+exports.addOrDeleteTagsHeroes = async (req, res, next) => {
   const { heroIds, tags } = req.body;
+  const action = req.query.action;
+  let heroes;
+
   try {
-    const heroes = await Hero.updateMany(
-      { _id: { $in: heroIds } },
-      {
-        $addToSet: {
-          tags: { $each: tags },
+    if (action === "add") {
+      heroes = await Hero.updateMany(
+        { _id: { $in: heroIds } },
+        {
+          $addToSet: {
+            tags: { $each: tags },
+          },
         },
-      },
-      { new: true }
-    );
-
-    if (!heroes) {
-      return res.status(404).send("No hero found");
+        { new: true }
+      );
+    } else if (action === "delete") {
+      heroes = await Hero.updateMany(
+        { userId: req.user.user_id, _id: { $in: heroIds } },
+        { $pull: { tags: { $in: tags } } }
+      );
     }
-
-    res.status(200).json(heroes);
-  } catch (err) {
-    res.status(err.status || 500).json({
-      message: err.message,
-      error: err,
-    });
-  }
-};
-
-exports.deleteTagsFromHeroes = async (req, res, next) => {
-  const { heroIds, tags } = req.body;
-  try {
-    const heroes = await Hero.updateMany(
-      { userId: req.user.user_id, _id: { $in: heroIds } },
-      { $pull: { tags: { $in: tags } } }
-    );
 
     if (!heroes) {
       return res.status(404).send("No hero found");
@@ -164,25 +161,6 @@ exports.deleteManyHero = async (req, res, next) => {
     if (!heroes) {
       return res.status(404).send("No hero found");
     }
-    res.status(200).json(heroes);
-  } catch (err) {
-    res.status(err.status || 500).json({
-      message: err.message,
-      error: err,
-    });
-  }
-};
-
-exports.searchHero = async (req, res, next) => {
-  try {
-    const heroes = await Hero.find({
-      name: { $regex: new RegExp(req.query.name, "i") },
-    }).exec();
-
-    if (!heroes) {
-      return res.status(404).send("No hero found");
-    }
-
     res.status(200).json(heroes);
   } catch (err) {
     res.status(err.status || 500).json({
