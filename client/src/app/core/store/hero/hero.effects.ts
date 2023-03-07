@@ -15,13 +15,13 @@ export class HeroEffects {
   )
   );
 
-  loadMyHeroes$ = createEffect(() => this.actions$.pipe(
-    ofType(heroActions.getMyHeroes),
-    mergeMap(() => this.heroService.getMyHeroes()),
-    map(heroes => heroActions.getMyHeroesSuccess({ heroes })),
-    catchError(error => of(heroActions.getMyHeroesFailed({ error })))
-  )
-  );
+  // loadMyHeroes$ = createEffect(() => this.actions$.pipe(
+  //   ofType(heroActions.getMyHeroes),
+  //   mergeMap(() => this.heroService.getMyHeroes()),
+  //   map(heroes => heroActions.getMyHeroesSuccess({ heroes })),
+  //   catchError(error => of(heroActions.getMyHeroesFailed({ error })))
+  // )
+  // );
 
   loadHero$ = createEffect(() => this.actions$.pipe(
     ofType(heroActions.getHero),

@@ -12,10 +12,9 @@ export const LOGIN_FAILED = '@Auth/LoginFailed'
 export const LOGOUT = '@Auth/Logout'
 export const LOGOUT_SUCCESS = '@Auth/LogoutSuccess'
 
-
-export const FETCH_USER = '@Auth/FetchUser';
-export const FETCH_USER_SUCCESS = '@Auth/FetchUserSuccess';
-export const FETCH_USER_FAILED = '@Auth/FetchUserFailed';
+// export const FETCH_USER = '@Auth/FetchUser';
+// export const FETCH_USER_SUCCESS = '@Auth/FetchUserSuccess';
+// export const FETCH_USER_FAILED = '@Auth/FetchUserFailed';
 
 export const register = createAction(REGISTER, props<{ email: string, password: string }>());
 export const registerSuccess = createAction(REGISTER_SUCCESS, props<{ user: User }>());
@@ -26,9 +25,9 @@ export const loginFailed = createAction(LOGIN_FAILED, props<{ error?: string }>(
 export const logout = createAction(LOGOUT);
 export const logoutSuccess = createAction(LOGOUT_SUCCESS);
 
-export const fetchUser = createAction(FETCH_USER);
-export const fetchUserSuccess = createAction(FETCH_USER_SUCCESS, props<{ user: User }>());
-export const fetchUserFailed = createAction(FETCH_USER_FAILED, props<{ error: string }>());
+// export const fetchUser = createAction(FETCH_USER);
+// export const fetchUserSuccess = createAction(FETCH_USER_SUCCESS, props<{ user: User }>());
+// export const fetchUserFailed = createAction(FETCH_USER_FAILED, props<{ error: string }>());
 
 export type AuthActions = ActionType<typeof register>
   | ActionType<typeof registerSuccess>
@@ -38,6 +37,6 @@ export type AuthActions = ActionType<typeof register>
   | ActionType<typeof loginFailed>
   | ActionType<typeof logout>
   | ActionType<typeof logoutSuccess>
-  | ActionType<typeof fetchUser>
-  | ActionType<typeof fetchUserSuccess>
-  | ActionType<typeof fetchUserFailed>
+  // | ActionType<typeof fetchUser>
+  // | ActionType<typeof fetchUserSuccess>
+  // | ActionType<typeof fetchUserFailed>

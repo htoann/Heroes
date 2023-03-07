@@ -40,20 +40,20 @@ export class AuthEffects {
     )
   );
 
-  fetchUser$ = createEffect(() => this.actions$.pipe(
-    ofType((authActions.fetchUser)),
-    switchMap(() => {
-      const token = localStorage.getItem('token')
+  // fetchUser$ = createEffect(() => this.actions$.pipe(
+  //   ofType((authActions.fetchUser)),
+  //   switchMap(() => {
+  //     const token = localStorage.getItem('token')
 
-      if (!token) {
-        return of(authActions.fetchUserFailed({ error: 'Token not found in local storage.' }));
-      }
-      return this.authService.fetchUser(token).pipe(
-        map(user => authActions.fetchUserSuccess({ user })),
-        catchError(error => of(authActions.fetchUserFailed({ error })))
-      );
-    })
-  ));
+  //     if (!token) {
+  //       return of(authActions.fetchUserFailed({ error: 'Token not found in local storage.' }));
+  //     }
+  //     return this.authService.fetchUser(token).pipe(
+  //       map(user => authActions.fetchUserSuccess({ user })),
+  //       catchError(error => of(authActions.fetchUserFailed({ error })))
+  //     );
+  //   })
+  // ));
 
   constructor(
     private actions$: Actions,

@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { Hero } from '../../core/models/hero.model';
 import { getHeroes } from '../../core/store/hero/hero.actions';
 import { heroesSelector } from '../../core/store/hero/hero.selector';
-import { AuthService } from './../../core/services/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Subscription } from 'rxjs';
 
 @Component({

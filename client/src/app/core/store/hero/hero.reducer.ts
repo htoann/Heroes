@@ -16,12 +16,12 @@ export function heroReducer(state: HeroState = initialState, action: HeroActions
       return { ...state, status: 'idle', items: action.heroes, error: '' }
     case HeroActions.GET_HEROES_FAILED:
       return { ...state, status: 'error', items: [], error: action.error }
-    case HeroActions.GET_MY_HEROES:
-      return { ...state, status: 'loading' }
-    case HeroActions.GET_MY_HEROES_SUCCESS:
-      return { ...state, status: 'idle', myHeroes: action.heroes, error: '' }
-    case HeroActions.GET_MY_HEROES_FAILED:
-      return { ...state, status: 'error', myHeroes: [], error: action.error }
+    // case HeroActions.GET_MY_HEROES:
+    //   return { ...state, status: 'loading' }
+    // case HeroActions.GET_MY_HEROES_SUCCESS:
+    //   return { ...state, status: 'idle', myHeroes: action.heroes, error: '' }
+    // case HeroActions.GET_MY_HEROES_FAILED:
+    //   return { ...state, status: 'error', myHeroes: [], error: action.error }
     case HeroActions.GET_HERO:
       return { ...state, status: 'loading' }
     case HeroActions.GET_HERO_SUCCESS:

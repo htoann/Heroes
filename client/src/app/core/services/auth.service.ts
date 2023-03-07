@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of, tap, BehaviorSubject, map } from 'rxjs';
+import { Observable, of, tap, BehaviorSubject, map, catchError } from 'rxjs';
 import { User, UserResponse } from '../models/user.model';
 import { environment } from 'src/environments/environment';
 import { ToastService } from './toast.service';
@@ -81,14 +81,14 @@ export class AuthService {
         localStorage.setItem('user', JSON.stringify(user))
         this.currentUserSubject.next(user);
         return user;
-      })
+      }),
     )
   }
 
-  fetchUser(token: string): Observable<User> {
-    const headers = {
-      Authorization: `Bearer ${token}`
-    };
-    return this.http.get<User>(`${this.userUrl}/me`, { headers });
-  }
+  // fetchUser(token: string): Observable<User> {
+  //   const headers = {
+  //     Authorization: `Bearer ${token}`
+  //   };
+  //   return this.http.get<User>(`${this.userUrl}/me`, { headers });
+  // }
 }

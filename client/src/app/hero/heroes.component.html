@@ -13,15 +13,12 @@
             class="list-group-item d-flex justify-content-between"
           >
             <a
-              routerLink="/heroes/detail/{{ hero._id }}"
+              routerLink="/heroes/{{ hero._id }}"
               class="text-decoration-none flex-row"
               for="flexCheckChecked"
             >
               <h5 class="d-flex my-2">{{ hero.name | capitalize }}</h5>
-              <tag-input
-                [ngModel]="hero.tags"
-                [removable]="false"
-              >
+              <tag-input [ngModel]="hero.tags" [removable]="false">
                 <ng-template item-template let-item="item" let-index="index">
                   <span class="tag">#{{ item }} </span>
                 </ng-template>
@@ -60,17 +57,21 @@
 
         <tag-input
           [(ngModel)]="tags"
-          (onAdd)="onAddToAddTags($any($event))"
           [modelAsStrings]="true"
           #input1
-          ><ng-template item-template let-item="item" let-index="index">
-            <span>#{{ item }} </span>
-            <span
+          ><ng-template
+            item-template
+            let-item="item"
+            let-index="index"
+            (click)="input1.removeItem(item, index)"
+          >
+            <span>#{{ item }} x</span>
+            <!-- <span
               (click)="input1.removeItem(item, index)"
               class="ng2-tag__remove-button"
             >
               x
-            </span>
+            </span> -->
           </ng-template>
         </tag-input>
 
@@ -110,20 +111,24 @@
 
         <tag-input
           [(ngModel)]="selectedTags"
-          (onAdd)="onAddToRemoveTags($any($event))"
           (onRemove)="onRemoveToRemoveTags($any($event))"
           [modelAsStrings]="true"
           #input2
           placeholder="Edit tags of heroes"
           secondaryPlaceholder="Tags"
-          ><ng-template item-template let-item="item" let-index="index">
-            <span>#{{ item }} </span>
-            <span
+          ><ng-template
+            item-template
+            let-item="item"
+            let-index="index"
+            (click)="input2.removeItem(item, index)"
+          >
+            <span>#{{ item }} x</span>
+            <!-- <span
               (click)="input2.removeItem(item, index)"
               class="ng2-tag__remove-button"
             >
               x
-            </span>
+            </span> -->
           </ng-template>
         </tag-input>
 
@@ -138,7 +143,7 @@
     </div>
   </div>
 </div>
-
+<!-- 
 <div *ngIf="heroes.length === 0" class="text-center">
   <h4>No hero found</h4>
-</div>
+</div> -->

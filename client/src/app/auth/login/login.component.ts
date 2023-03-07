@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { first } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent {
   submitted = false;
   returnUrl: string;
   error = '';
+  private userSubscription: Subscription | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,7 +50,7 @@ export class LoginComponent {
     this.loading = true;
     const { email, password } = this.loginForm.value;
 
-    this.authService.login(email, password)
+    this.userSubscription = this.authService.login(email, password)
       .pipe(first())
       .subscribe({
         next: (data) => {
@@ -59,5 +61,11 @@ export class LoginComponent {
           this.loading = false;
         }
       })
+  }
+
+  ngOnDestroy() {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 }

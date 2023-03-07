@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { first } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,7 @@ export class RegisterComponent {
   submitted = false;
   returnUrl: string;
   error = '';
+  private userscription: Subscription | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,7 +52,7 @@ export class RegisterComponent {
 
     const { email, password } = this.registerForm.value;
 
-    this.authService.register(email, password)
+    this.userscription = this.authService.register(email, password)
       .pipe(first())
       .subscribe({
         next: (data) => {
@@ -61,5 +63,11 @@ export class RegisterComponent {
           this.loading = false;
         }
       })
+  }
+
+  ngOnDestroy() {
+    if (this.userscription) {
+      this.userscription.unsubscribe();
+    }
   }
 }
