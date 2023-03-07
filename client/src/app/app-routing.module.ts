@@ -25,8 +25,8 @@ const routes: Routes = [
       import('./user/user.module').then((b) => b.UserModule),
   },
 
-  { path: 'dashboard', component: DashboardComponent },
-  
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+
   { path: '**', pathMatch: 'full', component: NotFoundComponent, canActivate: [AuthGuard] },
 
 ];

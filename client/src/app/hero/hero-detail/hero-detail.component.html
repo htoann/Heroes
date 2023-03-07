@@ -6,7 +6,7 @@
     <h2>{{ hero.name | uppercase }}</h2>
     <div><span>ID: </span>{{ hero._id }}</div>
 
-    <div [formGroup]="form">
+    <div [formGroup]="form" class="mt-4">
       <div class="my-2">
         <label for="hero-name" class="mb-2">Hero name</label>
         <input
@@ -33,6 +33,7 @@
           "
           type="email"
           class="form-control"
+          placeholder="Email"
           formControlName="mail"
         />
       </div>
@@ -63,11 +64,7 @@
   </div>
 
   <h6>Hero tags (Enter example: "mytag")</h6>
-  <tag-input
-    [(ngModel)]="tags"
-    [modelAsStrings]="true"
-    #input
-  >
+  <tag-input [(ngModel)]="tags" [modelAsStrings]="true" #input>
     <ng-template
       item-template
       let-item="item"
@@ -80,7 +77,7 @@
     </ng-template>
   </tag-input>
 
-  <div>
+  <div class="mt-4">
     <button type="button" (click)="goBack()" class="btn btn-primary">
       Go back
     </button>

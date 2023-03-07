@@ -1,13 +1,38 @@
 <app-hero-search></app-hero-search>
 
-<h2>Top Heroes</h2>
+<div class="mt-5">
+  <h4 class="my-4">Top Heroes</h4>
 
-<div class="heroes-menu">
-  <a *ngFor="let hero of heroes" routerLink="/heroes/{{ hero._id }}">
-    <h4 class="mb-0">{{ hero.name | capitalize }}</h4>
-  </a>
-
-  <div *ngIf="heroes.length === 0">
-    <h4>No hero found</h4>
+  <div class="container">
+    <div class="row">
+      <div
+        class="col"
+        *ngFor="let hero of heroes"
+        routerLink="/heroes/{{ hero._id }}"
+      >
+        <div class="card">
+          <img
+            src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png"
+            class="card-img-top avatar-hero"
+            alt=""
+          />
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ hero.name | capitalize }}</h5>
+            <tag-input
+              *ngIf="hero.tags!.length > 0"
+              [ngModel]="hero.tags"
+              [removable]="false"
+              [hideForm]="true"
+            >
+              <ng-template item-template let-item="item" let-index="index">
+                <span class="tag">#{{ item }} </span>
+              </ng-template>
+            </tag-input>
+            <p class="card-text" *ngIf="hero.tags!.length === 0">No tags</p>
+            <button class="btn btn-primary mt-3">View More</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

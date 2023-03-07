@@ -1,28 +1,18 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <a class="header-title" href="/">
+    <img class="logo" src="../../../../assets/images/Hero-logo.png" alt="" />
+  </a>
   <div class="container-fluid p-0">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a
-            class="nav-link active fs-5 fw-bold"
-            aria-current="page"
-            href="/dashboard"
-            >Home</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link active fs-5"
-            aria-current="page"
-            href="/dashboard"
+        <li class="nav-item" *ngIf="user">
+          <a class="nav-link active fs-5" aria-current="page" href="/dashboard"
             >Dashboard</a
           >
         </li>
         <div *ngIf="user">
           <li class="nav-item">
-            <a
-              class="nav-link active fs-5"
-              href="/heroes/list/{{ user._id }}"
+            <a class="nav-link active fs-5" href="/heroes/list/{{ user._id }}"
               >My Heroes</a
             >
           </li>
@@ -30,23 +20,23 @@
       </ul>
     </div>
 
-    <div *ngIf="user; else doSomethingElse" class="d-flex align-items-center">
-      <span class="name_user align-center"
-        >User: {{ user.name || user.email }}</span
-      >
-      <a href="/user/{{ user._id }}">
-        <button type="button" class="btn btn-success">Profile</button>
-      </a>
+    <div *ngIf="user; else auth" class="d-flex align-items-center">
+      <a href="/user/{{ user._id }}"
+        ><img
+          class="avatar"
+          src="https://www.pngmart.com/files/22/User-Avatar-Profile-PNG-Isolated-Transparent-Picture.png"
+          alt=""
+      /></a>
       <button type="button" class="btn btn-primary" (click)="logout()">
         Logout
       </button>
     </div>
-    <ng-template #doSomethingElse>
+    <ng-template #auth>
       <a href="/auth/login"
-        ><button type="button" class="btn btn-primary">Login</button>
+        ><button type="button" class="btn btn-light login">Login</button>
       </a>
       <a href="/auth/register"
-        ><button type="button" class="btn btn-success">Register</button>
+        ><button type="button" class="btn btn-primary">Register</button>
       </a>
     </ng-template>
   </div>

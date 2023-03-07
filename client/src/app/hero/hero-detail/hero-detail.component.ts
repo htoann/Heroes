@@ -26,7 +26,13 @@ export class HeroDetailComponent {
     private location: Location,
     private fb: FormBuilder,
     private store: Store,
-  ) {
+  ) { }
+
+  get mail() {
+    return this.form.get('mail')
+  }
+
+  ngOnInit(): void {
     this.form = this.fb.group({
       name: ["", Validators.required],
       mail: ["", Validators.email],
@@ -34,13 +40,7 @@ export class HeroDetailComponent {
       age: ["", Validators.min(0)],
       address: "",
     });
-  }
 
-  get mail() {
-    return this.form.get('mail')
-  }
-
-  ngOnInit(): void {
     this.getHero();
   }
 
@@ -65,7 +65,7 @@ export class HeroDetailComponent {
   updateHero(): void {
     const updatedHero = { ...this.hero, ...this.form.value, };
     updatedHero.tags = this.tags?.map(tag => tag.toLowerCase().replace(/\s+/g, ''));
-    this.store.dispatch(updateHero({ hero: updatedHero }));
+    this.store.dispatch(updateHero({ hero: updatedHero }))
   }
 
   deleteHero(id: string): void {

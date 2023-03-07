@@ -18,11 +18,17 @@
               for="flexCheckChecked"
             >
               <h5 class="d-flex my-2">{{ hero.name | capitalize }}</h5>
-              <tag-input [ngModel]="hero.tags" [removable]="false">
+              <tag-input
+                [ngModel]="hero.tags"
+                [removable]="false"
+                [hideForm]="true"
+                *ngIf="hero.tags!.length > 0"
+              >
                 <ng-template item-template let-item="item" let-index="index">
                   <span class="tag">#{{ item }} </span>
                 </ng-template>
               </tag-input>
+              <span *ngIf="hero.tags!.length === 0"> No tags </span>
             </a>
           </li>
         </div>
@@ -55,10 +61,7 @@
           </tag-input>
         </div>
 
-        <tag-input
-          [(ngModel)]="tags"
-          [modelAsStrings]="true"
-          #input1
+        <tag-input [(ngModel)]="tags" [modelAsStrings]="true" #input1
           ><ng-template
             item-template
             let-item="item"
@@ -78,7 +81,7 @@
         <button
           type="button"
           (click)="addTagsToHeroes()"
-          class="btn btn-success"
+          class="btn btn-primary"
         >
           Add tags
         </button>
