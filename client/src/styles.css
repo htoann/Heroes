@@ -65,3 +65,9 @@ label {
   align-items: center;
   height: 28px;
 }
+
+.tag__text {
+  display: flex !important;
+  align-items: center !important;
+  height: 28px !important;
+}

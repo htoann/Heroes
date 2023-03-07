@@ -4,11 +4,11 @@ import { AppState } from './../core/store/app.state';
 import { Hero } from './../core/models/hero.model';
 import { getHeroes } from './../core/store/hero/hero.actions';
 import { heroesSelector } from './../core/store/hero/hero.selector';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { HeroService } from './../core/services/hero.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../core/services/auth.service';
-import { Location } from '@angular/common';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-heroes',
@@ -24,9 +24,9 @@ export class HeroesComponent implements OnInit {
   tags: string[];
   tagsRemove: string[] = [];
   selectedTags: string[] = [];
+  private unsubscribe$: Subject<void> = new Subject<void>();
 
-
-  constructor(private store: Store<AppState>, private authService: AuthService, private heroService: HeroService, private router: Router, private location: Location,) { }
+  constructor(private store: Store<AppState>, private authService: AuthService, private heroService: HeroService, private router: Router) { }
 
   ngOnInit(): void {
     if (!this.authService.currentUserValue) {
@@ -38,19 +38,19 @@ export class HeroesComponent implements OnInit {
 
   getHeroes(): void {
     this.store.dispatch(getHeroes())
-    this.store.pipe(select(heroesSelector)).subscribe(heroes => this.heroes = heroes)
+    this.store.pipe(select(heroesSelector), takeUntil(this.unsubscribe$)).subscribe(heroes => this.heroes = heroes);
   }
 
   addTagsToHeroes(): void {
     this.tags = this.tags.map(tag => tag.toLowerCase().trim().replace(/\s+/g, ''));
-    this.heroService.addTagsToHeroes(this.heroIds, this.tags).subscribe(data => {
+    this.heroService.addTagsToHeroes(this.heroIds, this.tags).pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
       this.getHeroes();
     }
     )
   }
 
   deleteTagsFromHeroes(): void {
-    this.heroService.deleteTagsFromHeroes(this.heroIdsRemovieTag, this.tagsRemove).subscribe(data => {
+    this.heroService.deleteTagsFromHeroes(this.heroIdsRemovieTag, this.tagsRemove).pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
       this.getHeroes();
     });
   }
@@ -65,18 +65,10 @@ export class HeroesComponent implements OnInit {
 
   public onRemoveToAddHeroes(hero: Hero) {
     this.heroIds = this.heroIds.filter(id => id !== hero._id)
-
-    console.log('tag removed: value is ' + hero);
   }
 
   public onRemoveToRemoveHeroes(hero: Hero) {
     this.heroIdsRemovieTag = this.heroIdsRemovieTag.filter(id => id !== hero._id)
-
-    console.log('tag removed: value is ' + hero);
-  }
-
-  public onAddToAddTags(tag: string) {
-    console.log(tag)
   }
 
   public onAddToRemoveHeroes(tag: string) {
@@ -88,17 +80,14 @@ export class HeroesComponent implements OnInit {
         }
       })
     })
-
-    console.log(this.selectedTags)
-  }
-
-  public onAddToRemoveTags(tag: string) {
-    console.log(tag)
   }
 
   public onRemoveToRemoveTags(tag: string) {
     this.tagsRemove.push(tag)
-    console.log('tag removed: value is ' + tag);
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 }

@@ -3,8 +3,8 @@ import { select, Store } from '@ngrx/store';
 import { Hero } from '../../core/models/hero.model';
 import { getHeroes } from '../../core/store/hero/hero.actions';
 import { heroesSelector } from '../../core/store/hero/hero.selector';
-import { userSelector } from '../../core/store/auth/auth.selector';
 import { AuthService } from './../../core/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +13,7 @@ import { AuthService } from './../../core/services/auth.service';
 })
 export class DashboardComponent implements OnInit {
   heroes: Hero[] = [];
+  private topHeroesSubscription: Subscription | undefined;
 
   constructor(private store: Store,
     private authService: AuthService) { }
@@ -21,10 +22,16 @@ export class DashboardComponent implements OnInit {
     this.getTopHeroes();
   }
 
-  getTopHeroes(): void {
+  private getTopHeroes(): void {
     if (this.authService.currentUserValue) {
       this.store.dispatch(getHeroes())
-      this.store.pipe(select(heroesSelector)).subscribe(heroes => this.heroes = heroes.slice(1, 5))
+      this.topHeroesSubscription = this.store.pipe(select(heroesSelector)).subscribe(heroes => this.heroes = heroes.slice(1, 5))
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.topHeroesSubscription) {
+      this.topHeroesSubscription.unsubscribe();
     }
   }
 }

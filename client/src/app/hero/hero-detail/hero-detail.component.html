@@ -65,19 +65,18 @@
   <h6>Hero tags (Enter example: "mytag")</h6>
   <tag-input
     [(ngModel)]="tags"
-    (onSelect)="onSelect($any($event))"
-    (onAdd)="onAdd($any($event))"
     [modelAsStrings]="true"
     #input
   >
-    <ng-template item-template let-item="item" let-index="index" class="tags-wrap">
-      <span class="tag" (click)="input.removeItem(item, index)">#{{ item }} x</span>
-      <!-- <span
-        (click)="input.removeItem(item, index)"
-        class="ng2-tag__remove-button"
+    <ng-template
+      item-template
+      let-item="item"
+      let-index="index"
+      class="tags-wrap"
+    >
+      <span class="tag" (click)="input.removeItem(item, index)"
+        >#{{ item }} x</span
       >
-        x
-      </span> -->
     </ng-template>
   </tag-input>
 
@@ -95,7 +94,7 @@
     <button
       type="button"
       (click)="updateHero()"
-      [disabled]="mail?.invalid "
+      [disabled]="mail?.invalid"
       class="btn btn-success"
     >
       Save

@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { User } from '../../core/models/user.model';
-import { Store } from '@ngrx/store';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from '../../core/services/user.service';
 import { first } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-detail',
@@ -18,16 +18,17 @@ export class UserDetailComponent {
   form: FormGroup;
   error: string | undefined
   loading: boolean;
+  private userSubscription: Subscription | undefined;
+  private updateUserSubscription: Subscription | undefined;
 
   constructor(
-    private route: ActivatedRoute,
     private authService: AuthService,
     private userService: UserService,
     private location: Location,
     private fb: FormBuilder,
-    private store: Store,
+    private route: ActivatedRoute
   ) {
-    this.form = fb.group({
+    this.form = this.fb.group({
       name: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
     });
@@ -37,9 +38,15 @@ export class UserDetailComponent {
     this.getUser();
   }
 
-  getUser(): void {
+  get email() {
+    return this.form.get('email')
+  }
+
+  private getUser(): void {
+    const id = this.route.snapshot.paramMap.get('id')!;
+
     this.loading = true;
-    this.userService.getMe().subscribe(user => {
+    this.userSubscription = this.userService.getUser(id).subscribe(user => {
       this.user = user;
       this.form.patchValue({
         name: user.name,
@@ -55,7 +62,7 @@ export class UserDetailComponent {
 
   updateUser(): void {
     const updatedUser = { ...this.user, ...this.form.value };
-    this.authService.updateUser(updatedUser).pipe(first())
+    this.updateUserSubscription = this.authService.updateUser(updatedUser).pipe(first())
       .subscribe({
         next: (user) => {
           this.user = user;
@@ -66,7 +73,13 @@ export class UserDetailComponent {
       })
   }
 
-  get email() {
-    return this.form.get('email')
+  ngOnDestroy() {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+
+    if (this.updateUserSubscription) {
+      this.updateUserSubscription.unsubscribe();
+    }
   }
 }

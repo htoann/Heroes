@@ -8,7 +8,7 @@ import { Hero } from '../../core/models/hero.model';
 import { deleteHero, getHero, updateHero } from '../../core/store/hero/hero.actions';
 import { select, Store } from '@ngrx/store';
 import { currentHeroSelector } from '../../core/store/hero/hero.selector';
-
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-hero-detail',
@@ -19,6 +19,7 @@ export class HeroDetailComponent {
   @Input() hero: Hero | null;
   tags?: string[];
   form: FormGroup;
+  private heroSubscription: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +27,7 @@ export class HeroDetailComponent {
     private fb: FormBuilder,
     private store: Store,
   ) {
-    this.form = fb.group({
+    this.form = this.fb.group({
       name: ["", Validators.required],
       mail: ["", Validators.email],
       gender: "",
@@ -35,14 +36,18 @@ export class HeroDetailComponent {
     });
   }
 
+  get mail() {
+    return this.form.get('mail')
+  }
+
   ngOnInit(): void {
     this.getHero();
   }
 
-  getHero(): void {
+  private getHero(): void {
     const id = this.route.snapshot.paramMap.get('id')!;
     this.store.dispatch(getHero({ id }))
-    this.store.pipe(select(currentHeroSelector)).subscribe(hero => {
+    this.heroSubscription = this.store.pipe(select(currentHeroSelector)).subscribe(hero => {
       if (hero) {
         this.hero = hero
         this.tags = hero.tags
@@ -55,41 +60,25 @@ export class HeroDetailComponent {
         });
       }
     })
-
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 
   updateHero(): void {
     const updatedHero = { ...this.hero, ...this.form.value, };
-    updatedHero.tags = this.tags?.map(tag => tag.toLowerCase().trim().replace(/\s+/g, ''));
+    updatedHero.tags = this.tags?.map(tag => tag.toLowerCase().replace(/\s+/g, ''));
     this.store.dispatch(updateHero({ hero: updatedHero }));
-  }
-
-  get mail() {
-    return this.form.get('mail')
   }
 
   deleteHero(id: string): void {
     this.store.dispatch(deleteHero({ id }))
   }
 
-  // Tags
-
-  public onAdd(tag: any) {
+  goBack(): void {
+    this.location.back();
   }
 
-  public onRemove(tag: string) {
-    console.log('tag removed: value is ' + tag);
-  }
-
-  public onSelect(tag: string) {
-    console.log('tag selected: value is ' + tag);
-  }
-
-  public onTagEdited(tag: string) {
-    console.log('tag edited: current value is ' + tag);
+  ngOnDestroy(): void {
+    if (this.heroSubscription) {
+      this.heroSubscription.unsubscribe();
+    }
   }
 }
