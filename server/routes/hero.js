@@ -7,6 +7,8 @@ router.get("/", verifyToken, HeroController.getHeroes);
 
 router.get("/list/:myUserId", verifyToken, HeroController.getMyHeroes);
 
+router.patch("/tags", verifyToken, HeroController.addOrDeleteTagsHeroes);
+
 router.get("/:id", verifyToken, HeroController.getHero);
 
 router.post("/", verifyToken, HeroController.createHero);
@@ -14,7 +16,5 @@ router.post("/", verifyToken, HeroController.createHero);
 router.patch("/:id", verifyToken, HeroController.updateHero);
 
 router.delete("/:id", verifyToken, HeroController.deleteHero);
-
-router.patch("/tags", verifyToken, HeroController.addOrDeleteTagsHeroes);
 
 module.exports = router;

@@ -1,11 +1,11 @@
 <div class="d-flex justify-content-center">
   <div class="col-4">
-    <label for="new-hero">Hero name</label>
+    <label for="new-hero">Name</label>
     <input
       type="text"
       class="form-control mt-2"
       id="formGroupExampleInput"
-      placeholder="Name"
+      placeholder="Hero"
       #heroName
       (keyup.enter)="createHero(heroName.value); heroName.value = ''"
     />
@@ -15,7 +15,7 @@
       class="btn btn-primary d-flex mx-auto"
       (click)="createHero(heroName.value); heroName.value = ''"
     >
-      Add hero
+      + Add
     </button>
   </div>
 </div>
