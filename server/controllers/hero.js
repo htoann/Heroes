@@ -6,6 +6,7 @@ exports.getHeroes = async (req, res, next) => {
     let heroes;
     if (name) {
       heroes = await Hero.find({
+        userId: req.user.user_id,
         name: { $regex: new RegExp(req.query.name, "i") },
       }).exec();
     } else {
