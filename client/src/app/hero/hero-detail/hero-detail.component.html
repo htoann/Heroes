@@ -7,8 +7,8 @@
     <div><span>ID: </span>{{ hero._id }}</div>
 
     <div [formGroup]="form" class="mt-4">
-      <div class="my-2">
-        <label for="hero-name" class="mb-2">Hero name</label>
+      <div class="my-2 form-input">
+        <label for="hero-name" class="mb-1">Name</label>
         <input
           type="text"
           class="form-control"
@@ -17,20 +17,78 @@
           formControlName="name"
         />
       </div>
-      <div class="my-2">
+      <!-- <div class="my-2 form-input">
         <label for="hero-gender" class="mb-2">Hero gender</label>
         <select class="form-select" aria-label="Default select example">
           <option value="" selected>Choose gender</option>
           <option value="0">Male</option>
           <option value="1">Female</option>
         </select>
-      </div>
-      <div class="my-2">
-        <label for="hero-mail" class="mb-2">Hero mail</label>
+      </div> -->
+      <!-- <div class="my-2 input-group">
+        <div class="col-4">
+          <label for="hero-gender" class="mb-2">Hero gender</label>
+          <select class="form-select" aria-label="Default select example">
+            <option value="" selected>Choose gender</option>
+            <option value="0">Male</option>
+            <option value="1">Female</option>
+          </select>
+        </div>
+        <div class="col-4">
+          <input
+            type="number"
+            class="form-control"
+            id="hero-age"
+            placeholder="Age"
+            formControlName="age"
+          />
+        </div>
+      </div> -->
+      <label for="hero-gender" class="mb-2">Gender</label>
+      <div class="input-group mb-3">
+        <!-- <select
+          class="form-select"
+          aria-label="Default select example"
+          formControlName="gender"
+        >
+          <option value="0">Male</option>
+          <option value="1">Female</option>
+        </select> -->
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="gender"
+            id="gender"
+            value="male"
+            formControlName="gender"
+          />
+          <label class="form-check-label" for="inlineRadio1">Male</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="gender"
+            id="gender"
+            value="female"
+            formControlName="gender"
+          />
+          <label class="form-check-label" for="inlineRadio2">Female</label>
+        </div>
+        <!-- <span class="input-group-text">Age</span>
         <input
-          [class.is-invalid]="
-            form.get('mail')?.invalid && form.get('mail')?.touched
-          "
+          type="text"
+          class="form-control"
+          placeholder="Age"
+          aria-label="Age"
+          formControlName="age"
+        /> -->
+      </div>
+      <div class="my-2 form-input">
+        <label for="hero-mail" class="mb-1">Email</label>
+        <input
+          [class.is-invalid]="mail?.invalid && mail?.touched"
           type="email"
           class="form-control"
           placeholder="Email"
@@ -40,9 +98,10 @@
       <div *ngIf="mail?.invalid" class="alert alert-danger">
         Please enter a valid email
       </div>
-      <div class="my-2">
-        <label for="hero-age" class="mb-2">Hero age</label>
+      <div class="my-2 form-input">
+        <label for="hero-age" class="mb-1">Age</label>
         <input
+          [class.is-invalid]="age?.invalid && age?.touched"
           type="number"
           class="form-control"
           id="hero-age"
@@ -50,8 +109,11 @@
           formControlName="age"
         />
       </div>
-      <div class="my-2">
-        <label for="hero-address" class="mb-2">Hero address</label>
+      <div *ngIf="age?.invalid" class="alert alert-danger">
+        Please enter a valid age
+      </div>
+      <div class="my-2 form-input">
+        <label for="hero-address" class="mb-1">Address</label>
         <input
           type="text"
           class="form-control"
@@ -63,7 +125,7 @@
     </div>
   </div>
 
-  <h6>Hero tags (Enter example: "mytag")</h6>
+  <h6>Tags (for example enter "mytag")</h6>
   <tag-input [(ngModel)]="tags" [modelAsStrings]="true" #input>
     <ng-template
       item-template
@@ -78,12 +140,12 @@
   </tag-input>
 
   <div class="mt-4">
-    <button type="button" (click)="goBack()" class="btn btn-primary">
+    <button type="button" (click)="goBack()" class="btn btn-secondary">
       Go back
     </button>
     <button
       type="button"
-      class="btn btn-danger mr-auto"
+      class="btn btn-light mr-auto"
       (click)="deleteHero(hero._id)"
     >
       Delete Hero
@@ -91,8 +153,8 @@
     <button
       type="button"
       (click)="updateHero()"
-      [disabled]="mail?.invalid"
-      class="btn btn-success"
+      [disabled]="mail?.invalid || age?.invalid"
+      class="btn btn-primary save-btn"
     >
       Save
     </button>

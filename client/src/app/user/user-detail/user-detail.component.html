@@ -5,10 +5,10 @@
     <h2>{{ user.name | uppercase }}</h2>
     <div><span>ID: </span>{{ user._id }}</div>
 
-    <h5 class="text-uppercase mt-3">Information</h5>
+    <h5 class="text-uppercase mt-5">Information</h5>
 
     <div [formGroup]="form">
-      <div class="input-group my-4">
+      <div class="input-group mb-4 mt-2">
         <span class="input-group-text">Email</span>
         <input type="text" class="form-control" formControlName="email" />
       </div>

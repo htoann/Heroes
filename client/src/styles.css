@@ -23,9 +23,11 @@ button {
   border: none;
   cursor: pointer;
   font-size: 1.2rem;
-  padding: 1rem;
+  /* padding: 1rem; */
+  padding: 0.5rem 0.75rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
+  font-weight: 500 !important;
 }
 
 button:disabled {
@@ -58,6 +60,11 @@ label {
 
 @import "./toast.css";
 
+/* Tag input compoent */
+.ng-tns-c62-6 {
+  cursor: pointer !important;
+}
+
 .tag {
   display: flex;
   align-items: center;
@@ -74,13 +81,4 @@ label {
   width: 50px;
   height: 100%;
   margin-right: 20px;
-}
-
-/* .ng2-tags-container,
-.ng-tns-c62-2 {
-  cursor: pointer !important;
-} */
-
-.ng-tns-c62-6 {
-  cursor: pointer !important;
 }

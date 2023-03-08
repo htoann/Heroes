@@ -9,3 +9,14 @@
 a:first-child {
   margin-top: 16px;
 }
+
+li {
+  list-style: none;
+  padding: 5px;
+  color: black;
+}
+
+li:hover {
+  background: rgb(228, 228, 228);
+  border-radius: 5px;
+}

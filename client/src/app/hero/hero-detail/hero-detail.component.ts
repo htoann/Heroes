@@ -32,6 +32,10 @@ export class HeroDetailComponent {
     return this.form.get('mail')
   }
 
+  get age() {
+    return this.form.get('age')
+  }
+
   ngOnInit(): void {
     this.form = this.fb.group({
       name: ["", Validators.required],
