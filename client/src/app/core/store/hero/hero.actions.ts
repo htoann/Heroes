@@ -21,17 +21,17 @@ export const DELETE_HERO = '@Hero/Delete';
 export const DELETE_HERO_SUCCESS = '@Hero/DeleteSuccess';
 export const DELETE_HERO_FAILED = '@Hero/DeleteFailed';
 
-export const GET_MY_HEROES = '@Hero/GetMyHeroes'
-export const GET_MY_HEROES_SUCCESS = '@Hero/GetMyHeroesSuccess'
-export const GET_MY_HEROES_FAILED = '@Hero/GetMyHeroesFailed'
+// export const GET_MY_HEROES = '@Hero/GetMyHeroes'
+// export const GET_MY_HEROES_SUCCESS = '@Hero/GetMyHeroesSuccess'
+// export const GET_MY_HEROES_FAILED = '@Hero/GetMyHeroesFailed'
 
 export const getHeroes = createAction(GET_HEROES);
 export const getHeroesSuccess = createAction(GET_HEROES_SUCCESS, props<{ heroes: Hero[] }>());
 export const getHeroesFailed = createAction(GET_HEROES_FAILED, props<{ error?: string }>());
 
-export const getMyHeroes = createAction(GET_MY_HEROES);
-export const getMyHeroesSuccess = createAction(GET_MY_HEROES_SUCCESS, props<{ heroes: Hero[] }>());
-export const getMyHeroesFailed = createAction(GET_MY_HEROES_FAILED, props<{ error?: string }>());
+// export const getMyHeroes = createAction(GET_MY_HEROES);
+// export const getMyHeroesSuccess = createAction(GET_MY_HEROES_SUCCESS, props<{ heroes: Hero[] }>());
+// export const getMyHeroesFailed = createAction(GET_MY_HEROES_FAILED, props<{ error?: string }>());
 
 export const getHero = createAction(GET_HERO, props<{ id: string }>())
 export const getHeroSuccess = createAction(GET_HERO_SUCCESS, props<{ hero: Hero }>());
@@ -65,9 +65,9 @@ export type HeroActions = ActionType<typeof getHeroes>
   | ActionType<typeof updateHeroSuccess>
   | ActionType<typeof updateHeroFailed>
 
-  | ActionType<typeof getMyHeroes>
-  | ActionType<typeof getMyHeroesSuccess>
-  | ActionType<typeof getMyHeroesFailed>
+  // | ActionType<typeof getMyHeroes>
+  // | ActionType<typeof getMyHeroesSuccess>
+  // | ActionType<typeof getMyHeroesFailed>
 
   | ReturnType<typeof deleteHero>
   | ReturnType<typeof deleteHeroSuccess>

@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './hero/dashboard/dashboard.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { UserDetailComponent } from './user-detail/user-detail.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { AuthGuard } from './core/helpers/auth.guard';
+import { DashboardComponent } from './shared/dashboard/dashboard.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+
   {
     path: 'heroes',
     loadChildren: () =>
@@ -17,11 +19,15 @@ const routes: Routes = [
       import('./auth/auth.module').then((b) => b.AuthModule),
   },
 
-  { path: 'user/:id', component: UserDetailComponent },
+  {
+    path: 'user',
+    loadChildren: () =>
+      import('./user/user.module').then((b) => b.UserModule),
+  },
 
-  { path: '', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
 
-  { path: '**', pathMatch: 'full', component: NotFoundComponent },
+  { path: '**', pathMatch: 'full', component: NotFoundComponent, canActivate: [AuthGuard] },
 
 ];
 

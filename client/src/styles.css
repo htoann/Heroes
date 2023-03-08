@@ -1,5 +1,4 @@
-Application-wide Styles
-h1 {
+Application-wide Styles h1 {
   color: #369;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
@@ -11,7 +10,8 @@ h3 {
   font-weight: lighter;
 }
 body {
-  margin: 2em;
+  margin-left: 2em;
+  margin-right: 2em;
 }
 body,
 input[type="text"],
@@ -20,30 +20,65 @@ button {
   font-family: Cambria, Georgia, serif;
 }
 button {
-  background-color: #eee;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
-  color: black;
   font-size: 1.2rem;
-  padding: 1rem;
-  margin-right: 1rem;
+  /* padding: 1rem; */
+  padding: 0.5rem 0.75rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
+  font-weight: 500 !important;
 }
-button:hover {
-  background-color: black;
-  color: white;
-}
+
 button:disabled {
   background-color: #eee;
   color: #aaa;
   cursor: auto;
 }
 
-/* everywhere else */
+button + button {
+  margin-left: 1rem;
+}
+
 * {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif !important;
+  --color-primary: #0d6efd;
+}
+
+h2 {
+  font-weight: 600;
+}
+
+label {
+  font-weight: 500;
 }
 
 @import "~bootstrap/dist/css/bootstrap.min.css";
+
+/* Toast */
+
+@import "./toast.css";
+
+/* Tag input compoent */
+.ng-tns-c62-6 {
+  cursor: pointer !important;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  height: 28px;
+}
+
+.tag__text {
+  display: flex !important;
+  align-items: center !important;
+  height: 28px !important;
+}
+
+.avatar {
+  width: 50px;
+  height: 100%;
+  margin-right: 20px;
+}

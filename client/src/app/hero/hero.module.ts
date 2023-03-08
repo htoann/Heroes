@@ -9,7 +9,7 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { HeroesComponent } from './heroes.component';
 import { RouterModule } from '@angular/router';
 import { HeroRoutingModule } from './hero-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from '../shared/dashboard/dashboard.component';
 
 @NgModule({
   imports: [

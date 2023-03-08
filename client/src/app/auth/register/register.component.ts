@@ -3,8 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { first } from 'rxjs/operators';
-import { register } from 'src/app/core/store/auth/auth.actions';
-import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -17,20 +16,20 @@ export class RegisterComponent {
   submitted = false;
   returnUrl: string;
   error = '';
+  private userscription: Subscription | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private store: Store
-  ) {
-    if (this.authService.getToken()) {
-      this.router.navigate(['/']);
-    }
-  }
+  ) { }
 
   ngOnInit() {
+    if (this.authService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       password: ['', Validators.required]
@@ -53,16 +52,22 @@ export class RegisterComponent {
 
     const { email, password } = this.registerForm.value;
 
-    this.authService.register(email, password)
+    this.userscription = this.authService.register(email, password)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.store.dispatch(register({ email, password }));
-          this.router.navigateByUrl("/")
+      .subscribe({
+        next: (data) => {
+          this.router.navigateByUrl("/");
         },
-        error => {
+        error: (error) => {
           this.error = error.error;
           this.loading = false;
-        });
+        }
+      })
+  }
+
+  ngOnDestroy() {
+    if (this.userscription) {
+      this.userscription.unsubscribe();
+    }
   }
 }

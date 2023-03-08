@@ -2,5 +2,30 @@
   margin-right: 15px;
   font-weight: 700;
   font-size: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header-title {
+  text-decoration: none;
+}
+
+.container-fluid {
+  margin-left: 10px;
+}
+
+.navbar {
+  display: flex;
+}
+
+li {
+  font-weight: 500;
+}
+
+.logo {
+  width: 120px;
+  height: 100%;
+}
+
+.login {
+  margin-right: 1rem;
 }

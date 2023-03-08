@@ -12,12 +12,8 @@ const HeroSchema = new Schema(
     address: String,
     age: Number,
     mail: String,
-    gender: Boolean,
+    gender: String,
     tags: Array,
-    // user: {
-    //   type: Object,
-    //   ref: "User",
-    // },
     userId: {
       type: mongoose.Schema.ObjectId,
       ref: "User",

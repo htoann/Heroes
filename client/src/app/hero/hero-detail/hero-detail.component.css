@@ -1,0 +1,11 @@
+button {
+  margin-bottom: 0;
+}
+
+.save-btn {
+  float: right;
+}
+
+.form-input {
+  margin-bottom: 20px !important
+}

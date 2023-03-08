@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { Store } from '@ngrx/store';
-import { login } from 'src/app/core/store/auth/auth.actions';
 import { first } from 'rxjs/operators';
-import { UserService } from './../../core/services/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -18,20 +16,20 @@ export class LoginComponent {
   submitted = false;
   returnUrl: string;
   error = '';
+  private userSubscription: Subscription | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private store: Store,
-  ) {
-    if (this.authService.getToken()) {
-      this.router.navigate(['/']);
-    }
-  }
+  ) { }
 
   ngOnInit() {
+    if (this.authService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       password: ['', Validators.required]
@@ -52,16 +50,22 @@ export class LoginComponent {
     this.loading = true;
     const { email, password } = this.loginForm.value;
 
-    this.authService.login(email, password)
+    this.userSubscription = this.authService.login(email, password)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.store.dispatch(login({ email, password }));
-          this.router.navigateByUrl("/")
+      .subscribe({
+        next: (data) => {
+          this.router.navigateByUrl("/");
         },
-        error => {
+        error: (error) => {
           this.error = error.error;
           this.loading = false;
-        });
+        }
+      })
+  }
+
+  ngOnDestroy() {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 }

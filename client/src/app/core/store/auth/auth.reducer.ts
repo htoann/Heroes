@@ -33,15 +33,15 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
       return { ...state, status: 'idle', user: null }
     }
       
-    case AuthActions.FETCH_USER: {
-      return { ...state, status: 'loading' };
-    }
-    case AuthActions.FETCH_USER_SUCCESS: {
-      return { ...state, status: 'idle', user: action.user };
-    }
-    case AuthActions.FETCH_USER_FAILED: {
-      return { ...state, status: 'error', user: null, error: action.error };
-    }
+    // case AuthActions.FETCH_USER: {
+    //   return { ...state, status: 'loading' };
+    // }
+    // case AuthActions.FETCH_USER_SUCCESS: {
+    //   return { ...state, status: 'idle', user: action.user };
+    // }
+    // case AuthActions.FETCH_USER_FAILED: {
+    //   return { ...state, status: 'error', user: null, error: action.error };
+    // }
     default:
       return state
 
