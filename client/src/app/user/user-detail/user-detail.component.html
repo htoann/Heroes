@@ -1,45 +1,82 @@
-<div *ngIf="user" class="mx-auto">
-  <div
-    class="list-group col-4 mb-4 d-flex mx-auto shadow p-3 mb-5 bg-body rounded p-4"
-  >
-    <h2>{{ user.name | uppercase }}</h2>
-    <div><span>ID: </span>{{ user._id }}</div>
+<app-loading [loading]="loading"></app-loading> -->
 
-    <h5 class="text-uppercase mt-5">Information</h5>
+<section *ngIf="user">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-6 mb-4 mb-lg-0">
+        <div class="card mb-3" style="border-radius: 0.5rem">
+          <div class="row g-0">
+            <div
+              class="col-md-4 gradient-custom text-center text-black justify-content-center d-flex flex-column align-items-center"
+              style="
+                border-top-left-radius: 0.5rem;
+                border-bottom-left-radius: 0.5rem;
+              "
+            >
+              <img
+                src="../../../../assets/images/user-avt.png"
+                alt="Avatar"
+                class="img-fluid my-5"
+                style="width: 80px"
+              />
+              <h5>{{ user.name }}</h5>
+              <!-- <p>Web Designer</p> -->
+              <i class="far fa-edit mb-5"></i>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body p-4">
+                <h6>Information</h6>
+                <hr class="mt-0 mb-4" />
+                <div class="row pt-1">
+                  <div [formGroup]="form">
+                    <div class="input-group mb-4 mt-2">
+                      <span class="input-group-text">Email</span>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="email"
+                      />
+                    </div>
+                    <div class="input-group my-4">
+                      <span class="input-group-text">Name</span>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="name"
+                      />
+                    </div>
+                    <div *ngIf="email?.invalid" class="alert alert-danger">
+                      Please enter a valid email
+                    </div>
+                  </div>
 
-    <div [formGroup]="form">
-      <div class="input-group mb-4 mt-2">
-        <span class="input-group-text">Email</span>
-        <input type="text" class="form-control" formControlName="email" />
+                  <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+                    {{ error }}
+                  </div>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    (click)="goBack()"
+                    class="btn btn-primary mb-0"
+                  >
+                    Go back
+                  </button>
+                  <button
+                    *ngIf="email?.valid && form.dirty"
+                    type="button"
+                    (click)="updateUser()"
+                    [disabled]="email?.invalid || !form.dirty"
+                    class="btn btn-success mb-0"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="input-group my-4">
-        <span class="input-group-text">Name</span>
-        <input type="text" class="form-control" formControlName="name" />
-      </div>
-      <div *ngIf="email?.invalid" class="alert alert-danger">
-        Please enter a valid email
-      </div>
-    </div>
-
-    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
-      {{ error }}
-    </div>
-
-    <div>
-      <button type="button" (click)="goBack()" class="btn btn-primary mb-0">
-        Go back
-      </button>
-      <button
-        *ngIf="email?.valid && form.dirty"
-        type="button"
-        (click)="updateUser()"
-        [disabled]="email?.invalid || !form.dirty"
-        class="btn btn-success mb-0"
-      >
-        Save
-      </button>
     </div>
   </div>
-</div>
-
-<!-- <app-loading loading="loading"></app-loading> -->
+</section>

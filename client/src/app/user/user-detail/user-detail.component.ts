@@ -43,15 +43,17 @@ export class UserDetailComponent {
   }
 
   private getUser(): void {
+    this.loading = true;
+
     const id = this.route.snapshot.paramMap.get('id')!;
 
-    this.loading = true;
     this.userSubscription = this.userService.getUser(id).subscribe(user => {
       this.user = user;
       this.form.patchValue({
         name: user.name,
         email: user.email,
       });
+      
       this.loading = false;
     })
   }

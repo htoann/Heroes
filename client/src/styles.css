@@ -23,7 +23,6 @@ button {
   border: none;
   cursor: pointer;
   font-size: 1.2rem;
-  /* padding: 1rem; */
   padding: 0.5rem 0.75rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
@@ -82,3 +81,12 @@ label {
   height: 100%;
   margin-right: 20px;
 }
+
+/* .ng2-tags-container,
+.ng-tns-c62-2 {
+  justify-content: center !important;
+} */
+
+/* .card .ng2-tag-input:has(.ng2-tags-container) {
+  justify-content: center !important;
+} */

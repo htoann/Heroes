@@ -1,0 +1,21 @@
+.avatar-hero {
+  width: 100px;
+  height: 100%;
+  padding-top: 16px;
+  margin: auto;
+  object-fit: contain;
+}
+.card {
+  cursor: pointer;
+  transition: 0.2s ease 0s;
+  height: 298px;
+}
+
+.card:hover {
+  box-shadow: 5px 5px rgb(225, 227, 255) !important;
+}
+
+tag-input {
+  height: 40px;
+  overflow: hidden !important;
+}

@@ -7,7 +7,7 @@
 }
 
 a:first-child {
-  margin-top: 16px;
+  margin-top: 8px;
 }
 
 li {
@@ -17,6 +17,6 @@ li {
 }
 
 li:hover {
-  background: rgb(228, 228, 228);
+  background: rgb(250, 250, 250);
   border-radius: 5px;
 }

@@ -6,7 +6,7 @@
           <div class="row g-0">
             <div class="col-md-6 col-lg-5 d-none d-md-block">
               <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                src="../../../assets/images/login-pic.webp"
                 alt="login form"
                 class="img-fluid"
                 style="border-radius: 1rem 0 0 1rem"
@@ -23,7 +23,7 @@
                     Sign into your account
                   </h5>
 
-                  <div class="form-outline mb-1">
+                  <div class="form-outline mb-2">
                     <label class="form-label" for="email">Email address</label>
                     <input
                       type="email"
@@ -45,7 +45,7 @@
                     Please enter a valid email
                   </div>
 
-                  <div class="form-outline mt-3 mb-1">
+                  <div class="form-outline mt-3 mb-2">
                     <label class="form-label" for="password">Password</label>
                     <input
                       type="password"
@@ -72,25 +72,26 @@
                     >
                       <span
                         *ngIf="loading"
+                        
                         class="spinner-border spinner-border-sm mt-1 mr-6"
                       ></span>
                       Login
                     </button>
-                    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+                    <div *ngIf="error" class="alert alert-danger mb-0">
                       {{ error }}
                     </div>
                   </div>
 
-                  <a class="small text-muted" href="#!">Forgot password?</a>
+                  <!-- <a class="small text-muted" href="#!">Forgot password?</a> -->
                   <p class="my-3" style="color: #393f81">
                     Don't have an account?
-                    <a href="/auth/register" style="color: #393f81"
+                    <a routerLink="/auth/register" style="color: #393f81"
                       >Register here</a
                     >
                   </p>
-                  <a href="#!" class="small text-muted">Terms of use. </a>
+                  <!-- <a href="#!" class="small text-muted">Terms of use. </a>
                   <br />
-                  <a href="#!" class="small text-muted">Privacy policy</a>
+                  <a href="#!" class="small text-muted">Privacy policy</a> -->
                 </form>
               </div>
             </div>

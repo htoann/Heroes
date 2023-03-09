@@ -19,6 +19,7 @@ export class HeroDetailComponent {
   @Input() hero: Hero | null;
   tags?: string[];
   form: FormGroup;
+  loading: boolean;
   private heroSubscription: Subscription | undefined;
 
   constructor(
@@ -36,6 +37,10 @@ export class HeroDetailComponent {
     return this.form.get('age')
   }
 
+  get name() {
+    return this.form.get('name')
+  }
+
   ngOnInit(): void {
     this.form = this.fb.group({
       name: ["", Validators.required],
@@ -49,6 +54,7 @@ export class HeroDetailComponent {
   }
 
   private getHero(): void {
+    this.loading = true;
     const id = this.route.snapshot.paramMap.get('id')!;
     this.store.dispatch(getHero({ id }))
     this.heroSubscription = this.store.pipe(select(currentHeroSelector)).subscribe(hero => {
@@ -62,7 +68,10 @@ export class HeroDetailComponent {
           age: hero.age,
           address: hero.address,
         });
+
+        this.loading = false;
       }
+
     })
   }
 

@@ -3,26 +3,21 @@
   <input
     type="text"
     class="form-control"
-    id="formGroupExampleInput"
     placeholder="Name"
     #searchBox
     (input)="search(searchBox.value)"
   />
 
   <ul
-    class="list-group mt-4 position-absolute col-2 mx-auto shadow mb-5 bg-body rounded w-100"
+    class="list-group mt-2 position-absolute col-2 mx-auto shadow mb-5 bg-body rounded w-100"
   >
     <a
       *ngFor="let hero of heroes$ | async"
       routerLink="/heroes/{{ hero._id }}"
-      class="text-decoration-none px-2 mb-3"
+      class="text-decoration-none px-2 mb-2"
     >
       <li>
-        <img
-          class="avatar"
-          src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png"
-          alt=""
-        />
+        <img class="avatar" src="../../../assets/images/hero-avt.webp" alt="" />
         <a
           routerLink="/heroes/{{ hero._id }}"
           class="text-decoration-none w-100"

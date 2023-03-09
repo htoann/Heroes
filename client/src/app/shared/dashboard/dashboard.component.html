@@ -1,7 +1,7 @@
 <app-hero-search></app-hero-search>
 
-<div class="mt-5">
-  <h4 class="my-4">Top Heroes</h4>
+<div class="my-5">
+  <h4 class="my-4 text-center">Top Heroes</h4>
 
   <div class="container">
     <div class="row">
@@ -10,29 +10,10 @@
         *ngFor="let hero of heroes"
         routerLink="/heroes/{{ hero._id }}"
       >
-        <div class="card">
-          <img
-            src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png"
-            class="card-img-top avatar-hero"
-            alt=""
-          />
-          <div class="card-body text-center">
-            <h5 class="card-title">{{ hero.name | capitalize }}</h5>
-            <tag-input
-              *ngIf="hero.tags!.length > 0"
-              [ngModel]="hero.tags"
-              [removable]="false"
-              [hideForm]="true"
-            >
-              <ng-template item-template let-item="item" let-index="index">
-                <span class="tag">#{{ item }} </span>
-              </ng-template>
-            </tag-input>
-            <p class="card-text" *ngIf="hero.tags!.length === 0">No tags</p>
-            <button class="btn btn-primary mt-4">View More</button>
-          </div>
-        </div>
+        <app-hero-card [hero]="hero"></app-hero-card>
       </div>
     </div>
   </div>
 </div>
+
+<app-loading [loading]="loading"></app-loading>

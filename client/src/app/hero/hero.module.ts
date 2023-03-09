@@ -10,6 +10,8 @@ import { HeroesComponent } from './heroes.component';
 import { RouterModule } from '@angular/router';
 import { HeroRoutingModule } from './hero-routing.module';
 import { DashboardComponent } from '../shared/dashboard/dashboard.component';
+import { SharedModule } from '../shared/shared.module';
+import { HeroCardComponent } from './hero-card/hero-card.component';
 
 @NgModule({
   imports: [
@@ -18,7 +20,8 @@ import { DashboardComponent } from '../shared/dashboard/dashboard.component';
     TagInputModule,
     FormsModule,
     RouterModule,
-    HeroRoutingModule
+    HeroRoutingModule,
+    SharedModule
   ],
   declarations: [
     HeroDetailComponent,
@@ -26,7 +29,8 @@ import { DashboardComponent } from '../shared/dashboard/dashboard.component';
     CapitalizePipe,
     HeroFormComponent,
     HeroSearchComponent,
-    DashboardComponent
+    DashboardComponent,
+    HeroCardComponent
   ],
   providers: [
   ]

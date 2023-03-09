@@ -1,0 +1,26 @@
+<div
+  class="card shadow-sm p-3 mb-2 bg-body-tertiary rounded"
+>
+  <img
+    src="../../../assets//images/hero-avt.webp"
+    class="card-img-top avatar-hero"
+    alt=""
+  />
+  <div class="card-body text-center">
+    <h5 class="card-title">{{ hero.name | capitalize }}</h5>
+    <tag-input
+      *ngIf="hero.tags!.length > 0"
+      [ngModel]="hero.tags"
+      [removable]="false"
+      [hideForm]="true"
+    >
+      <ng-template item-template let-item="item" let-index="index">
+        <span class="tag">#{{ item }} </span>
+      </ng-template>
+    </tag-input>
+    <p class="card-text" *ngIf="hero.tags!.length === 0">No tags</p>
+    <button class="btn btn-primary mt-4" routerLink="/heroes/{{ hero._id }}">
+      View More
+    </button>
+  </div>
+</div>
