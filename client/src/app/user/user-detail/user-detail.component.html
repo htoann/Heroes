@@ -1,4 +1,4 @@
-<app-loading [loading]="loading"></app-loading> -->
+<app-loading [loading]="loading"></app-loading>
 
 <section *ngIf="user">
   <div class="container py-5 h-100">
@@ -16,12 +16,10 @@
               <img
                 src="../../../../assets/images/user-avt.png"
                 alt="Avatar"
-                class="img-fluid my-5"
+                class="img-fluid my-3"
                 style="width: 80px"
               />
               <h5>{{ user.name }}</h5>
-              <!-- <p>Web Designer</p> -->
-              <i class="far fa-edit mb-5"></i>
             </div>
             <div class="col-md-8">
               <div class="card-body p-4">
@@ -45,12 +43,12 @@
                         formControlName="name"
                       />
                     </div>
-                    <div *ngIf="email?.invalid" class="alert alert-danger">
+                    <div *ngIf="email?.invalid" class="text-error">
                       Please enter a valid email
                     </div>
                   </div>
 
-                  <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+                  <div *ngIf="error" class="text-error mt-3 mb-0">
                     {{ error }}
                   </div>
                 </div>

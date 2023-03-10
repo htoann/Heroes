@@ -27,7 +27,7 @@
           formControlName="mail"
         />
       </div>
-      <div *ngIf="mail?.invalid" class="alert alert-danger">
+      <div *ngIf="mail?.invalid" class="text-error">
         Please enter a valid email
       </div>
       <div class="my-2 form-input">
@@ -51,7 +51,7 @@
           formControlName="age"
         />
       </div>
-      <div *ngIf="age?.invalid" class="alert alert-danger">
+      <div *ngIf="age?.invalid" class="text-error">
         Please enter a valid age
       </div>
 

@@ -13,6 +13,7 @@ export class NavbarComponent {
   title = 'Heroes';
   user: User;
   private userSubscription: Subscription | undefined;
+  clicked: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -27,6 +28,10 @@ export class NavbarComponent {
     this.authService.logout();
     this.router.navigate(['/auth/login']);
   }
+
+  // clickEvent() {
+  //   this.clicked = !this.clicked;
+  // }
 
   ngOnDestroy() {
     if (this.userSubscription) {

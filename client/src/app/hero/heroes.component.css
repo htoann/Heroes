@@ -6,7 +6,9 @@ li {
   flex-direction: column;
 }
 
-.selected {
-  background-color: black;
-  color: white;
+.tag-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }

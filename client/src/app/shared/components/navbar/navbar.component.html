@@ -1,41 +1,61 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <a class="header-title" href="/">
+  <a class="header-title" routerLink="/">
     <img class="logo" src="../../../../assets/images/Hero-logo.png" alt="" />
   </a>
   <div class="container-fluid p-0">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item" *ngIf="user">
-          <a class="nav-link active fs-5" aria-current="page" href="/dashboard"
+          <a
+            class="nav-link active fs-5"
+            aria-current="page"
+            routerLink="/dashboard"
             >Dashboard</a
           >
         </li>
         <div *ngIf="user">
           <li class="nav-item">
-            <a class="nav-link active fs-5" href="/heroes/list/{{ user._id }}"
+            <a
+              class="nav-link active fs-5"
+              routerLink="/heroes/list/{{ user._id }}"
               >My Heroes</a
             >
           </li>
         </div>
       </ul>
     </div>
-
-    <div *ngIf="user; else auth" class="d-flex align-items-center">
-      <a href="/user/{{ user._id }}"
-        ><img
+    <!-- (click)="clickEvent()" -->
+    <div class="dropdown" *ngIf="user; else auth">
+      <button
+        class="btn btn-light dropdown-toggle d-flex align-items-center"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <img
           class="avatar"
           src="../../../../assets/images/user-avt.png"
           alt=""
-      /></a>
-      <button type="button" class="btn btn-light" (click)="logout()">
-        Logout
+        />
+        <span class="user-name">{{ user.name }}</span>
       </button>
+      <ul class="dropdown-menu" [class.show]="clicked">
+        <li>
+          <a class="dropdown-item" routerLink="/user/{{ user._id }}">Profile</a>
+        </li>
+        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <a class="dropdown-item pe-auto" routerLink="" (click)="logout()"
+            >Logout</a
+          >
+        </li>
+      </ul>
     </div>
     <ng-template #auth>
-      <a href="/auth/login"
+      <a routerLink="/auth/login"
         ><button type="button" class="btn btn-light login">Login</button>
       </a>
-      <a href="/auth/register"
+      <a routerLink="/auth/register"
         ><button type="button" class="btn btn-primary">Register</button>
       </a>
     </ng-template>
