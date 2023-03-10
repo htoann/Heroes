@@ -11,6 +11,7 @@ import { createHero } from '../../core/store/hero/hero.actions';
 })
 export class HeroFormComponent {
   @Input() heroes: Hero[] = []
+  error: string;
 
   constructor(public heroService: HeroService, private store: Store) {
   }

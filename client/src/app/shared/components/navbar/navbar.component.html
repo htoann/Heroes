@@ -39,7 +39,8 @@
         />
         <span class="user-name">{{ user.name }}</span>
       </button>
-      <ul class="dropdown-menu" [class.show]="clicked">
+      <!-- [class.show]="clicked" -->
+      <ul class="dropdown-menu">
         <li>
           <a class="dropdown-item" routerLink="/user/{{ user._id }}">Profile</a>
         </li>

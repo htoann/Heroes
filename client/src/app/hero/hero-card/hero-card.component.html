@@ -1,10 +1,14 @@
-<div class="card shadow-sm p-3 mb-2 bg-body-tertiary rounded">
+<div
+  class="card shadow-sm bg-body-tertiary rounded"
+  [class.selected]="hero.selected"
+>
+  <!-- <input type="checkbox" id="checkbox" name="checkbox" /> -->
   <img
     src="../../../assets//images/hero-avt.webp"
-    class="card-img-top avatar-hero"
+    class="card-img-top avatar-hero pt-3"
     alt=""
   />
-  <div class="card-body text-center">
+  <div class="card-body text-center" for="checkbox">
     <h5 class="card-title">{{ hero.name | capitalize }}</h5>
     <tag-input
       *ngIf="hero.tags!.length > 0"

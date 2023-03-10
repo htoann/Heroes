@@ -68,6 +68,10 @@ label {
   height: 28px;
 }
 
+/* tag {
+  background-color: aquamarine !important;
+} */
+
 .tag__text {
   display: flex !important;
   align-items: center !important;
@@ -91,4 +95,5 @@ label {
 
 .text-error {
   color: var(--danger);
+  margin-top: 2px;
 }

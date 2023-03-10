@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Hero } from 'src/app/core/models/hero.model';
+import { Hero, HeroSelected } from 'src/app/core/models/hero.model';
 
 @Component({
   selector: 'app-hero-card',
@@ -7,6 +7,6 @@ import { Hero } from 'src/app/core/models/hero.model';
   styleUrls: ['./hero-card.component.css']
 })
 export class HeroCardComponent {
-  @Input() hero: Hero;
+  @Input() hero: HeroSelected;
   @Input() checkBox: boolean | false;
 }

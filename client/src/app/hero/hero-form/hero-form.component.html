@@ -1,20 +1,18 @@
-<div class="d-flex justify-content-center">
-  <div class="col-2">
-    <label for="new-hero" class="d-flex justify-content-center">Name</label>
-    <input
-      type="text"
-      class="form-control mt-2"
-      placeholder="Hero"
-      #heroName
-      (keyup.enter)="createHero(heroName.value); heroName.value = ''"
-    />
+<div class="col-2">
+  <label for="new-hero">Name</label>
+  <input
+    type="text"
+    class="form-control mt-2"
+    placeholder="Hero"
+    #heroName
+    (keyup.enter)="createHero(heroName.value); heroName.value = ''"
+  />
 
-    <button
-      type="button"
-      class="btn btn-primary d-flex mx-auto"
-      (click)="createHero(heroName.value); heroName.value = ''"
-    >
-      + Add
-    </button>
-  </div>
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="createHero(heroName.value); heroName.value = ''"
+  >
+    + Add
+  </button>
 </div>

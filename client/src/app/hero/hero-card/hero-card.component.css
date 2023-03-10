@@ -1,21 +1,27 @@
 .avatar-hero {
   width: 100px;
   height: 100%;
-  padding-top: 16px;
+  /* padding-top: 8px; */
   margin: auto;
   object-fit: contain;
 }
 .card {
-  cursor: pointer;
-  transition: 0.2s ease 0s;
-  height: 298px;
+  /* transition: 0.2s ease 0s; */
+  height: 290px;
+  cursor: default;
 }
 
-.card:hover {
+.card:hover:not(.selected) {
   box-shadow: 5px 5px rgb(225, 227, 255) !important;
+  /* background: rgb(243, 243, 243); */
 }
 
 tag-input {
   height: 40px;
   overflow: hidden !important;
+}
+
+.selected {
+  /* box-shadow: 5px 5px rgb(225, 227, 255); */
+  background: rgb(219, 225, 241);
 }
