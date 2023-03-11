@@ -9,12 +9,13 @@
   />
 
   <ul
+    *ngIf="heroes$"
     class="list-group mt-2 position-absolute col-2 mx-auto shadow mb-5 bg-body rounded w-100"
   >
     <a
       *ngFor="let hero of heroes$ | async"
       routerLink="/heroes/{{ hero._id }}"
-      class="text-decoration-none px-2 mb-2"
+      class="text-decoration-none px-2 my-2"
     >
       <li>
         <img class="avatar" src="../../../assets/images/hero-avt.webp" alt="" />
@@ -27,4 +28,10 @@
       </li>
     </a>
   </ul>
+  <div
+    *ngIf="(heroes$ | async)?.length == 0 && (searchTerms | async)"
+    class="list-group mt-2 position-absolute col-2 mx-auto shadow mb-5 bg-body rounded w-100"
+  >
+    <span class="m-2">No heroes found</span>
+  </div>
 </div>

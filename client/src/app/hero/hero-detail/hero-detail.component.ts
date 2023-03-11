@@ -5,10 +5,9 @@ import { Location } from '@angular/common';
 
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Hero } from '../../core/models/hero.model';
-import { deleteHero, getHero, updateHero } from '../../core/store/hero/hero.actions';
-import { select, Store } from '@ngrx/store';
-import { currentHeroSelector } from '../../core/store/hero/hero.selector';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { HeroService } from './../../core/services/hero.service';
 
 @Component({
   selector: 'app-hero-detail',
@@ -26,7 +25,7 @@ export class HeroDetailComponent {
     private route: ActivatedRoute,
     private location: Location,
     private fb: FormBuilder,
-    private store: Store,
+    private heroService: HeroService
   ) { }
 
   get mail() {
@@ -56,8 +55,7 @@ export class HeroDetailComponent {
   private getHero(): void {
     this.loading = true;
     const id = this.route.snapshot.paramMap.get('id')!;
-    this.store.dispatch(getHero({ id }))
-    this.heroSubscription = this.store.pipe(select(currentHeroSelector)).subscribe(hero => {
+    this.heroSubscription = this.heroService.getHero(id).subscribe(hero => {
       if (hero) {
         this.hero = hero
         this.tags = hero.tags
@@ -78,11 +76,11 @@ export class HeroDetailComponent {
   updateHero(): void {
     const updatedHero = { ...this.hero, ...this.form.value, };
     updatedHero.tags = this.tags?.map(tag => tag.toLowerCase().replace(/\s+/g, ''));
-    this.store.dispatch(updateHero({ hero: updatedHero }))
+    this.heroService.updateHero(updatedHero);
   }
 
   deleteHero(id: string): void {
-    this.store.dispatch(deleteHero({ id }))
+    this.heroService.deleteHero(id);
   }
 
   goBack(): void {

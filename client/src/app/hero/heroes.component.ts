@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState } from './../core/store/app.state';
 import { Hero, HeroSelected } from './../core/models/hero.model';
-import { getHeroes } from './../core/store/hero/hero.actions';
-import { heroesSelector } from './../core/store/hero/hero.selector';
 import { Subject } from 'rxjs';
 import { HeroService } from './../core/services/hero.service';
 import { Router } from '@angular/router';
@@ -38,13 +36,12 @@ export class HeroesComponent implements OnInit {
   }
 
   private getHeroes(): void {
-    this.store.dispatch(getHeroes())
-    this.store.pipe(select(heroesSelector), takeUntil(this.unsubscribe$)).subscribe(heroes => {
+    this.heroService.getHeroes().pipe(takeUntil(this.unsubscribe$)).subscribe(heroes => {
       this.heroes = heroes.map((hero) => ({
         ...hero,
         selected: false,
       }));
-    });
+    })
   }
 
   onSelected(heroSelect: Hero) {

@@ -51,14 +51,30 @@
         </button>
       </div>
     </div>
-    <div class="row row-cols-4 gy-3">
+    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      New hero
+    </button>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <app-hero-form [heroes]="heroes"></app-hero-form>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row row-cols-4 gy-3 mb-4">
       <div class="col" *ngFor="let hero of heroes">
         <div (click)="onSelected(hero)">
           <app-hero-card [hero]="hero"></app-hero-card>
         </div>
       </div>
     </div>
-
-    <app-hero-form [heroes]="heroes"></app-hero-form>
   </div>
 </div>

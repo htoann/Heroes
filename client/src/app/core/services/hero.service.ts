@@ -1,88 +1,47 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Hero } from '../models/hero.model';
-import { Observable, tap, of, catchError } from 'rxjs';
-import { AuthService } from './auth.service';
+import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Location } from '@angular/common';
-import { ToastService } from './toast.service';
+import { createHero, deleteHero, getHero, getHeroes, updateHero } from '../store/hero/hero.actions';
+import { AppState } from '../store/app.state';
+import { select, Store } from '@ngrx/store';
+import { currentHeroSelector, heroesSelector } from '../store/hero/hero.selector';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroService {
   constructor(
-    private location: Location,
     private http: HttpClient,
-    private authService: AuthService,
-    private toastr: ToastService) {
+    private store: Store<AppState>) {
   }
   private heroesUrl = environment.heroesUrl
-  private userUrl = environment.userUrl
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
+  createHero(name: string): void {
+    this.store.dispatch(createHero({ name }));
+  }
+
   getHeroes() {
-    return this.http.get<Hero[]>(`${this.heroesUrl}/list/${this.authService.currentUserId}`);
+    this.store.dispatch(getHeroes())
+    return this.store.pipe(select(heroesSelector))
   }
 
-  getHero(id: string): Observable<Hero> {
-    const url = `${this.heroesUrl}/${id}`;
-    return this.http.get<Hero>(url);
+  public getHero(id: string) {
+    this.store.dispatch(getHero({ id }))
+    return this.store.pipe(select(currentHeroSelector))
   }
 
-  updateHero(hero: Hero): Observable<Hero> {
-    const url = `${this.heroesUrl}/${hero._id}`;
-    return this.http.patch<Hero>(url, hero, this.httpOptions).pipe(
-      tap(_ => {
-        this.toastr.showSuccess("Update hero successfully");
-        this.location.back();
-      })
-    )
+  updateHero(updatedHero: Hero): void {
+    this.store.dispatch(updateHero({ hero: updatedHero }))
   }
 
-  addTagsToHeroes(heroIds: any, tags: any): Observable<any> {
-    const url = `${this.heroesUrl}/tags?action=add`;
-    const body = { heroIds, tags }
-
-    console.log(body)
-
-    return this.http.patch<any>(url, body, this.httpOptions)
-  }
-
-  deleteTagsFromHeroes(heroIds: any, tags: any): Observable<any> {
-    const url = `${this.heroesUrl}/tags?action=delete`;
-    const body = { heroIds, tags }
-
-    return this.http.patch<any>(url, body, this.httpOptions)
-  }
-
-  createHero(name: string): Observable<Hero> {
-    return this.http.post<Hero>(this.heroesUrl, { name }, this.httpOptions).pipe(
-      tap((newHero: Hero) => {
-      }),
-      catchError((error) => {
-        this.toastr.showError(error.error)
-        return of(error)
-      })
-    )
-  }
-
-  deleteHero(id: string): Observable<Hero> {
-    const url = `${this.heroesUrl}/${id}`;
-    return this.http.delete<Hero>(url, this.httpOptions).pipe(
-      tap(_ => {
-        this.toastr.showSuccess("Delete hero successfully");
-        this.location.back();
-      }),
-    );
-  }
-
-  deleteHeroes(ids: string[]): Observable<Hero> {
-    const url = `${this.heroesUrl}`;
-    return this.http.delete<Hero>(url, this.httpOptions)
+  deleteHero(id: string): void {
+    this.store.dispatch(deleteHero({ id }))
   }
 
   searchHeroes(term: string): Observable<Hero[]> {
@@ -98,5 +57,19 @@ export class HeroService {
       //   return of(error)
       // })
     );
+  }
+
+  addTagsToHeroes(heroIds: any, tags: any): Observable<any> {
+    const url = `${this.heroesUrl}/tags?action=add`;
+    const body = { heroIds, tags }
+
+    return this.http.patch<any>(url, body, this.httpOptions)
+  }
+
+  deleteTagsFromHeroes(heroIds: any, tags: any): Observable<any> {
+    const url = `${this.heroesUrl}/tags?action=delete`;
+    const body = { heroIds, tags }
+
+    return this.http.patch<any>(url, body, this.httpOptions)
   }
 }
