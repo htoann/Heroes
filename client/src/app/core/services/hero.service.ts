@@ -59,14 +59,14 @@ export class HeroService {
     );
   }
 
-  addTagsToHeroes(heroIds: any, tags: any): Observable<any> {
+  addTagsToHeroes(heroIds: string[], tags: string[]): Observable<any> {
     const url = `${this.heroesUrl}/tags?action=add`;
     const body = { heroIds, tags }
 
     return this.http.patch<any>(url, body, this.httpOptions)
   }
 
-  deleteTagsFromHeroes(heroIds: any, tags: any): Observable<any> {
+  deleteTagsFromHeroes(heroIds: string[], tags: string[]): Observable<any> {
     const url = `${this.heroesUrl}/tags?action=delete`;
     const body = { heroIds, tags }
 

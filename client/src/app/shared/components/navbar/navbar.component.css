@@ -1,3 +1,9 @@
+nav {
+  padding-left: 2em;
+  padding-right: 2em;
+  height: 70px;
+}
+
 .name_user {
   margin-right: 15px;
   font-weight: 700;

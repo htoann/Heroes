@@ -1,24 +1,29 @@
-<div class="mb-3 col-2 mx-auto my-4 position-relative">
-  <h4 class="text-center mb-4">Hero Search</h4>
+<i class="bi bi-search"></i>
+<form class="d-flex" role="search" class="me-3 mx-auto my-4 position-relative">
   <input
-    type="text"
-    class="form-control"
-    placeholder="Name"
+    class="form-control me-2 rounded-pill"
+    type="search"
+    placeholder="Search hero name"
+    aria-label="Search"
     #searchBox
     (input)="search(searchBox.value)"
   />
-
   <ul
+    (click)="searchBox.value = ''; search(searchBox.value)"
     *ngIf="heroes$"
-    class="list-group mt-2 position-absolute col-2 mx-auto shadow mb-5 bg-body rounded w-100"
+    class="result col-4 list-group mt-2 position-absolute col-2 mx-auto shadow mb-5 bg-body rounded w-100"
   >
     <a
       *ngFor="let hero of heroes$ | async"
       routerLink="/heroes/{{ hero._id }}"
-      class="text-decoration-none px-2 my-2"
+      class="text-decoration-none"
     >
-      <li>
-        <img class="avatar" src="../../../assets/images/hero-avt.webp" alt="" />
+      <li *ngIf="searchBox.value" class="p-2 mx-2">
+        <img
+          class="avatar rounded-circle"
+          src="../../../assets/images/hero-avt.webp"
+          alt=""
+        />
         <a
           routerLink="/heroes/{{ hero._id }}"
           class="text-decoration-none w-100"
@@ -29,9 +34,9 @@
     </a>
   </ul>
   <div
-    *ngIf="(heroes$ | async)?.length == 0 && (searchTerms | async)"
+    *ngIf="(heroes$ | async)?.length === 0 && searchBox.value"
     class="list-group mt-2 position-absolute col-2 mx-auto shadow mb-5 bg-body rounded w-100"
   >
     <span class="m-2">No heroes found</span>
   </div>
-</div>
+</form>

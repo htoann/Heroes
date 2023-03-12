@@ -4,15 +4,19 @@ import { RouterModule } from "@angular/router";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingComponent } from './components/loading/loading.component';
+import { CapitalizePipe } from './pipe/capitalize.pipe';
+import { HeroSearchComponent } from '../hero/hero-search/hero-search.component';
 
 const components = [
   NavbarComponent,
-  LoadingComponent
+  LoadingComponent,
+  CapitalizePipe,
+  HeroSearchComponent
 ]
 
 @NgModule({
   imports: [
-  CommonModule,
+    CommonModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,

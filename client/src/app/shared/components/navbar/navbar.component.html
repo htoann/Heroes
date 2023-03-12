@@ -1,4 +1,6 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav
+  class="navbar navbar-expand-lg bg-body-tertiary shadow-sm mb-5 bg-body-tertiary rounded"
+>
   <a class="header-title" routerLink="/">
     <img class="logo" src="../../../../assets/images/Hero-logo.png" alt="" />
   </a>
@@ -25,23 +27,23 @@
       </ul>
     </div>
     <!-- (click)="clickEvent()" -->
-    <!-- <input class="form-control" type="text" placeholder="Default input" /> -->
+    <app-hero-search *ngIf="user"></app-hero-search>
     <div class="dropdown" *ngIf="user; else auth">
       <button
-        class="btn btn-light dropdown-toggle d-flex align-items-center"
+        class="btn btn-light dropdown-toggle"
         type="button"
+        id="dropdownMenuButton1"
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
         <img
-          class="avatar"
+          class="avatar rounded-circle"
           src="../../../../assets/images/user-avt.png"
           alt=""
         />
-        <span class="user-name">{{ user.name }}</span>
+        <span class="user-name">{{ user.email }}</span>
       </button>
-      <!-- [class.show]="clicked" -->
-      <ul class="dropdown-menu">
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
         <li>
           <a class="dropdown-item" routerLink="/user/{{ user._id }}">Profile</a>
         </li>

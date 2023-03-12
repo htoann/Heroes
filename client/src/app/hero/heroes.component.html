@@ -1,4 +1,4 @@
-<h2 class="text-center">My Heroes</h2>
+<h4 class="text-center my-4">My Heroes</h4>
 
 <div class="my-5">
   <div class="container">
@@ -6,7 +6,7 @@
       <div class="mb-4 tag-form">
         <label for="" class="mb-1">Add tags</label>
         <tag-input
-          [disable]="true"
+          [(ngModel)]="tagsToAdd"
           [modelAsStrings]="true"
           #input1
           placeholder="Enter a new tags"
@@ -51,7 +51,13 @@
         </button>
       </div>
     </div>
-    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button
+      type="button"
+      class="btn btn-light d-flex m-auto mb-3"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      *ngIf="heroes.length > 0"
+    >
       New hero
     </button>
     <!-- Modal -->
@@ -68,8 +74,11 @@
         </div>
       </div>
     </div>
-    
-    <div class="row row-cols-4 gy-3 mb-4">
+
+    <div
+      class="row row-cols-4 gy-3 mb-4 justify-content-center"
+      *ngIf="heroes.length > 0"
+    >
       <div class="col" *ngFor="let hero of heroes">
         <div (click)="onSelected(hero)">
           <app-hero-card [hero]="hero"></app-hero-card>
@@ -78,3 +87,25 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="heroes.length == 0" class="d-flex justify-content-center">
+  <div class="bg-body-tertiary rounded col-2">
+    <img
+      src="../../../assets//images/hero-avt.webp"
+      class="card-img-top avatar-hero p-3"
+      alt=""
+    />
+    <div class="card-body text-center" for="checkbox">
+      <h5 class="card-title">Add your hero now</h5>
+      <button
+        class="btn btn-primary mt-4"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        + Add hero
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-loading [loading]="loading"></app-loading>

@@ -20,6 +20,7 @@ export class HeroesComponent implements OnInit {
   tagsToAdd: string[] = [];
   tagsToRemove: string[] = [];
   private unsubscribe$: Subject<void> = new Subject<void>();
+  loading: boolean = false;
 
   constructor(private store: Store<AppState>,
     private authService: AuthService,
@@ -36,11 +37,15 @@ export class HeroesComponent implements OnInit {
   }
 
   private getHeroes(): void {
+    this.loading = true;
+
     this.heroService.getHeroes().pipe(takeUntil(this.unsubscribe$)).subscribe(heroes => {
       this.heroes = heroes.map((hero) => ({
         ...hero,
         selected: false,
       }));
+
+      this.loading = false;
     })
   }
 
