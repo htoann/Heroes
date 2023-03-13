@@ -9,17 +9,19 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item" *ngIf="user">
           <a
-            class="nav-link active fs-5"
+            class="nav-link fs-5"
             aria-current="page"
             routerLink="/dashboard"
+            routerLinkActive="active-link"
             >Dashboard</a
           >
         </li>
         <div *ngIf="user">
           <li class="nav-item">
             <a
-              class="nav-link active fs-5"
+              class="nav-link fs-5"
               routerLink="/heroes/list/{{ user._id }}"
+              routerLinkActive="active-link"
               >My Heroes</a
             >
           </li>

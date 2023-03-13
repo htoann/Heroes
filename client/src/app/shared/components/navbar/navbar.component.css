@@ -39,3 +39,12 @@ li {
 .user-name {
   margin-right: 10px;
 }
+
+.nav-link {
+  color: rgb(140, 140, 140);
+}
+
+.active-link {
+  color: black;
+  border-bottom: 2px solid;
+}

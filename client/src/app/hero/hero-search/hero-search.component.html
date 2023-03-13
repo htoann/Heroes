@@ -9,9 +9,10 @@
     (input)="search(searchBox.value)"
   />
   <ul
-    (click)="searchBox.value = ''; search(searchBox.value)"
     *ngIf="heroes$"
-    class="result col-4 list-group mt-2 position-absolute col-2 mx-auto shadow mb-5 bg-body rounded w-100"
+    (click)="searchBox.value = ''"
+    class="result col-4 mt-2 position-absolute col-2 mx-auto shadow mb-5 bg-body rounded w-100"
+    [class.list-group]="heroes$ && searchBox.value"
   >
     <a
       *ngFor="let hero of heroes$ | async"

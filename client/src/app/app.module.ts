@@ -40,7 +40,10 @@ import { PageModule } from './page/page.module';
     UserModule,
     SharedModule,
     PageModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot({
+      autoDismiss: true,
+      maxOpened: 3,
+    })
   ],
   providers: [
     AuthGuard,

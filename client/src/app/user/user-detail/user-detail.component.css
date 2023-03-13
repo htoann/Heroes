@@ -6,3 +6,7 @@
 .avatar-wrapper {
   background-color: #dcbfc0;
 }
+
+.input-group-text {
+  width: 85px;
+}
