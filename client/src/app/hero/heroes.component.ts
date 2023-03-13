@@ -20,32 +20,20 @@ export class HeroesComponent implements OnInit {
   tagsToAdd: string[] = [];
   tagsToRemove: string[] = [];
   private unsubscribe$: Subject<void> = new Subject<void>();
-  loading: boolean = false;
 
-  constructor(private store: Store<AppState>,
-    private authService: AuthService,
-    private heroService: HeroService,
-    private router: Router,
-  ) { }
+  constructor(private heroService: HeroService) { }
 
   ngOnInit(): void {
-    if (!this.authService.currentUserValue) {
-      this.router.navigate(['/auth/login']);
-    }
-    else
-      this.getHeroes();
+    this.getHeroes();
   }
 
   private getHeroes(): void {
-    this.loading = true;
 
     this.heroService.getHeroes().pipe(takeUntil(this.unsubscribe$)).subscribe(heroes => {
       this.heroes = heroes.map((hero) => ({
         ...hero,
         selected: false,
       }));
-
-      this.loading = false;
     })
   }
 
@@ -70,6 +58,7 @@ export class HeroesComponent implements OnInit {
     this.tagsToAdd = this.tagsToAdd.map(tag => tag.toLowerCase().trim().replace(/\s+/g, ''));
     this.heroService.addTagsToHeroes(this.selectedHeroes, this.tagsToAdd).pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
       this.getHeroes();
+      this.selectedHeroes = [];
     }
     )
   }
@@ -78,6 +67,7 @@ export class HeroesComponent implements OnInit {
     this.heroService.deleteTagsFromHeroes(this.selectedHeroes, this.tagsToRemove).pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
       this.getHeroes();
       this.selectedTags = [];
+      this.selectedHeroes = [];
     }
     )
   }

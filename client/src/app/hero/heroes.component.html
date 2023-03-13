@@ -80,8 +80,19 @@
       *ngIf="heroes.length > 0"
     >
       <div class="col" *ngFor="let hero of heroes">
-        <div (click)="onSelected(hero)">
-          <app-hero-card [hero]="hero"></app-hero-card>
+        <div
+          (click)="onSelected(hero)"
+          class="hero-card-wrapper"
+          [class.selected]="hero.selected"
+        >
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
+            [attr.checked]="hero.selected ? 'checked' : null"
+          />
+          <app-hero-card [hero]="hero"> </app-hero-card>
         </div>
       </div>
     </div>
@@ -107,5 +118,3 @@
     </div>
   </div>
 </div>
-
-<app-loading [loading]="loading"></app-loading>

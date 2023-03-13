@@ -1,0 +1,14 @@
+{
+  "name": "chative",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "client": "cd client && ng serve --open",
+    "server": "cd server && npm run dev",
+    "auth": "cd microservice-auth && npm run dev",
+    "dev": "concurrently \"npm run client\" \"npm run server\" \"npm run auth\""
+  },
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
