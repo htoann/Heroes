@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from './../core/store/app.state';
 import { Hero, HeroSelected } from './../core/models/hero.model';
 import { Subject } from 'rxjs';
 import { HeroService } from './../core/services/hero.service';
-import { Router } from '@angular/router';
-import { AuthService } from './../core/services/auth.service';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -19,16 +15,19 @@ export class HeroesComponent implements OnInit {
   selectedTags: string[] = [];
   tagsToAdd: string[] = [];
   tagsToRemove: string[] = [];
+
+  allTags: string[] = [];
+  tagsToFilter: string = '';
   private unsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(private heroService: HeroService) { }
 
   ngOnInit(): void {
     this.getHeroes();
+    this.getAllTags();
   }
 
   private getHeroes(): void {
-
     this.heroService.getHeroes().pipe(takeUntil(this.unsubscribe$)).subscribe(heroes => {
       this.heroes = heroes.map((hero) => ({
         ...hero,
@@ -72,8 +71,22 @@ export class HeroesComponent implements OnInit {
     )
   }
 
+  onSelect(tag: string) {
+    this.tagsToFilter = tag;
+
+    this.heroService.getHeroesFilterTags(this.tagsToFilter).pipe(takeUntil(this.unsubscribe$)).subscribe(heroes => {
+      this.heroes = heroes;
+    })
+  }
+
   onRemove(tag: string): void {
     this.tagsToRemove.push(tag);
+  }
+
+  getAllTags(): void {
+    this.heroService.getAllTags().pipe(takeUntil(this.unsubscribe$)).subscribe(tags => {
+      this.allTags = tags;
+    })
   }
 
   ngOnDestroy(): void {

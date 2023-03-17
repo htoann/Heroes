@@ -31,7 +31,7 @@ export class HeroService {
     return this.store.pipe(select(heroesSelector))
   }
 
-  public getHero(id: string) {
+  getHero(id: string) {
     this.store.dispatch(getHero({ id }))
     return this.store.pipe(select(currentHeroSelector))
   }
@@ -48,15 +48,16 @@ export class HeroService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<Hero[]>(`${this.heroesUrl}?name=${term}`).pipe(
-      // tap(x => x.length ?
-      //   this.log(`Found heroes matching "${term}"`) :
-      //   this.log(`No heroes matching "${term}"`)),
-      // catchError((error) => {
-      //   this.toastr.showError(error.error)
-      //   return of(error)
-      // })
-    );
+    // return this.http.get<Hero[]>(`${this.heroesUrl}?name=${term}`).pipe(
+    //   tap(x => x.length ?
+    //     this.log(`Found heroes matching "${term}"`) :
+    //     this.log(`No heroes matching "${term}"`)),
+    //   catchError((error) => {
+    //     this.toastr.showError(error.error)
+    //     return of(error)
+    //   })
+    // );
+    return this.http.get<Hero[]>(`${this.heroesUrl}?name=${term}`);
   }
 
   addTagsToHeroes(heroIds: string[], tags: string[]): Observable<any> {
@@ -71,5 +72,14 @@ export class HeroService {
     const body = { heroIds, tags }
 
     return this.http.patch<any>(url, body, this.httpOptions)
+  }
+
+  getAllTags() {
+    return this.http.get<string[]>(`${this.heroesUrl}/tags`);
+  }
+
+  getHeroesFilterTags(tag: string): Observable<Hero[]> {
+    // const tagsString = tags.join(",");
+    return this.http.get<Hero[]>(`${this.heroesUrl}?tags=${tag}`);
   }
 }

@@ -74,8 +74,9 @@ label {
 
 .avatar {
   width: 40px;
-  height: 100%;
+  height: auto;
   margin-right: 10px;
+  object-fit: cover;
 }
 
 .card:has(.ng2-tags-container) .ng2-tags-container {

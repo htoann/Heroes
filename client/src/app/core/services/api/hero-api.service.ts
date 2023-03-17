@@ -25,7 +25,7 @@ export class HeroApiService {
   };
 
   getHeroes() {
-    return this.http.get<Hero[]>(`${this.heroesUrl}/list/${this.authService.currentUserId}`);
+    return this.http.get<Hero[]>(`${this.heroesUrl}`);
   }
 
   getHero(id: string): Observable<Hero> {
@@ -45,8 +45,8 @@ export class HeroApiService {
 
   createHero(name: string): Observable<Hero> {
     return this.http.post<Hero>(this.heroesUrl, { name }, this.httpOptions).pipe(
-      tap((newHero: Hero) => {
-      }),
+      // tap((newHero: Hero) => {
+      // }),
       catchError((error) => {
         this.toastr.showError(error.error)
         return of(error)

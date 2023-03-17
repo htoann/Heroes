@@ -5,7 +5,7 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { AuthGuard } from '../core/helpers/auth.guard';
 
 const routes: Routes = [
-  { path: 'list/:myUserId', component: HeroesComponent, canActivate: [AuthGuard] },
+  { path: '', component: HeroesComponent, canActivate: [AuthGuard] },
 
   { path: ':id', component: HeroDetailComponent, canActivate: [AuthGuard] }
 ];

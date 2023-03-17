@@ -1,5 +1,18 @@
 <h4 class="text-center my-4">My Heroes</h4>
 
+<div class="container text-center tag-form">
+  <tag-input
+    [ngModel]="allTags"
+    (onSelect)="onSelect($any($event))"
+    [removable]="false"
+    [hideForm]="true"
+  >
+    <ng-template item-template let-item="item" let-index="index">
+      <span class="tag">#{{ item }} </span>
+    </ng-template>
+  </tag-input>
+</div>
+
 <div class="my-5">
   <div class="container">
     <div *ngIf="selectedHeroes.length > 0">
