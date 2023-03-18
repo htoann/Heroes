@@ -1,14 +1,14 @@
 <h4 class="text-center my-4">My Heroes</h4>
 
 <div class="container text-center tag-form">
-  <tag-input
-    [ngModel]="allTags"
-    (onSelect)="onSelect($any($event))"
-    [removable]="false"
-    [hideForm]="true"
-  >
-    <ng-template item-template let-item="item" let-index="index">
-      <span class="tag">#{{ item }} </span>
+  <tag-input [ngModel]="allTags" [removable]="false" [hideForm]="true">
+    <ng-template item-template let-item="item">
+      <span
+        class="tag"
+        [class.active]="item.selected"
+        (click)="onSelect(item)"
+        >#{{ item.tag }}
+      </span>
     </ng-template>
   </tag-input>
 </div>

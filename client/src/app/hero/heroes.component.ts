@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Hero, HeroSelected } from './../core/models/hero.model';
 import { Subject } from 'rxjs';
-import { HeroService } from './../core/services/hero.service';
 import { takeUntil } from 'rxjs/operators';
+import { Hero, HeroSelected } from './../core/models/hero.model';
+import { HeroService } from './../core/services/hero.service';
 
 @Component({
   selector: 'app-heroes',
@@ -16,8 +16,8 @@ export class HeroesComponent implements OnInit {
   tagsToAdd: string[] = [];
   tagsToRemove: string[] = [];
 
-  allTags: string[] = [];
-  tagsToFilter: string = '';
+  allTags: any[] = [];
+  tagsToFilter: string[] = [];
   private unsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(private heroService: HeroService) { }
@@ -71,8 +71,14 @@ export class HeroesComponent implements OnInit {
     )
   }
 
-  onSelect(tag: string) {
-    this.tagsToFilter = tag;
+  onSelect(tag: any) {
+    this.allTags.forEach((t) => {
+      if (tag.tag == t.tag) {
+        t.selected = !t.selected;
+      }
+    });
+
+    this.tagsToFilter = this.allTags.filter(tag => tag.selected).map(tag => tag.tag);
 
     this.heroService.getHeroesFilterTags(this.tagsToFilter).pipe(takeUntil(this.unsubscribe$)).subscribe(heroes => {
       this.heroes = heroes;
@@ -85,7 +91,11 @@ export class HeroesComponent implements OnInit {
 
   getAllTags(): void {
     this.heroService.getAllTags().pipe(takeUntil(this.unsubscribe$)).subscribe(tags => {
-      this.allTags = tags;
+      this.allTags = tags.map((tag: any) => ({
+        tag,
+        selected: false,
+        readonly: true
+      }));
     })
   }
 

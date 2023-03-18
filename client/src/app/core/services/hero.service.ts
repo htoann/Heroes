@@ -78,8 +78,8 @@ export class HeroService {
     return this.http.get<string[]>(`${this.heroesUrl}/tags`);
   }
 
-  getHeroesFilterTags(tag: string): Observable<Hero[]> {
-    // const tagsString = tags.join(",");
-    return this.http.get<Hero[]>(`${this.heroesUrl}?tags=${tag}`);
+  getHeroesFilterTags(tags: string[]): Observable<Hero[]> {
+    const tagsString = tags.join(",");
+    return this.http.get<Hero[]>(`${this.heroesUrl}?tags=${tagsString}`);
   }
 }

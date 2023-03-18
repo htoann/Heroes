@@ -2,19 +2,21 @@ const Hero = require("../models/hero");
 
 exports.getHeroes = async (req, res, next) => {
   const name = req.query.name;
-  const tags = req.query.tags?.split(",");
+  const tags = req.query.tags?.length > 0 ? req.query.tags.split(",") : null;
 
   try {
     let heroes;
+    // query ?name=hero
     if (name) {
       heroes = await Hero.find({
         userId: req.user.user_id,
         name: { $regex: new RegExp(req.query.name, "i") },
       }).exec();
+      // query ?tag=test, test1
     } else if (tags) {
       heroes = await Hero.find({
         userId: req.user.user_id,
-        tags: { $in: tags },
+        tags: { $all: tags },
       });
     } else {
       heroes = await Hero.find({ userId: req.user.user_id });
@@ -65,7 +67,7 @@ exports.createHero = async (req, res, next) => {
   try {
     const existingHero = await Hero.findOne({ name: req.body.name });
     if (existingHero) {
-      return res.status(400).send("Hero name already exists");
+      return res.status(400).send("A hero with that name already exists");
     }
 
     const hero = await Hero.create({ userId: req.user.user_id, ...req.body });

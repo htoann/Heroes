@@ -34,3 +34,8 @@ li {
   border-radius: 5px;
   background: rgb(246, 247, 251);
 }
+
+::ng-deep tag:has(span.active) {
+  color: white;
+  background-color: #2196f3;
+}
