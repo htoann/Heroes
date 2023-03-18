@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap, of, catchError } from 'rxjs';
+import { Observable, tap, of, catchError, throwError, filter } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Location } from '@angular/common';
 import { Hero } from '../../models/hero.model';
 import { ToastService } from '../toast.service';
-import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,6 @@ export class HeroApiService {
   constructor(
     private location: Location,
     private http: HttpClient,
-    private authService: AuthService,
     private toastr: ToastService) {
   }
   private heroesUrl = environment.heroesUrl
@@ -39,18 +37,26 @@ export class HeroApiService {
       tap(_ => {
         this.toastr.showSuccess("Update hero successfully");
         this.location.back();
-      })
+      }),
+      catchError((error) => {
+        this.toastr.showError(error.error);
+        return of(null);
+      }),
+      // filter null cause Observable<Hero>
+      filter((hero: Hero | null): hero is Hero => hero !== null)
     )
   }
 
   createHero(name: string): Observable<Hero> {
     return this.http.post<Hero>(this.heroesUrl, { name }, this.httpOptions).pipe(
-      // tap((newHero: Hero) => {
-      // }),
+      tap(_ => {
+        this.toastr.showSuccess("Create hero successfully");
+      }),
       catchError((error) => {
-        this.toastr.showError(error.error)
-        return of(error)
-      })
+        this.toastr.showError(error.error);
+        return of(null);
+      }),
+      filter((hero: Hero | null): hero is Hero => hero !== null)
     )
   }
 
@@ -61,6 +67,11 @@ export class HeroApiService {
         this.toastr.showSuccess("Delete hero successfully");
         this.location.back();
       }),
+      catchError((error) => {
+        this.toastr.showError(error.error);
+        return of(null);
+      }),
+      filter((hero: Hero | null): hero is Hero => hero !== null)
     );
   }
 
