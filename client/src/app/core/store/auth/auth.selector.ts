@@ -5,3 +5,4 @@ const featureHero = createFeatureSelector<AuthState>('feature_auth')
 
 export const userSelector = createSelector(featureHero, state => state.user)
 export const authStatusSelector = createSelector(featureHero, state => state.status)
+export const authErrorSelector = createSelector(featureHero, state => state.error)

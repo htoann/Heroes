@@ -1,21 +1,32 @@
-<div class="d-flex justify-content-center">
-  <div class="col-4">
-    <label for="new-hero">Name</label>
-    <input
-      type="text"
-      class="form-control mt-2"
-      id="formGroupExampleInput"
-      placeholder="Hero"
-      #heroName
-      (keyup.enter)="createHero(heroName.value); heroName.value = ''"
-    />
-
-    <button
-      type="button"
-      class="btn btn-primary d-flex mx-auto"
-      (click)="createHero(heroName.value); heroName.value = ''"
-    >
-      + Add
-    </button>
-  </div>
+<div class="modal-header">
+  <h1 class="modal-title fs-5" id="exampleModalLabel">Add hero</h1>
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="modal"
+    aria-label="Close"
+  ></button>
+</div>
+<div class="modal-body">
+  <label for="new-hero">Name</label>
+  <input
+    type="text"
+    class="form-control mt-2"
+    placeholder="Hero"
+    #heroName
+    (keyup.enter)="createHero(heroName.value); heroName.value = ''"
+  />
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+    Close
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="createHero(heroName.value); heroName.value = ''"
+    data-bs-dismiss="modal"
+  >
+    Add
+  </button>
 </div>

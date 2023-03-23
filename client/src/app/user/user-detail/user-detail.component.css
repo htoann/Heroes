@@ -1,0 +1,12 @@
+.img-fluid {
+  border: 2px solid white;
+  width: 80px;
+}
+
+.avatar-wrapper {
+  background-color: #dcbfc0;
+}
+
+.input-group-text {
+  width: 85px;
+}

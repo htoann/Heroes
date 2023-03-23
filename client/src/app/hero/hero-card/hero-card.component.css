@@ -1,0 +1,22 @@
+.avatar-hero {
+  width: 100px;
+  height: 100%;
+  margin: auto;
+  object-fit: contain;
+}
+
+.card {
+  /* transition: 0.2s ease 0s; */
+  height: 290px;
+  cursor: default;
+}
+
+tag-input {
+  height: 40px;
+  overflow: hidden !important;
+}
+
+.selected {
+  /* box-shadow: 5px 5px rgb(225, 227, 255); */
+  background: rgb(221, 226, 238);
+}

@@ -1,26 +1,28 @@
-<div class="mb-3 col-2 mx-auto my-4 position-relative">
-  <h4 class="text-center mb-4">Hero Search</h4>
+<i class="bi bi-search"></i>
+<form class="d-flex" role="search" class="me-3 mx-auto my-4 position-relative">
   <input
-    type="text"
-    class="form-control"
-    id="formGroupExampleInput"
-    placeholder="Name"
+    class="form-control me-2 rounded-pill"
+    type="search"
+    placeholder="Search hero name"
+    aria-label="Search"
     #searchBox
     (input)="search(searchBox.value)"
   />
-
   <ul
-    class="list-group mt-4 position-absolute col-2 mx-auto shadow mb-5 bg-body rounded w-100"
+    *ngIf="heroes$"
+    (click)="searchBox.value = ''"
+    class="result col-4 mt-2 position-absolute col-2 mx-auto shadow mb-5 bg-body rounded w-100"
+    [class.list-group]="heroes$ && searchBox.value"
   >
     <a
       *ngFor="let hero of heroes$ | async"
       routerLink="/heroes/{{ hero._id }}"
-      class="text-decoration-none px-2 mb-3"
+      class="text-decoration-none"
     >
-      <li>
+      <li *ngIf="searchBox.value" class="p-2 mx-2">
         <img
-          class="avatar"
-          src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png"
+          class="avatar rounded-circle"
+          src="../../../assets/images/hero-avt.webp"
           alt=""
         />
         <a
@@ -32,4 +34,10 @@
       </li>
     </a>
   </ul>
-</div>
+  <div
+    *ngIf="(heroes$ | async)?.length === 0 && searchBox.value"
+    class="list-group mt-2 position-absolute col-2 mx-auto shadow mb-5 bg-body rounded w-100"
+  >
+    <span class="m-2">No heroes found</span>
+  </div>
+</form>

@@ -7,16 +7,19 @@
 }
 
 a:first-child {
-  margin-top: 16px;
+  margin-top: 8px;
+}
+
+a:last-child {
+  margin-bottom: 8px;
 }
 
 li {
   list-style: none;
-  padding: 5px;
   color: black;
 }
 
 li:hover {
-  background: rgb(228, 228, 228);
+  background: rgb(240, 240, 240);
   border-radius: 5px;
 }

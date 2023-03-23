@@ -14,7 +14,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './core/helpers/token.interceptor';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { HeroModule } from './hero/hero.module';
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { AuthGuard } from './core/helpers/auth.guard';
@@ -22,11 +21,11 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 
 import { ToastrModule } from 'ngx-toastr';
+import { PageModule } from './page/page.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -35,13 +34,16 @@ import { ToastrModule } from 'ngx-toastr';
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
     CoreModule,
-    SharedModule,
     BrowserAnimationsModule,
     HeroModule,
     AuthModule,
     UserModule,
     SharedModule,
-    ToastrModule.forRoot()
+    PageModule,
+    ToastrModule.forRoot({
+      autoDismiss: true,
+      maxOpened: 3,
+    })
   ],
   providers: [
     AuthGuard,

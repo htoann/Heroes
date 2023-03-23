@@ -1,17 +1,10 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "./toast.css";
+
 Application-wide Styles h1 {
   color: #369;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
-}
-h2,
-h3 {
-  color: #444;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: lighter;
-}
-body {
-  margin-left: 2em;
-  margin-right: 2em;
 }
 body,
 input[type="text"],
@@ -23,7 +16,6 @@ button {
   border: none;
   cursor: pointer;
   font-size: 1.2rem;
-  /* padding: 1rem; */
   padding: 0.5rem 0.75rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
@@ -44,6 +36,7 @@ button + button {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif !important;
   --color-primary: #0d6efd;
+  --danger: #e14747;
 }
 
 h2 {
@@ -54,13 +47,7 @@ label {
   font-weight: 500;
 }
 
-@import "~bootstrap/dist/css/bootstrap.min.css";
-
-/* Toast */
-
-@import "./toast.css";
-
-/* Tag input compoent */
+/* Tag input component */
 .ng-tns-c62-6 {
   cursor: pointer !important;
 }
@@ -71,14 +58,33 @@ label {
   height: 28px;
 }
 
+/* tag {
+  background-color: aquamarine !important;
+} */
+
 .tag__text {
   display: flex !important;
   align-items: center !important;
   height: 28px !important;
 }
 
+.tag-form:has(.ng2-tag-input__text-input) .ng2-tag-input__text-input {
+  text-align: center;
+}
+
 .avatar {
-  width: 50px;
-  height: 100%;
-  margin-right: 20px;
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.card:has(.ng2-tags-container) .ng2-tags-container {
+  justify-content: center;
+  cursor: default;
+}
+
+.text-error {
+  color: var(--danger);
+  margin-top: 2px;
 }

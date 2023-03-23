@@ -1,0 +1,47 @@
+<div class="my-5">
+  <h4 class="my-4 text-center">Top Heroes</h4>
+
+  <div class="container">
+    <div class="row row-cols-4 gy-3 mb-4 justify-content-center">
+      <div class="col" *ngFor="let hero of heroes">
+        <app-hero-card [hero]="hero"></app-hero-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="heroes.length == 0" class="d-flex justify-content-center">
+  <div class="bg-body-tertiary rounded col-2">
+    <img
+      src="../../../assets//images/hero-avt.webp"
+      class="card-img-top avatar-hero p-3"
+      alt=""
+    />
+    <div class="card-body text-center" for="checkbox">
+      <h5 class="card-title">Add your hero now</h5>
+      <button
+        class="btn btn-primary mt-4"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        + Add hero
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <app-hero-form [heroes]="heroes"></app-hero-form>
+    </div>
+  </div>
+</div>
+
+<app-loading [loading]="loading"></app-loading>

@@ -6,7 +6,36 @@ li {
   flex-direction: column;
 }
 
-.selected {
-  background-color: black;
+.tag-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form-check-input {
+  display: none;
+  position: absolute;
+  z-index: 9;
+  padding: 8px;
+  margin: 10px;
+}
+
+.hero-card-wrapper:hover .form-check-input {
+  display: block;
+}
+
+.selected .form-check-input {
+  display: block;
+}
+
+.hero-card-wrapper:hover:not(.selected) {
+  box-shadow: 5px 5px 5px rgb(225 227 255) !important;
+  border-radius: 5px;
+  background: rgb(246, 247, 251);
+}
+
+::ng-deep tag:has(span.active) {
   color: white;
+  background-color: #2196f3;
 }

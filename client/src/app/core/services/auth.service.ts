@@ -84,11 +84,4 @@ export class AuthService {
       }),
     )
   }
-
-  // fetchUser(token: string): Observable<User> {
-  //   const headers = {
-  //     Authorization: `Bearer ${token}`
-  //   };
-  //   return this.http.get<User>(`${this.userUrl}/me`, { headers });
-  // }
 }

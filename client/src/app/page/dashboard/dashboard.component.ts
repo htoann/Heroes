@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
   heroes: Hero[] = [];
+  loading: boolean;
   private topHeroesSubscription: Subscription | undefined;
 
   constructor(private store: Store,
@@ -23,10 +24,16 @@ export class DashboardComponent implements OnInit {
   }
 
   private getTopHeroes(): void {
+    this.loading = true;
+
     if (this.authService.currentUserValue) {
       this.store.dispatch(getHeroes())
-      this.topHeroesSubscription = this.store.pipe(select(heroesSelector)).subscribe(heroes => this.heroes = heroes.slice(1, 5))
+      this.topHeroesSubscription = this.store.pipe(select(heroesSelector)).subscribe(heroes => {
+        this.heroes = heroes.slice(0, 4);
+        this.loading = false;
+      })
     }
+
   }
 
   ngOnDestroy(): void {

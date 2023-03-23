@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Hero } from '../../core/models/hero.model';
 import { HeroService } from '../../core/services/hero.service';
-import { createHero } from '../../core/store/hero/hero.actions';
 
 @Component({
   selector: 'app-hero-form',
@@ -11,6 +10,7 @@ import { createHero } from '../../core/store/hero/hero.actions';
 })
 export class HeroFormComponent {
   @Input() heroes: Hero[] = []
+  error: string;
 
   constructor(public heroService: HeroService, private store: Store) {
   }
@@ -21,6 +21,6 @@ export class HeroFormComponent {
     }
     name = name.trim();
 
-    this.store.dispatch(createHero({ name }))
+    this.heroService.createHero(name);
   }
 }

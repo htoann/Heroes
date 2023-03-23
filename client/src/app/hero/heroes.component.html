@@ -1,152 +1,133 @@
-<h2 class="text-center">My Heroes</h2>
+<h4 class="text-center my-4">My Heroes</h4>
 
-<app-hero-form [heroes]="heroes"></app-hero-form>
+<div class="container text-center tag-form">
+  <tag-input [ngModel]="allTags" [removable]="false" [hideForm]="true">
+    <ng-template item-template let-item="item">
+      <span
+        class="tag"
+        [class.active]="item.selected"
+        (click)="onSelect(item)"
+        >#{{ item.tag }}
+      </span>
+    </ng-template>
+  </tag-input>
+</div>
 
-<div class="container text-center">
-  <div class="row">
-    <div class="col">
-      <ul class="list-group mb-4 d-flex mx-auto">
-        <div class="form-check ps-0">
-          <h4>List Heroes</h4>
-          <li
-            *ngFor="let hero of heroes"
-            class="list-group-item d-flex justify-content-between"
-          >
-            <a
-              routerLink="/heroes/{{ hero._id }}"
-              class="text-decoration-none flex-row"
-              for="flexCheckChecked"
+<div class="my-5">
+  <div class="container">
+    <div *ngIf="selectedHeroes.length > 0">
+      <div class="mb-4 tag-form">
+        <label for="" class="mb-1">Add tags</label>
+        <tag-input
+          [(ngModel)]="tagsToAdd"
+          [modelAsStrings]="true"
+          #input1
+          placeholder="Enter a new tags"
+          secondaryPlaceholder="Enter a new tags"
+          ><ng-template item-template let-item="item" let-index="index">
+            <span class="tag" (click)="input1.removeItem(item, index)"
+              >#{{ item }} x</span
             >
-              <h5 class="d-flex my-2">{{ hero.name | capitalize }}</h5>
-              <tag-input
-                [ngModel]="hero.tags"
-                [removable]="false"
-                [hideForm]="true"
-                *ngIf="hero.tags!.length > 0"
-              >
-                <ng-template item-template let-item="item" let-index="index">
-                  <span class="tag">#{{ item }} </span>
-                </ng-template>
-              </tag-input>
-              <span *ngIf="hero.tags!.length === 0"> No tags </span>
-            </a>
-          </li>
-        </div>
-      </ul>
-    </div>
-    <div class="col">
-      <div>
-        <!-- Add tags -->
-        <div class="mb-4">
-          <h5 class="text-center">Select heroes for add tags</h5>
-          <tag-input
-            (onAdd)="onAddToAddHeroes($any($event))"
-            (onRemove)="onRemoveToAddHeroes($any($event))"
-            [(ngModel)]="heroObjectAdd"
-            [editable]="true"
-            [identifyBy]="'id'"
-            [displayBy]="'name'"
-            placeholder="Enter heroes"
-            secondaryPlaceholder="Enter heroes"
-            [onlyFromAutocomplete]="true"
-          >
-            <tag-input-dropdown
-              [showDropdownIfEmpty]="true"
-              [autocompleteObservable]="requestAutocompleteHeroes"
-              [identifyBy]="'_id'"
-              [displayBy]="'name'"
-            >
-              >
-            </tag-input-dropdown>
-          </tag-input>
-        </div>
-
-        <tag-input [(ngModel)]="tags" [modelAsStrings]="true" #input1
-          ><ng-template
-            item-template
-            let-item="item"
-            let-index="index"
-            (click)="input1.removeItem(item, index)"
-          >
-            <span>#{{ item }} x</span>
-            <!-- <span
-              (click)="input1.removeItem(item, index)"
-              class="ng2-tag__remove-button"
-            >
-              x
-            </span> -->
           </ng-template>
         </tag-input>
-
         <button
           type="button"
           (click)="addTagsToHeroes()"
-          class="btn btn-primary"
+          class="btn btn-success"
         >
-          Add tags
+          Save
         </button>
-
-        <!-- Delete tags for heroes -->
-
-        <div class="mb-4">
-          <h5 class="text-center mt-4">Select heroes for remove tags</h5>
-          <tag-input
-            (onAdd)="onAddToRemoveHeroes($any($event))"
-            (onRemove)="onRemoveToRemoveHeroes($any($event))"
-            [(ngModel)]="heroObjectRemove"
-            [editable]="true"
-            [identifyBy]="'id'"
-            [displayBy]="'name'"
-            placeholder="Enter heroes"
-            secondaryPlaceholder="Enter heroes"
-            [onlyFromAutocomplete]="true"
-          >
-            <tag-input-dropdown
-              [showDropdownIfEmpty]="true"
-              [autocompleteObservable]="requestAutocompleteHeroes"
-              [identifyBy]="'_id'"
-              [displayBy]="'name'"
-            >
-              >
-            </tag-input-dropdown>
-          </tag-input>
-        </div>
-
+      </div>
+      <div class="mb-4 tag-form">
+        <label for="" class="mb-1">Delete tags</label>
         <tag-input
           [(ngModel)]="selectedTags"
-          (onRemove)="onRemoveToRemoveTags($any($event))"
+          (onRemove)="onRemove($any($event))"
           [modelAsStrings]="true"
+          [hideForm]="true"
           #input2
-          placeholder="Edit tags of heroes"
-          secondaryPlaceholder="Tags"
-          ><ng-template
-            item-template
-            let-item="item"
-            let-index="index"
-            (click)="input2.removeItem(item, index)"
-          >
-            <span>#{{ item }} x</span>
-            <!-- <span
-              (click)="input2.removeItem(item, index)"
-              class="ng2-tag__remove-button"
+          placeholder="Delete tags of heroes"
+          secondaryPlaceholder="Delete tags of heroes"
+          ><ng-template item-template let-item="item" let-index="index">
+            <span class="tag" (click)="input2.removeItem(item, index)"
+              >#{{ item }} x</span
             >
-              x
-            </span> -->
           </ng-template>
         </tag-input>
-
+        <p class="card-text" *ngIf="selectedTags!.length === 0">No tags</p>
         <button
           type="button"
           (click)="deleteTagsFromHeroes()"
-          class="btn btn-danger"
+          class="btn btn-light"
         >
-          Save tags
+          Save
         </button>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn btn-light d-flex m-auto mb-3"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      *ngIf="heroes.length > 0"
+    >
+      New hero
+    </button>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <app-hero-form [heroes]="heroes"></app-hero-form>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row row-cols-4 gy-3 mb-4 justify-content-center"
+      *ngIf="heroes.length > 0"
+    >
+      <div class="col" *ngFor="let hero of heroes">
+        <div
+          (click)="onSelected(hero)"
+          class="hero-card-wrapper"
+          [class.selected]="hero.selected"
+        >
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
+            [attr.checked]="hero.selected ? 'checked' : null"
+          />
+          <app-hero-card [hero]="hero"> </app-hero-card>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<!-- 
-<div *ngIf="heroes.length === 0" class="text-center">
-  <h4>No hero found</h4>
-</div> -->
+
+<div *ngIf="heroes.length == 0" class="d-flex justify-content-center">
+  <div class="bg-body-tertiary rounded col-2">
+    <img
+      src="../../../assets//images/hero-avt.webp"
+      class="card-img-top avatar-hero p-3"
+      alt=""
+    />
+    <div class="card-body text-center" for="checkbox">
+      <h5 class="card-title">Add your hero now</h5>
+      <button
+        class="btn btn-primary mt-4"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        + Add hero
+      </button>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,11 @@ export interface Hero {
   address?: string
   mail?: string
   age?: number
-  gender?: boolean
+  gender?: string
   userId?: string
   tags?: string[]
+}
+
+export interface HeroSelected extends Hero {
+  selected?: boolean;
 }

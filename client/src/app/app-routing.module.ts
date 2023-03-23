@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { AuthGuard } from './core/helpers/auth.guard';
-import { DashboardComponent } from './shared/dashboard/dashboard.component';
+import { DashboardComponent } from './page/dashboard/dashboard.component';
+import { NotFoundComponent } from './page/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

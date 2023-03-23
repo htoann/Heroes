@@ -1,0 +1,8 @@
+.img-fluid {
+  height: 100%;
+  object-fit: cover;
+}
+
+.h-100 {
+  height: calc(100vh - 165px) !important;
+}

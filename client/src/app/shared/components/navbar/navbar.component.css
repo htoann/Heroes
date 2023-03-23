@@ -1,3 +1,9 @@
+nav {
+  padding-left: 2em;
+  padding-right: 2em;
+  height: 70px;
+}
+
 .name_user {
   margin-right: 15px;
   font-weight: 700;
@@ -17,6 +23,10 @@
   display: flex;
 }
 
+.dropdown-menu {
+  width: 100%;
+}
+
 li {
   font-weight: 500;
 }
@@ -28,4 +38,17 @@ li {
 
 .login {
   margin-right: 1rem;
+}
+
+.user-name {
+  margin-right: 10px;
+}
+
+.nav-link {
+  color: rgb(140, 140, 140);
+}
+
+.active-link {
+  color: black;
+  border-bottom: 2px solid;
 }

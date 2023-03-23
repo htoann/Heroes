@@ -1,41 +1,67 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <a class="header-title" href="/">
+<nav
+  class="navbar navbar-expand-lg bg-body-tertiary shadow-sm mb-5 bg-body-tertiary rounded"
+>
+  <a class="header-title" routerLink="/">
     <img class="logo" src="../../../../assets/images/Hero-logo.png" alt="" />
   </a>
   <div class="container-fluid p-0">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item" *ngIf="user">
-          <a class="nav-link active fs-5" aria-current="page" href="/dashboard"
+          <a
+            class="nav-link fs-6"
+            aria-current="page"
+            routerLink="/dashboard"
+            routerLinkActive="active-link"
             >Dashboard</a
           >
         </li>
         <div *ngIf="user">
           <li class="nav-item">
-            <a class="nav-link active fs-5" href="/heroes/list/{{ user._id }}"
+            <a
+              class="nav-link fs-6"
+              routerLink="/heroes"
+              routerLinkActive="active-link"
               >My Heroes</a
             >
           </li>
         </div>
       </ul>
     </div>
-
-    <div *ngIf="user; else auth" class="d-flex align-items-center">
-      <a href="/user/{{ user._id }}"
-        ><img
-          class="avatar"
-          src="https://www.pngmart.com/files/22/User-Avatar-Profile-PNG-Isolated-Transparent-Picture.png"
+    <!-- (click)="clickEvent()" -->
+    <app-hero-search *ngIf="user"></app-hero-search>
+    <div class="dropdown" *ngIf="user; else auth">
+      <button
+        class="btn btn-light dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton1"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <img
+          class="avatar rounded-circle"
+          src="../../../../assets/images/user-avt.png"
           alt=""
-      /></a>
-      <button type="button" class="btn btn-light" (click)="logout()">
-        Logout
+        />
+        <span class="user-name">{{ user.email }}</span>
       </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li>
+          <a class="dropdown-item" routerLink="/user/{{ user._id }}">Profile</a>
+        </li>
+        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <a class="dropdown-item pe-auto" routerLink="" (click)="logout()"
+            >Logout</a
+          >
+        </li>
+      </ul>
     </div>
     <ng-template #auth>
-      <a href="/auth/login"
+      <a routerLink="/auth/login"
         ><button type="button" class="btn btn-light login">Login</button>
       </a>
-      <a href="/auth/register"
+      <a routerLink="/auth/register"
         ><button type="button" class="btn btn-primary">Register</button>
       </a>
     </ng-template>
