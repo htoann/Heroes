@@ -1,15 +1,15 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var cors = require("cors");
+const createError = require("http-errors");
+const cookieParser = require("cookie-parser");
+const express = require("express");
+const logger = require("morgan");
+const path = require("path");
+const cors = require("cors");
 
-var heroesRouter = require("./routes/hero");
+const heroesRouter = require("./routes/hero");
 
 const initDatabase = require("./config/initDatabase");
 
-var app = express();
+const app = express();
 
 initDatabase();
 
@@ -21,11 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   cors({
-    origin: [
-      "https://test.app",
-      "http://localhost:4200",
-      process.env.WEB_URL,
-    ],
+    origin: ["http://localhost:4200", process.env.WEB_URL],
     methods: "GET, POST, PUT, DELETE, PATCH",
     credentials: true,
     maxAge: 3600,
@@ -33,6 +29,9 @@ app.use(
 );
 
 app.use("/api/heroes", heroesRouter);
+app.use("/", async (req, res) => {
+  res.status(404).send("It's work");
+});
 app.use("*", async (req, res) => {
   res.status(404).send("404 not found");
 });

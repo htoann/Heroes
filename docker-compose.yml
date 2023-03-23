@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  server:
+    container_name: heroes
+    build: /server
+    ports:
+      - "8000:8000"
+
+  microservice-auth:
+    container_name: auth
+    build: /microservice-auth
+    ports:
+      - "8001:8001"

@@ -1,16 +1,16 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var cors = require("cors");
+const cookieParser = require("cookie-parser");
+const createError = require("http-errors");
+const express = require("express");
+const logger = require("morgan");
+const path = require("path");
+const cors = require("cors");
 
-var authRouter = require("./routes/auth");
-var userRouter = require("./routes/user");
+const authRouter = require("./routes/auth");
+const userRouter = require("./routes/user");
 
 const initDatabase = require("./config/initDatabase");
 
-var app = express();
+const app = express();
 
 initDatabase();
 
@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   cors({
-    origin: ["https://test.app", "http://localhost:4200", process.env.WEB_URL],
+    origin: ["http://localhost:4200", process.env.WEB_URL],
     methods: "GET, POST, PUT, DELETE, PATCH",
     credentials: true,
     maxAge: 3600,
@@ -30,9 +30,12 @@ app.use(
 );
 
 app.use("/api/auth", authRouter);
-app.use("/api/user", userRouter);
+app.use("/api/users", userRouter);
+app.use("/", async (req, res) => {
+  res.status(404).send("It's work");
+});
 app.use("*", async (req, res) => {
-  res.status(404).send("404 not found");
+  res.status(404).send("404 Not Found");
 });
 
 // catch 404 and forward to error handler
